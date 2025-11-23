@@ -5,11 +5,31 @@ libbudgie-private.so.0 libbudgie-private0 #MINVER#
  budgie_animation_new@Base 10.4
  budgie_animation_start@Base 10.4
  budgie_animation_stop@Base 10.4
+ budgie_application_construct@Base 10.10~preview.1
+ budgie_application_create_launch_context@Base 10.10~preview.1
+ budgie_application_get_actions@Base 10.10~preview.1
+ budgie_application_get_categories@Base 10.10~preview.1
+ budgie_application_get_content_types@Base 10.10~preview.1
+ budgie_application_get_dbus_activatable@Base 10.10~preview.1
+ budgie_application_get_description@Base 10.10~preview.1
+ budgie_application_get_desktop_id@Base 10.10~preview.1
+ budgie_application_get_desktop_path@Base 10.10~preview.1
+ budgie_application_get_exec@Base 10.10~preview.1
+ budgie_application_get_generic_name@Base 10.10~preview.1
+ budgie_application_get_icon@Base 10.10~preview.1
+ budgie_application_get_keywords@Base 10.10~preview.1
+ budgie_application_get_name@Base 10.10~preview.1
+ budgie_application_get_prefers_default_gpu@Base 10.10~preview.1
+ budgie_application_get_should_show@Base 10.10~preview.1
+ budgie_application_get_type@Base 10.10~preview.1
+ budgie_application_launch@Base 10.10~preview.1
+ budgie_application_launch_action@Base 10.10~preview.1
+ budgie_application_launch_action_with_context@Base 10.10~preview.1
+ budgie_application_launch_with_context@Base 10.10~preview.1
+ budgie_application_new@Base 10.10~preview.1
+ budgie_application_set_desktop_id@Base 10.10~preview.1
+ budgie_application_set_name@Base 10.10~preview.1
  budgie_autohide_policy_get_type@Base 10.4
- budgie_back_ease_in@Base 10.4
- budgie_back_ease_out@Base 10.4
- budgie_circ_ease_in@Base 10.4
- budgie_circ_ease_out@Base 10.4
  budgie_desktop_manager_construct@Base 10.4
  budgie_desktop_manager_create_new_panel@Base 10.4
  budgie_desktop_manager_delete_panel@Base 10.4
@@ -17,6 +37,8 @@ libbudgie-private.so.0 libbudgie-private0 #MINVER#
  budgie_desktop_manager_get_panels@Base 10.4
  budgie_desktop_manager_get_raven_plugins@Base 10.7
  budgie_desktop_manager_get_type@Base 10.4
+ budgie_desktop_manager_move_panel@Base 10.10~preview.1
+ budgie_desktop_manager_remove_panel@Base 10.10~preview.1
  budgie_desktop_manager_rescan_panel_plugins@Base 10.7
  budgie_desktop_manager_rescan_raven_plugins@Base 10.7
  budgie_desktop_manager_set_autohide@Base 10.4
@@ -27,9 +49,7 @@ libbudgie-private.so.0 libbudgie-private0 #MINVER#
  budgie_desktop_manager_set_transparency@Base 10.4
  budgie_desktop_manager_slots_available@Base 10.4
  budgie_desktop_manager_slots_used@Base 10.4
- budgie_elastic_ease_in@Base 10.4
  budgie_elastic_ease_out@Base 10.4
- budgie_expo_ease_in@Base 10.4
  budgie_expo_ease_out@Base 10.4
  budgie_notification_close_reason_get_type@Base 10.5.3+git20220217a
  budgie_notification_construct@Base 10.5.3+git20220217a
@@ -65,10 +85,6 @@ libbudgie-private.so.0 libbudgie-private0 #MINVER#
  budgie_prop_change_dup@Base 10.4
  budgie_prop_change_free@Base 10.4
  budgie_prop_change_get_type@Base 10.4
- budgie_quad_ease_in@Base 10.4
- budgie_quad_ease_in_out@Base 10.4
- budgie_quad_ease_out@Base 10.4
- budgie_set_struts@Base 10.4
  budgie_shadow_block_construct@Base 10.4
  budgie_shadow_block_get_active@Base 10.4
  budgie_shadow_block_get_position@Base 10.4
@@ -77,9 +93,17 @@ libbudgie-private.so.0 libbudgie-private0 #MINVER#
  budgie_shadow_block_set_active@Base 10.4
  budgie_shadow_block_set_position@Base 10.4
  budgie_sine_ease_in@Base 10.4
- budgie_sine_ease_in_out@Base 10.4
- budgie_sine_ease_out@Base 10.4
  budgie_struts_get_type@Base 10.5.1
+ budgie_switcheroo_apply_gpu_profile@Base 10.10~preview.1
+ budgie_switcheroo_construct@Base 10.10~preview.1
+ budgie_switcheroo_dbus_get_gpus@Base 10.10~preview.1
+ budgie_switcheroo_dbus_get_has_dual_gpu@Base 10.10~preview.1
+ budgie_switcheroo_dbus_get_type@Base 10.10~preview.1
+ budgie_switcheroo_dbus_proxy_get_type@Base 10.10~preview.1
+ budgie_switcheroo_dbus_register_object@Base 10.10~preview.1
+ budgie_switcheroo_get_dual_gpu@Base 10.10~preview.1
+ budgie_switcheroo_get_type@Base 10.10~preview.1
+ budgie_switcheroo_new@Base 10.10~preview.1
  budgie_toplevel_add_new_applet@Base 10.4
  budgie_toplevel_can_move_applet_left@Base 10.4
  budgie_toplevel_can_move_applet_right@Base 10.4
@@ -111,4 +135,3 @@ libbudgie-private.so.0 libbudgie-private0 #MINVER#
  budgie_toplevel_set_theme_regions@Base 10.4
  budgie_toplevel_set_transparency@Base 10.4
  budgie_toplevel_set_uuid@Base 10.4
- budgie_unset_struts@Base 10.4

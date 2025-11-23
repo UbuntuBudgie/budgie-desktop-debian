@@ -33,6 +33,7 @@ budgie-desktop (10.10~preview.1-1) experimental; urgency=medium
   * add notification-daemon to stop gnome-shell etc all being pulled in
   * Add labwc as an alternate wayland session
   * Note; restores superficial autopkgtest (Closes: #1004364)
+  * Revise symbols for this release
   * wrap-and-sort -bst
 
  -- David Mohammed <fossfreedom@ubuntu.com>  Sat, 08 Nov 2025 09:43:01 +0000

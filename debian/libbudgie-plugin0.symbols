@@ -19,7 +19,6 @@ libbudgie-plugin.so.0 libbudgie-plugin0 #MINVER#
  budgie_panel_position_get_type@Base 10.4
  budgie_plugin_get_panel_widget@Base 10.4
  budgie_plugin_get_type@Base 10.4
- budgie_popover_get_position_policy@Base 10.4
  budgie_popover_get_type@Base 10.4
  budgie_popover_manager_get_type@Base 10.4
  budgie_popover_manager_new@Base 10.4
@@ -27,5 +26,3 @@ libbudgie-plugin.so.0 libbudgie-plugin0 #MINVER#
  budgie_popover_manager_show_popover@Base 10.4
  budgie_popover_manager_unregister_popover@Base 10.4
  budgie_popover_new@Base 10.4
- budgie_popover_position_policy_get_type@Base 10.4
- budgie_popover_set_position_policy@Base 10.4
