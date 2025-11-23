@@ -1,8 +1,8 @@
-budgie-desktop (10.10~preview.1-1) experimental; urgency=medium
+budgie-desktop (10.10~preview.1-0ubuntu1) resolute; urgency=medium
 
   * New upstream release
     - upstream has marked this as preview to indicate that it is
-      experimental (Closes: #1120909)
+      experimental (LP: #2132268)
     - this preview release transitions budgie to be a wayland only
       desktop.  (Closes: #990678)
       The packaging changes described below reflect
