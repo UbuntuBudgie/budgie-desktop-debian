@@ -1,0 +1,5 @@
+remove-on-upgrade /etc/xdg/autostart/org.buddiesofbudgie.BudgieDesktopScreensaver.desktop
+remove-on-upgrade /etc/xdg/autostart/org.buddiesofbudgie.SettingsDaemon.XSettings.desktop
+remove-on-upgrade /etc/xdg/autostart/org.buddiesofbudgie.SettingsDaemon.MediaKeys.desktop
+remove-on-upgrade /etc/xdg/autostart/org.buddiesofbudgie.SettingsDaemon.ScreensaverProxy.desktop
+remove-on-upgrade /etc/xdg/autostart/org.buddiesofbudgie.SettingsDaemon.Color.desktop

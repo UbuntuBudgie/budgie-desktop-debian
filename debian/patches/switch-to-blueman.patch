@@ -1,0 +1,119 @@
+Description: Switch to using blueman
+ BCC has been patched to no longer build with a deprecated bluetooth
+ library and as such cannot be used to connect bluetooth devices
+ (#1059485)
+ This patch switches to using blueman instead
+Author: David Mohammed <fossfreedom@ubuntu.com>
+Forwarded: not-needed
+Last-Update: 2025-01-02
+
+--- a/src/panel/applets/status/BluetoothIndicator.vala
++++ b/src/panel/applets/status/BluetoothIndicator.vala
+@@ -197,13 +197,13 @@
+ 	private void on_settings_activate() {
+ 		this.popover.hide();
+ 
+-		var app_info = new DesktopAppInfo("budgie-bluetooth-panel.desktop");
++		var app_info = new DesktopAppInfo("blueman-manager.desktop");
+ 		if (app_info == null) return;
+ 
+ 		try {
+ 			app_info.launch(null, null);
+ 		} catch (Error e) {
+-			warning("Unable to launch budgie-bluetooth-panel.desktop: %s", e.message);
++			warning("Unable to launch blueman-manager.desktop: %s", e.message);
+ 		}
+ 	}
+ 
+--- /dev/null
++++ b/src/panel/applets/status/blueman-manager.desktop
+@@ -0,0 +1,78 @@
++[Desktop Entry]
++Name[ast]=Alministrador Bluetooth
++Name[be]=Кіраўнік Bluetooth
++Name[ca]=Gestor de Bluetooth
++Name[da]=Bluetooth-håndtering
++Name[de]=Bluetooth Manager
++Name[el]=Διαχειριστής Bluetooth
++Name[en_GB]=Bluetooth Manager
++Name[es]=Gestor de conexiones Bluetooth
++Name[et]=Bluetoothi haldur
++Name[eu]=Bluetooth kudeatzailea
++Name[fi]=Bluetooth-hallinta
++Name[fr]=Gestionnaire Bluetooth
++Name[he]=מנהל בלוטות׳
++Name[hr]=Bluetooth upravitelj
++Name[hu]=Bluetooth kezelő
++Name[is]=Bluetooth-stjórnun
++Name[it]=Gestore Bluetooth
++Name[ja]=Bluetooth マネージャー
++Name[ko]=블루투스 관리자
++Name[lt]=„Bluetooth“ tvarkytuvė
++Name[nb]=Håndtering av Blåtann
++Name[nl]=Bluetooth-beheerder
++Name[pl]=Menedżer Bluetooth
++Name[pt_BR]=Gerenciador de Bluetooth
++Name[pt]=Gestor de Bluetooth
++Name[ru]=Менеджер Bluetooth
++Name[sk]=Správca Bluetooth
++Name[sl]=Bluetooth upravljalnik
++Name[sv]=Bluetooth hanterare
++Name[tr]=Bluetooth Yöneticisi
++Name[uk]=Засіб керування Bluetooth
++Name[vi]=Trình quản lý Bluetooth
++Name[zh_CN]=蓝牙管理器
++Name[zh_TW]=藍牙管理器
++Name[oc]=Gestionari Bluetooth
++Name=Bluetooth Manager
++Comment[ast]=Alministrador Bluetooth Blueman
++Comment[be]=Blueman - кіраўнік Bluetooth
++Comment[ca]=Gestor de Bluetooth Blueman
++Comment[da]=Blueman Bluetooth-håndtering
++Comment[de]=Blueman Bluetooth Manager
++Comment[el]=Διαχειριστής bluetooth του blueman
++Comment[en_GB]=Blueman Bluetooth Manager
++Comment[es]=Gestor de conexiones Bluetooth Blueman
++Comment[et]=Bluetoothi haldur Blueman
++Comment[eu]=Blueman Bluetooth kudeatzailea
++Comment[fi]=Blueman bluetooth-hallinta
++Comment[fr]=Gestionnaire Bluetooth Blueman
++Comment[he]=Blueman - מנהל בלוטות׳
++Comment[hr]=Blueman Bluetooth upravitelj
++Comment[hu]=Blueman Bluetooth-kezelő
++Comment[is]=Blueman Bluetooth-umsýsla
++Comment[it]=Blueman Gestore Bluetooth
++Comment[ja]=Blueman Bluetooth マネージャー
++Comment[ko]=Blueman 블루투스 관리자
++Comment[lt]=Blueman „Bluetooth“ tvarkytuvė
++Comment[nb]=Blueman Blåtannsbehandler
++Comment[nl]=Blueman Bluetooth-beheer
++Comment[pl]=Menedżer Bluetooth Blueman
++Comment[pt_BR]=Gerenciador de Bluetooth Blueman
++Comment[pt]=Gestor de Bluetooth Blueman
++Comment[ru]=Менеджер Bluetooth Blueman
++Comment[sk]=Správca Bluetooth Blueman
++Comment[sl]=Blueman Bluetooth upravljalnik
++Comment[sv]=Blueman Bluetooth hanterare
++Comment[tr]=Blueman Bluetooth Yöneticisi
++Comment[uk]=Blueman — засіб керування Bluetooth
++Comment[zh_CN]=Blueman 蓝牙管理器
++Comment[zh_TW]=Blueman 藍牙管理器
++Comment[oc]=Gestionari Bluetooth Blueman
++Comment=Blueman Bluetooth Manager
++Icon=blueman
++Exec=env GDK_BACKEND=wayland,X11 blueman-manager
++Terminal=false
++Type=Application
++StartupNotify=true
++Categories=GTK;GNOME;Settings;HardwareSettings;
+--- a/src/panel/applets/status/meson.build
++++ b/src/panel/applets/status/meson.build
+@@ -67,3 +67,8 @@
+     'com.solus-project.status.gschema.xml',
+     install_dir: join_paths(datadir, 'glib-2.0', 'schemas'),
+ )
++
++install_data(
++    'blueman-manager.desktop',
++    install_dir: join_paths(datadir, 'budgie-desktop', 'applications'),
++)
