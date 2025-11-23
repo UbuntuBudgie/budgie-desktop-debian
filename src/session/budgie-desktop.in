@@ -1,0 +1,23 @@
+#!/bin/sh
+
+BUDGIE_VERSION="@PACKAGE_VERSION@"
+
+if [ "$1" = "--version" ]; then
+    echo "budgie-desktop $BUDGIE_VERSION"
+    echo "Copyright © Budgie Desktop Developers"
+    exit 0
+fi
+
+if [ -z $XDG_CURRENT_DESKTOP ]; then
+  XDG_CURRENT_DESKTOP=Budgie
+  export XDG_CURRENT_DESKTOP
+fi
+
+@bindir@/org.buddiesofbudgie.Services &
+sleep 2
+
+# Wait until the server starts before launching the session
+compositor="@gsd_libexecdir@/budgie-session-compositor-ready"
+if command -v "$compositor" > /dev/null 2>&1 && "$compositor"; then
+  exec budgie-session --builtin --session=org.buddiesofbudgie.BudgieDesktop $*
+fi
