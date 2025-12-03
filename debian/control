@@ -40,8 +40,8 @@ Build-Depends:
  valac,
  zenity (>= 3.99),
 Standards-Version: 4.7.2
-Vcs-Browser: https://github.com/ubuntubudgie/budgie-desktop-debian/tree/debian
-Vcs-Git: https://github.com/ubuntubudgie/budgie-desktop-debian.git -b debian
+Vcs-Browser: https://github.com/ubuntubudgie/budgie-desktop-debian/tree/ubuntu/latest
+Vcs-Git: https://github.com/ubuntubudgie/budgie-desktop-debian.git -b ubuntu/latest
 Rules-Requires-Root: no
 
 Package: budgie-core
