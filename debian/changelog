@@ -1,7 +1,7 @@
 budgie-desktop (10.10~preview.2-0ubuntu1) resolute; urgency=medium
 
   * New upstream release
-    BudgieMenuWindow: Adapt to new BCC deskop file name
+    BudgieMenuWindow: Adapt to new BCC desktop file name
     panel/plugin-manager: Don't free object owned by hashtable
     Fix critical crashes and robustness issues across Budgie Desktop
     Calculate the position on the screen to show the run dialog
