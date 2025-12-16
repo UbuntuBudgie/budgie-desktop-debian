@@ -1,8 +1,18 @@
 budgie-desktop (10.10~preview.2-0ubuntu1) resolute; urgency=medium
 
+  * New upstream release
+    BudgieMenuWindow: Adapt to new BCC deskop file name
+    panel/plugin-manager: Don't free object owned by hashtable
+    Fix critical crashes and robustness issues across Budgie Desktop
+    Calculate the position on the screen to show the run dialog
+    build: Update libxfce4windowing to a minimum of 4.20.4
+    Add environment variables to help running budgie in virtualbox and
+    also help electron based apps think they are still running in GNOME
+    Reset values of caffeine mode only if needed
+    fix(panel): crash on direct position flip (horizontal or vertical)
   * d/watch fix watch to download preview assets
   * d/control correct Vcs to point to ubuntu repo
-  * 
+  * Add lfwvapi.patch to fix missing v4.20.4 libxfce4windowing package vapi
 
  -- David Mohammed <fossfreedom@ubuntu.com>  Mon, 15 Dec 2025 21:24:36 +0000
 
