@@ -9,7 +9,7 @@ Description: [PATCH] allow AppIndicator if System Tray is not present
 
 --- a/src/daemon/manager.vala
 +++ b/src/daemon/manager.vala
-@@ -86,7 +86,7 @@
+@@ -89,7 +89,7 @@
  		*/
  		public ServiceManager(bool replace) {
  			theme_manager = new Budgie.ThemeManager();
@@ -18,7 +18,7 @@ Description: [PATCH] allow AppIndicator if System Tray is not present
  			register_with_session.begin((o, res) => {
  				bool success = register_with_session.end(res);
  				if (!success) {
-@@ -153,4 +153,28 @@
+@@ -156,4 +156,28 @@
  			}
  		}
  	}
