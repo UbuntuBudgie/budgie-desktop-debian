@@ -1,3 +1,12 @@
+budgie-desktop (10.10~preview.2-2) experimental; urgency=medium
+
+  * Patch to remember display positions, resolution and scaling
+    0001-Remember-display-changes-from-wdisplays.patch
+    This is temporary until its replacement budgie-desktop-services
+    and budgie-display-configurator is accepted into Debian
+
+ -- David Mohammed <fossfreedom@ubuntu.com>  Mon, 22 Dec 2025 15:28:23 +0000
+
 budgie-desktop (10.10~preview.2-1) experimental; urgency=medium
 
   * New upstream release

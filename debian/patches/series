@@ -1,3 +1,4 @@
 allow-AppIndicator-if-System-Tray-is-not-present.patch
 switch-to-blueman.patch
 lfwvapi.patch
+0001-Remember-display-changes-from-wdisplays.patch
