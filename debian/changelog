@@ -1,3 +1,10 @@
+budgie-desktop (10.10.0-1) experimental; urgency=medium
+
+  * New upstream release
+    - upstream has marked this as stable
+
+ -- David Mohammed <fossfreedom@ubuntu.com>  Mon, 12 Jan 2026 20:29:58 +0000
+
 budgie-desktop (10.10~preview.2-2) experimental; urgency=medium
 
   * Patch to remember display positions, resolution and scaling
