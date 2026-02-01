@@ -1,6 +1,9 @@
 budgie-desktop (10.10.1-1) experimental; urgency=medium
 
   * New upstream release
+  * Packaging Changes
+    remove lintian-overrides since lintian not longer requires the
+    overrides therein
 
  -- David Mohammed <fossfreedom@ubuntu.com>  Sun, 01 Feb 2026 13:46:23 +0000
 
