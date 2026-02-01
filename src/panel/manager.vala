@@ -20,6 +20,13 @@ namespace Budgie {
 		"Raven Trigger",
 	};
 
+	[Flags]
+	public enum ResetFlags {
+		NONE = 0,
+		PANEL = 1 << 0,
+		RAVEN = 1 << 1
+	}
+
 	/**
 	* Available slots
 	*/
@@ -128,7 +135,7 @@ namespace Budgie {
 	public class PanelManager : DesktopManager {
 		private PanelManagerIface? iface;
 		bool setup = false;
-		bool reset = false;
+		ResetFlags reset_flags = ResetFlags.NONE;
 
 		/* Keep track of our SessionManager */
 		private LibSession.SessionClient? sclient;
@@ -199,20 +206,19 @@ namespace Budgie {
 			return true;
 		}
 
-		public PanelManager(bool reset) {
+		public PanelManager(ResetFlags reset_flags) {
 			Object();
-			this.reset = reset;
+			this.reset_flags = reset_flags;
 			Xfw.set_client_type(Xfw.ClientType.PAGER);
 			windowing = new Budgie.Windowing.Windowing();
 			screens = new HashTable<int,Screen?>(direct_hash, direct_equal);
 			panels = new HashTable<string,Budgie.Panel?>(str_hash, str_equal);
 		}
 
-		/**
-		* Initial setup of the dynamic transparency routine
-		* Executed after the initial setup of the panel manager
+		/*
+		* Setup the events for listening to the windowing system changes
 		*/
-		private void do_dynamic_transparency_setup() {
+		private void setup_windowing_events() {
 			windowing.window_state_changed.connect((window) => {
 				if (window.is_skip_pager() || window.is_skip_tasklist()) return;
 				check_windows();
@@ -220,13 +226,8 @@ namespace Budgie {
 
 			windowing.window_added.connect(window_opened);
 			windowing.window_removed.connect(check_windows);
-			windowing.active_window_changed.connect(active_window_changed);
+			windowing.active_window_changed.connect(check_windows);
 			windowing.active_workspace_changed.connect(check_windows);
-		}
-
-		private void active_window_changed() {
-			// Handle transparency
-			check_windows();
 		}
 
 		/*
@@ -294,7 +295,7 @@ namespace Budgie {
 				set_panel_transparent(false, true);
 				return;
 			}
-			bool found = false;
+			bool found_maximized_window = false;
 
 			Xfw.Workspace? active_workspace = windowing.get_active_workspace();
 
@@ -302,12 +303,21 @@ namespace Budgie {
 				if (window.is_skip_pager()) return;
 				if (!this.window_on_primary(window)) return;
 				if ((window.is_maximized() && !window.is_minimized())) {
-					found = true;
+					found_maximized_window = true;
 					return;
 				}
 			});
 
-			set_panel_transparent(!found);
+			set_panel_transparent(!found_maximized_window);
+			set_panel_occluded(found_maximized_window);
+		}
+
+		void set_panel_occluded(bool occluded) {
+			Budgie.Panel? panel = null;
+			var iter = HashTableIter<string,Budgie.Panel?>(panels);
+			while (iter.next(null, out panel)) {
+				panel.set_occluded(occluded);
+			}
 		}
 
 		/*
@@ -373,11 +383,22 @@ namespace Budgie {
 
 			screens.remove_all();
 
+			int n_monitors = dis.get_n_monitors();
+			if (n_monitors == 0) {
+				warning("No monitors detected. Skipping panel repositioning.");
+				return;
+			}
+
 			/* When we eventually get monitor-specific panels we'll find the ones that
 			* were left stray and find new homes, or temporarily disable
 			* them */
-			for (int i = 0; i < dis.get_n_monitors(); i++) {
+			for (int i = 0; i < n_monitors; i++) {
 				Gdk.Monitor mon = dis.get_monitor(i);
+				if (mon == null) {
+					warning("Monitor %d is null, skipping", i);
+					continue;
+				}
+
 				Gdk.Rectangle usable_area = mon.get_geometry();
 				Budgie.Screen? screen = new Budgie.Screen();
 				screen.area = usable_area;
@@ -391,11 +412,37 @@ namespace Budgie {
 
 			primary = screens.lookup(primary_monitor);
 
+			if (primary == null) {
+				warning("Primary monitor not found (primary_monitor=%d). Cannot reposition panels.", primary_monitor);
+
+				if (screens.size() == 0) {
+					warning("No screens in hashtable. Skipping panel repositioning.");
+					return;
+				}
+
+				// This in theory shouldn't be reached - but we probably should be safe
+				// than sorry here - lets be helpful and try to find any valid screen as fallback
+				var first_screen = screens.lookup(0);
+				if (first_screen == null) {
+					warning("No valid screens available. Skipping panel repositioning.");
+					return;
+				}
+
+				warning("Using first available screen as fallback");
+				primary = first_screen;
+				primary_monitor = 0;
+			}
+
 			/* Fix all existing panels here */
 			Gdk.Rectangle raven_screen;
 
 			iter = HashTableIter<string,Budgie.Panel?>(panels);
 			while (iter.next(out uuid, out panel)) {
+				if (panel == null) {
+					warning("Null panel found with uuid %s", uuid);
+					continue;
+				}
+
 				/* Force existing panels to update to new primary display */
 				panel.update_geometry(primary.area, panel.position);
 				if (panel.position == Budgie.PanelPosition.TOP) {
@@ -434,20 +481,65 @@ namespace Budgie {
 			this.setup = true;
 			/* Well, off we go to be a panel manager. */
 			do_setup();
-			do_dynamic_transparency_setup();
+			setup_windowing_events();
 		}
 
 		/**
-		* Reset the entire panel configuration
+		* Reset configuration based on flags
 		*/
 		void do_reset() {
-			message("Resetting budgie-panel configuration to defaults");
+			if (reset_flags == ResetFlags.NONE) {
+				return;
+			}
+
+			message("Resetting budgie-desktop configuration");
+
+			if (ResetFlags.PANEL in reset_flags) {
+				reset_panel_config();
+			}
+
+			if (ResetFlags.RAVEN in reset_flags) {
+				reset_raven_config();
+			}
+		}
+
+		/**
+		* Reset panel configuration
+		*/
+		void reset_panel_config() {
+			message("Resetting panel configuration to defaults");
 			Settings s = new Settings(Budgie.ROOT_SCHEMA);
 			this.default_layout = s.get_string(PANEL_KEY_LAYOUT);
 			this.reset_dconf_path(s);
-			// Preserve the default layout once more
+			// Preserve the default layout
 			s = new Settings(Budgie.ROOT_SCHEMA);
 			s.set_string(PANEL_KEY_LAYOUT, this.default_layout);
+		}
+
+		/**
+		* Reset Raven widget configuration
+		*/
+		void reset_raven_config() {
+			message("Resetting Raven widget configuration to defaults");
+
+			// Reset the main Raven widgets schema
+			Settings raven_widgets = new Settings("org.buddiesofbudgie.budgie-desktop.raven.widgets");
+
+			// Get widget UUIDs before reset
+			string[] widget_uuids = raven_widgets.get_strv("uuids");
+
+			// Reset individual widget instances
+			foreach (string uuid in widget_uuids) {
+				string instance_path = "/org/buddiesofbudgie/budgie-desktop/raven/widgets/instance/%s/".printf(uuid);
+				Settings instance_settings = new Settings.with_path(
+					"org.buddiesofbudgie.budgie-desktop.raven.widgets.instance-info",
+					instance_path
+				);
+				this.reset_dconf_path(instance_settings);
+			}
+
+			// Reset main schema last
+			this.reset_dconf_path(raven_widgets);
 		}
 
 		/**
@@ -468,7 +560,11 @@ namespace Budgie {
 				}
 			}
 
+			// Set flag to reset panel config only
+			ResetFlags old_flags = this.reset_flags;
+			this.reset_flags = ResetFlags.PANEL;
 			this.do_reset();
+			this.reset_flags = old_flags;  // Restore original flags
 		}
 
 		/**
@@ -476,9 +572,8 @@ namespace Budgie {
 		* i.e. no risk of dying
 		*/
 		void do_setup() {
-			if (this.reset) {
-				this.do_reset();
-			}
+			this.do_reset();
+
 			var scr = Gdk.Screen.get_default();
 			var dis = scr.get_display();
 
