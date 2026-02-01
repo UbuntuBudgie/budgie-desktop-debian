@@ -12,11 +12,9 @@ Subject: [PATCH] Remember display changes from wdisplays
  create mode 100644 src/daemon/wlr-display-manager.c
  create mode 100644 src/daemon/wlr-output-management-unstable-v1.xml
 
-diff --git a/src/daemon/main.vala b/src/daemon/main.vala
-index c1a6da38..1c4994e3 100644
 --- a/src/daemon/main.vala
 +++ b/src/daemon/main.vala
-@@ -75,6 +75,24 @@ public static int main(string[] args) {
+@@ -75,6 +75,24 @@
  	end_dialog.Opened.connect(settings.do_disable_quietly); // When we've opened the EndSession dialog, disable Caffeine Mode
  	end_dialog.Closed.connect(settings.do_disable_quietly); // When we've closed the EndSession dialog as well, ensure Caffeine mode is disabled
  
@@ -41,11 +39,9 @@ index c1a6da38..1c4994e3 100644
  	/* Enter main loop */
  	Gtk.main();
  
-diff --git a/src/daemon/meson.build b/src/daemon/meson.build
-index 9c670b50..25229ad7 100644
 --- a/src/daemon/meson.build
 +++ b/src/daemon/meson.build
-@@ -109,3 +109,42 @@ install_data(
+@@ -136,3 +136,42 @@
      files('notifications/20_buddiesofbudgie.budgie-desktop.notifications.gschema.override'),
      install_dir: join_paths(datadir, 'glib-2.0', 'schemas')
  )
@@ -88,9 +84,6 @@ index 9c670b50..25229ad7 100644
 +  install: true,
 +  install_dir: libexecdir,
 +)
-diff --git a/src/daemon/wlr-display-manager.c b/src/daemon/wlr-display-manager.c
-new file mode 100644
-index 00000000..8f4e6b7d
 --- /dev/null
 +++ b/src/daemon/wlr-display-manager.c
 @@ -0,0 +1,347 @@
@@ -441,9 +434,6 @@ index 00000000..8f4e6b7d
 +    wl_display_disconnect(state.display);
 +    return 0;
 +}
-diff --git a/src/daemon/wlr-output-management-unstable-v1.xml b/src/daemon/wlr-output-management-unstable-v1.xml
-new file mode 100644
-index 00000000..541284a8
 --- /dev/null
 +++ b/src/daemon/wlr-output-management-unstable-v1.xml
 @@ -0,0 +1,611 @@
@@ -1058,6 +1048,3 @@ index 00000000..541284a8
 +    </request>
 +  </interface>
 +</protocol>
--- 
-2.51.0
-
