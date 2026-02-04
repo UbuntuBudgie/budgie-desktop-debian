@@ -1,3 +1,10 @@
+budgie-desktop (10.10.1-2) experimental; urgency=medium
+
+  * Add xdg_config_dirs.patch for apps such as crystal-dock that
+    don't supply a fallback
+
+ -- David Mohammed <fossfreedom@ubuntu.com>  Wed, 04 Feb 2026 21:53:50 +0000
+
 budgie-desktop (10.10.1-1) experimental; urgency=medium
 
   * New upstream release
