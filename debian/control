@@ -40,8 +40,8 @@ Build-Depends:
  valac,
  zenity (>= 3.99),
 Standards-Version: 4.7.2
-Vcs-Browser: https://github.com/ubuntubudgie/budgie-desktop-debian/tree/ubuntu/latest
-Vcs-Git: https://github.com/ubuntubudgie/budgie-desktop-debian.git -b ubuntu/latest
+Vcs-Browser: https://github.com/ubuntubudgie/budgie-desktop-debian/tree/debian/latest
+Vcs-Git: https://github.com/ubuntubudgie/budgie-desktop-debian.git -b debian/latest
 Rules-Requires-Root: no
 
 Package: budgie-core
@@ -123,6 +123,8 @@ Depends:
  notification-daemon,
  python3-psutil,
  xdotool,
+ wdisplays,
+ wlr-randr,
  ${misc:Depends},
 Recommends: xdg-desktop-portal-wlr, ${dist:Recommends},
 Suggests: budgie-desktop-environment, ${dist:Suggests},

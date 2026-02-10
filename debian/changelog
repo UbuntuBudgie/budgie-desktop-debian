@@ -1,4 +1,36 @@
-budgie-desktop (10.10~preview.2-0ubuntu1) resolute; urgency=medium
+budgie-desktop (10.10.1-2) experimental; urgency=medium
+
+  * Add xdg_config_dirs.patch for apps such as crystal-dock that
+    don't supply a fallback
+
+ -- David Mohammed <fossfreedom@ubuntu.com>  Wed, 04 Feb 2026 21:53:50 +0000
+
+budgie-desktop (10.10.1-1) experimental; urgency=medium
+
+  * New upstream release
+  * Packaging Changes
+    remove lintian-overrides since lintian not longer requires the
+    overrides therein
+
+ -- David Mohammed <fossfreedom@ubuntu.com>  Sun, 01 Feb 2026 13:46:23 +0000
+
+budgie-desktop (10.10.0-1) experimental; urgency=medium
+
+  * New upstream release
+    - upstream has marked this as stable
+
+ -- David Mohammed <fossfreedom@ubuntu.com>  Mon, 12 Jan 2026 20:29:58 +0000
+
+budgie-desktop (10.10~preview.2-2) experimental; urgency=medium
+
+  * Patch to remember display positions, resolution and scaling
+    0001-Remember-display-changes-from-wdisplays.patch
+    This is temporary until its replacement budgie-desktop-services
+    and budgie-display-configurator is accepted into Debian
+
+ -- David Mohammed <fossfreedom@ubuntu.com>  Mon, 22 Dec 2025 15:28:23 +0000
+
+budgie-desktop (10.10~preview.2-1) experimental; urgency=medium
 
   * New upstream release
     BudgieMenuWindow: Adapt to new BCC desktop file name
@@ -14,13 +46,13 @@ budgie-desktop (10.10~preview.2-0ubuntu1) resolute; urgency=medium
   * d/control correct Vcs to point to ubuntu repo
   * Add lfwvapi.patch to fix missing v4.20.4 libxfce4windowing package vapi
 
- -- David Mohammed <fossfreedom@ubuntu.com>  Mon, 15 Dec 2025 21:24:36 +0000
+ -- David Mohammed <fossfreedom@ubuntu.com>  Sat, 20 Dec 2025 23:39:56 +0000
 
-budgie-desktop (10.10~preview.1-0ubuntu1) resolute; urgency=medium
+budgie-desktop (10.10~preview.1-1) experimental; urgency=medium
 
   * New upstream release
     - upstream has marked this as preview to indicate that it is
-      experimental (LP: #2132268)
+      experimental
     - this preview release transitions budgie to be a wayland only
       desktop.  (Closes: #990678)
       The packaging changes described below reflect

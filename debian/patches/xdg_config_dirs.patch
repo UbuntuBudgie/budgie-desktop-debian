@@ -1,0 +1,22 @@
+Forwarded: not needed
+Author: David Mohammed <fossfreedom@ubuntu.com>
+Last-Update: 2026-02-03
+Description: [PATCH] Define XDG_CONFIG_DIRS if not already defined
+
+---
+
+--- a/src/session/startbudgielabwc.in
++++ b/src/session/startbudgielabwc.in
+@@ -17,6 +17,12 @@
+     fi
+ done
+ 
++# Set XDG_CONFIG_DIRS for apps like crystal-dock that needs it but don't supply a fallback
++if [ -z "${XDG_CONFIG_DIRS}" ]; then
++  XDG_CONFIG_DIRS="/etc/xdg"
++  export XDG_CONFIG_DIRS
++fi
++
+ # Set the XDG_RUNTIME_DIR if we can not get it in systems
+ # without systemd
+ if [ -z "${XDG_RUNTIME_DIR}" ]; then

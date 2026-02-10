@@ -18,6 +18,7 @@ from systemd.journal import JournalHandler
 import psutil
 import sys
 import gettext
+from enum import StrEnum
 
 import gi
 from gi.repository import Gio, GLib
@@ -269,33 +270,59 @@ class Bridge:
 
         self.write_config()
 
+    # writes the complete environment file with XKB and cursor settings
+    def write_environment_file(self):
+        path = self.user_config("environment")
+        lines = []
+
+        # Get keyboard layout from desktop_input_sources_settings
+        layout = ""
+        if self.desktop_input_sources_settings:
+            sources = self.desktop_input_sources_settings["sources"]
+            for source in sources:
+                if source[0] == 'xkb':
+                    extract = source[1].replace("'","")
+
+                    if "+" in extract:
+                        rhs = extract.split("+")
+                        extract = f"{rhs[0]}({rhs[1]})"
+
+                    if layout == "":
+                        layout = extract
+                    else:
+                        layout += "," + extract
+
+        if layout == "":
+            layout = "us" # default to at least a known keyboard layout
+
+        lines.append(f"XKB_DEFAULT_LAYOUT={layout}\n")
+        lines.append("XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle\n")
+
+        # Get cursor settings from desktop_interface_settings
+        if self.desktop_interface_settings:
+            cursor_theme = self.desktop_interface_settings["cursor-theme"]
+            if cursor_theme:
+                lines.append(f"XCURSOR_THEME={cursor_theme}\n")
+
+            cursor_size = self.desktop_interface_settings["cursor-size"]
+            if cursor_size:
+                lines.append(f"XCURSOR_SIZE={cursor_size}\n")
+
+        # Ensure directory exists
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+
+        # Write the complete file
+        with open(path, "w") as file:
+            file.writelines(lines)
+
     # this handles cursor changes
     def cursor_changed(self, settings, key):
         match key:
-            case "cursor-theme":
-                patternmatch = "XCURSOR_THEME="
-            case "cursor-size":
-                patternmatch = "XCURSOR_SIZE="
+            case "cursor-theme" | "cursor-size":
+                # Regenerate the complete environment file
+                self.write_environment_file()
             case _:
                 return
-
-        newvalue = patternmatch + str(settings[key]) + "\n"
-        found = False
-        lines = []
-        path = self.user_config("environment")
-        with open(path, "r") as file:
-            for line in file:
-                if line.startswith(patternmatch):
-                    lines.append(newvalue)
-                    found = True
-                else:
-                    lines.append(line)
-
-        if not found:
-            lines.append(newvalue)
-
-        with open(path, "w") as file:
-            file.writelines(lines)
 
         if self.delay_config_write:
             return
@@ -308,30 +335,8 @@ class Bridge:
         if key != "sources":
             return
 
-        # grab the settings sources and reformat it
-        # i.e. variants expressed as "+variant" need to be
-        # converted to (variant)
-        # and we ignore ibus keyboard layouts since the
-        # window manager expects only xkb
-        layout = ""
-        for source in settings[key]:
-            if source[0] == 'xkb':
-                extract = source[1].replace("'","")
-
-                if "+" in extract:
-                    rhs = extract.split("+")
-                    extract = rhs[0] + "(" + rhs[1] + ")"
-
-                if layout == "":
-                    layout = extract
-                else:
-                    layout += "," + extract
-
-        if layout == "":
-            layout = "us" # default to at least a known keyboard layout
-
-        path = self.user_config("environment")
-        subprocess.call("sed -i 's/^XKB_DEFAULT_LAYOUT=.*/XKB_DEFAULT_LAYOUT="+layout+"/g' " + path, shell=True)
+        # Regenerate the complete environment file with updated layout
+        self.write_environment_file()
 
         if self.delay_config_write:
             return
@@ -437,7 +442,7 @@ class Bridge:
                 except IndexError:
                     pass
 
-        self.budgie_wm_changed(self.budgie_wm_settings, "focus-mode")
+        self.budgie_wm_changed(self.budgie_wm_settings, "window-focus-mode")
         self.budgie_wm_changed(self.budgie_wm_settings, "show-all-windows-tabswitcher")
         self.budgie_wm_changed(self.budgie_wm_settings, "edge-tiling")
         self.mutter_changed(self.mutter_settings, "center-new-windows")
@@ -490,14 +495,21 @@ class Bridge:
 
         updated = False
 
-        if key == "focus-mode":
+        if key == "window-focus-mode":
             path = "./focus/followMouse"
             bridge = root.find(path)
 
             if bridge == None:
                 return
 
-            if settings[key]:
+            class Mode(StrEnum):
+                CLICK = 'click'
+                SLOPPY = 'sloppy'
+                MOUSE = 'mouse'
+
+            focus_mode = settings[key]
+
+            if focus_mode != Mode.CLICK:
                 bridge.text = "yes"
             else:
                 bridge.text = "no"
@@ -510,7 +522,7 @@ class Bridge:
             if bridgeraise == None:
                 return
 
-            if settings[key]:
+            if focus_mode == Mode.MOUSE:
                 bridgeraise.text = "yes"
             else:
                 bridgeraise.text = "no"
