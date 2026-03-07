@@ -1,3 +1,13 @@
+budgie-desktop (10.10.2-1) experimental; urgency=medium
+
+  * New upstream release
+  * Packaging changes
+    Drop patch 0001-Remember-display-changes-from-wdisplays.patch
+    since it has been superseded by budgie-desktop-services
+  * d/control add dependency on budgie-desktop-services
+
+ -- David Mohammed <fossfreedom@ubuntu.com>  Sat, 07 Mar 2026 18:40:35 +0000
+
 budgie-desktop (10.10.1-2) experimental; urgency=medium
 
   * Add xdg_config_dirs.patch for apps such as crystal-dock that
