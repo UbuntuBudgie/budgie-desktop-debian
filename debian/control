@@ -126,6 +126,7 @@ Depends:
  wdisplays,
  wlr-randr,
  budgie-desktop-services,
+ mesa-utils,
  ${misc:Depends},
 Recommends: xdg-desktop-portal-wlr, ${dist:Recommends},
 Suggests: budgie-desktop-environment, ${dist:Suggests},

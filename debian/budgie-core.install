@@ -9,6 +9,7 @@ usr/share/budgie-desktop/gammastep.config
 usr/share/budgie-desktop/labwc/menu.xml
 usr/share/budgie-desktop/labwc/rc.xml
 usr/share/budgie/budgie-version.xml
+usr/share/budgie-desktop/labwc/themerc*
 usr/share/glib-2.0
 usr/share/gnome-session
 usr/share/icons
