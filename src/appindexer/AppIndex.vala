@@ -109,7 +109,7 @@ namespace Budgie {
 			}
 
 			// Update the application system after the timeout
-			this.timeout_id = Timeout.add(seconds, () => {
+			this.timeout_id = Timeout.add_seconds(seconds, () => {
 				this.refresh();
 				this.timeout_id = 0;
 				return Source.REMOVE;
@@ -221,6 +221,9 @@ namespace Budgie {
 			if (this.misc_category.apps.size > 0) {
 				this.categories.add(this.misc_category);
 			}
+
+			// sort the categories
+			this.categories.sort((a, b) => a.name.collate(b.name));
 
 			// Emit our signal for changes
 			this.changed();

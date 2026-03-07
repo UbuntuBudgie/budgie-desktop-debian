@@ -1155,6 +1155,20 @@ namespace Budgie {
 			if (add_separator) {
 				create_row(null, null, null, true);
 			}
+
+			string saved_custom_path = windowstate.screenshot_settings.get_string("last-save-directory-path");
+			if (saved_custom_path != "") {
+				File custom_file = File.new_for_path(saved_custom_path);
+				if (custom_file.query_exists()) {
+					string ic_name = lookup_icon_name(custom_file);
+					string mention = GLib.Path.get_basename(saved_custom_path);
+					custompath_row = {saved_custom_path, mention, ic_name};
+				} else {
+					// Path no longer exists, clear it
+					windowstate.screenshot_settings.set_string("last-save-directory-path", "");
+				}
+			}
+
 			// second section: (possible) custom path
 			int r_index = -1;
 			if (custompath_row != null) {
@@ -1219,26 +1233,28 @@ namespace Budgie {
 		}
 
 		void save_customdir(Gtk.Dialog dialog, int response_id) {
-			// setting user response on dialog as custom path (the labor work)
+			// setting user response on dialog as custom path
 			var save_dialog = dialog as Gtk.FileChooserDialog;
 			if (response_id == Gtk.ResponseType.ACCEPT) {
 				File file = save_dialog.get_file();
 				string ic_name = lookup_icon_name(file);
-
-				// so, the actual path
 				string custompath = file.get_path();
+				string mention = GLib.Path.get_basename(custompath);
 
-				// ...and its mention in the dropdown
-				string[] custompath_data = custompath.split("/");
-				string mention = custompath_data[custompath_data.length - 1];
-
-				// delivering info to set new row
 				custompath_row = {custompath, mention, ic_name};
+
+				// save the custom path to GSettings
+				windowstate.screenshot_settings.set_string("last-save-directory-path", custompath);
+
 				update_dropdown();
 			} else {
 				pickdir_combo.set_active(windowstate.screenshot_settings.get_int("last-save-directory"));
 			}
+
 			dialog.destroy();
+
+			// Show the AfterShot window again after the file chooser is closed
+			this.show();
 		}
 
 		private string get_icon_fromgicon(Icon ic) {
@@ -1256,11 +1272,18 @@ namespace Budgie {
 		}
 
 		private void get_customdir() {
+			// Hide the AfterShot window while the file chooser is open
+			this.hide();
+
 			// set custom dir to found dir
 			Gtk.FileChooserDialog dialog = new Gtk.FileChooserDialog(
 				_("Open Folder"), this, Gtk.FileChooserAction.SELECT_FOLDER,
 				_("Cancel"), Gtk.ResponseType.CANCEL, _("Open"), Gtk.ResponseType.ACCEPT, null
 			);
+
+			// Make it modal and transient for the parent window
+			dialog.set_modal(true);
+			dialog.set_transient_for(this);
 
 			dialog.response.connect(save_customdir);
 			dialog.show();
@@ -1276,6 +1299,8 @@ namespace Budgie {
 			int new_selection = combo.get_active();
 			if (new_selection <= counted_dirs) {
 				windowstate.screenshot_settings.set_int("last-save-directory", new_selection);
+				// Clear custom path when selecting a standard directory
+				windowstate.screenshot_settings.set_string("last-save-directory-path", "");
 			}
 
 			// if we change directory, reset save button's icon
