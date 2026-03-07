@@ -33,6 +33,7 @@ if [ -z "${XDG_RUNTIME_DIR}" ]; then
         fi
     fi
 fi
+
 if [ ! -e "${XDG_RUNTIME_DIR}" ]; then
     logger "XDG_RUNTIME_DIR is invalid or does not exist!"
     logger "Creating XDG_RUNTIME_DIR..."
@@ -42,6 +43,17 @@ if [ ! -e "${XDG_RUNTIME_DIR}" ]; then
     }
 fi
 
+# Fix desktop file override precedence
+if [ -z "$XDG_DATA_DIRS" ]; then
+    export XDG_DATA_DIRS="@datadir@/budgie-desktop:@datadir@"
+else
+    case ":$XDG_DATA_DIRS:" in
+        *":@datadir@/budgie-desktop:"*) ;;
+        *)
+            export XDG_DATA_DIRS="@datadir@/budgie-desktop:$XDG_DATA_DIRS"
+            ;;
+    esac
+fi
 
 # freedesktop specifications mandate that the definition
 # of XDG_SESSION_TYPE should be respected
@@ -81,6 +93,12 @@ if grep -q "VirtualBox" /sys/class/dmi/id/product_name 2>/dev/null; then
     export WLR_RENDERER=pixman
 fi
 
+if command -v eglinfo >/dev/null 2>&1; then
+    if eglinfo 2>/dev/null | grep -qi 'virgl'; then
+        export WLR_NO_HARDWARE_CURSORS=1
+    fi
+fi
+
 # Add a helper for electron based apps to think they are running under GNOME
 export GNOME_DESKTOP_SESSION_ID=this-is-deprecated
 
@@ -98,16 +116,20 @@ fi
 # Copy specific labwc configuration file for Budgie
 if [ ! -f "${XDG_CONFIG_HOME:-${HOME}/.config}/budgie-desktop/labwc/rc.xml" ]; then
     cp -p @datadir@/budgie-desktop/labwc/rc.xml "${XDG_CONFIG_HOME:-${HOME}/.config}/budgie-desktop/labwc/rc.xml"
+    # This is needed on some immutable distributions like NixOS.
+    chmod u+w "${XDG_CONFIG_HOME:-${HOME}/.config}/budgie-desktop/labwc/rc.xml"
 fi
 
 # Copy specific labwc environment file for Budgie
 if [ ! -f "${XDG_CONFIG_HOME:-${HOME}/.config}/budgie-desktop/labwc/environment" ]; then
     cp -p @datadir@/budgie-desktop/labwc/environment "${XDG_CONFIG_HOME:-${HOME}/.config}/budgie-desktop/labwc/environment"
+    chmod u+w "${XDG_CONFIG_HOME:-${HOME}/.config}/budgie-desktop/labwc/environment"
 fi
 
 # Copy specific labwc menu file for Budgie
 if [ ! -f "${XDG_CONFIG_HOME:-${HOME}/.config}/budgie-desktop/labwc/menu.xml" ]; then
     cp -p @datadir@/budgie-desktop/labwc/menu.xml "${XDG_CONFIG_HOME:-${HOME}/.config}/budgie-desktop/labwc/menu.xml"
+    chmod u+w "${XDG_CONFIG_HOME:-${HOME}/.config}/budgie-desktop/labwc/menu.xml"
 fi
 
 # Budgie will use its own config directory and config file to avoid

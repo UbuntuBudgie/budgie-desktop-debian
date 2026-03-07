@@ -1,14 +1,10 @@
 project(
     'budgie-desktop',
     ['c', 'vala'],
-    version: '10.10.0',
+    version: '10.10.2',
     license: [
         'GPL-2.0',
         'LGPL-2.1',
-    ],
-    default_options: [
-        'c_std=c11',
-        'warning_level=3'
     ],
 )
 
@@ -78,6 +74,7 @@ if get_option('with-runtime-dependencies')
     find_program('grim', required: true)
     find_program('slurp', required: true)
     find_program('swaybg', required: true)
+    find_program('eglinfo', required: true)
     found_gtklock = find_program('gtklock', required: false)
     if found_gtklock.found() == false
         find_program('swaylock', required: true)
@@ -104,6 +101,7 @@ add_global_arguments('-DGETTEXT_PACKAGE="budgie-desktop"', language: 'c')
 prefix = get_option('prefix')
 bindir = join_paths(prefix, get_option('bindir'))
 libdir = join_paths(prefix, get_option('libdir'))
+libexecdirroot = join_paths(prefix, get_option('libexecdir'))
 libexecdir = join_paths(prefix, get_option('libexecdir'), meson.project_name())
 confdir = join_paths(prefix, get_option('sysconfdir'))
 datadir = join_paths(prefix, get_option('datadir'))

@@ -125,7 +125,7 @@ namespace Budgie {
 			skip_taskbar_hint = true;
 
 			GtkLayerShell.init_for_window(this);
-			GtkLayerShell.set_layer(this, GtkLayerShell.Layer.TOP);
+			GtkLayerShell.set_layer(this, GtkLayerShell.Layer.OVERLAY);
 			GtkLayerShell.set_margin(this, GtkLayerShell.Edge.BOTTOM, 80);
 			GtkLayerShell.set_anchor(this, GtkLayerShell.Edge.BOTTOM, true);
 
@@ -155,7 +155,22 @@ namespace Budgie {
 		* Move the OSD into the correct position
 		*/
 		public void move_osd() {
-			GtkLayerShell.set_monitor(this, new WaylandClient().gdk_monitor);
+			var wayland_client = new WaylandClient();
+
+			if (!wayland_client.is_initialised()) {
+				warning("Cannot move OSD: WaylandClient not initialized");
+				return;
+			}
+
+			wayland_client.with_valid_monitor(() => {
+				var monitor = wayland_client.gdk_monitor;
+				if (monitor != null) {
+					GtkLayerShell.set_monitor(this, monitor);
+				} else {
+					warning("Failed to get valid monitor for OSD");
+				}
+				return true;
+			});
 		}
 	}
 
@@ -167,6 +182,11 @@ namespace Budgie {
 	public class OSDManager {
 		private OSD? osd_window = null;
 		private uint32 expire_timeout = 0;
+
+		// Signal to notify when OSD service is ready
+		public signal void ready();
+
+		private bool _is_ready = false;
 
 		[DBus (visible=false)]
 		public OSDManager() {
@@ -183,7 +203,9 @@ namespace Budgie {
 				flags |= BusNameOwnerFlags.REPLACE;
 			}
 			Bus.own_name(BusType.SESSION, Budgie.OSD_DBUS_NAME, flags,
-				on_bus_acquired, ()=> {}, Budgie.DaemonNameLost);
+				on_bus_acquired,
+				on_name_acquired,
+				Budgie.DaemonNameLost);
 		}
 
 		/**
@@ -192,10 +214,22 @@ namespace Budgie {
 		private void on_bus_acquired(DBusConnection conn) {
 			try {
 				conn.register_object(Budgie.OSD_DBUS_OBJECT_PATH, this);
+				debug("OSDManager: Registered object on DBus");
 			} catch (Error e) {
-				stderr.printf("Error registering BudgieOSD: %s\n", e.message);
+				critical("Error registering BudgieOSD: %s\n", e.message);
 			}
 			Budgie.setup = true;
+		}
+
+		/**
+		* Called when name is acquired on the bus
+		*/
+		private void on_name_acquired() {
+			if (!_is_ready) {
+				_is_ready = true;
+				debug("OSDManager: Name acquired, service is ready");
+				ready();
+			}
 		}
 
 		/**

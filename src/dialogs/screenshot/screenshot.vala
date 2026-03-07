@@ -32,48 +32,6 @@ namespace Budgie {
 	const string WINDOW = "Window";
 	const string SCREEN = "Screen";
 
-	/*
-	 The underlying WaylandClient does not appear to be fully thread-safe and either
-	 repeated calls very quickly, or calls within the same process where the
-	 reference was not release will result in mutex-locks causing the daemon to spin
-	 indefinitely.
-
-	 Our use in the daemon is limited so we can initialise variable we use within
-	 a singleton to make things thread-safe.
-	 */
-	 [SingleInstance]
-	 public class WaylandClient : GLib.Object {
-		 private unowned Xfw.Monitor? primary_monitor=null;
-
-		 public unowned Gdk.Monitor gdk_monitor {get; private set; }
-		 public int scale { get; private set; }
-
-		 public WaylandClient() {
-			 if (primary_monitor != null) return;
-			 Xfw.Screen.get_default().monitors_changed.connect(on_monitors_changed);
-			 on_monitors_changed();
-		 }
-
-		 void on_monitors_changed() {
-			 int loop = 0;
-
-			 /* it can take a short-time after first call for the underlying wayland client
-				to return a reference, so lets loop until we get a reference ... but
-				don't try indefinitely
-			 */
-			 Timeout.add_seconds(1, ()=> {
-				 primary_monitor = Xfw.Screen.get_default().get_primary_monitor();
-				 if (primary_monitor != null || loop++ > 10) {
-					 gdk_monitor = primary_monitor.get_gdk_monitor();
-					 scale = (int)primary_monitor.get_scale();
-					 return false;
-				 }
-
-				 return true;
-			 });
-		 }
-	 }
-
 	[SingleInstance]
 	public class CurrentState : GLib.Object {
 
@@ -370,12 +328,35 @@ namespace Budgie {
 		private unowned Gtk.Switch? screenshotcapturesoundswitch;
 
 		public ScreenshotHomeWindow() {
-			GtkLayerShell.init_for_window(this);
-			GtkLayerShell.set_layer(this, GtkLayerShell.Layer.TOP);
-			GtkLayerShell.set_monitor(this, new WaylandClient().gdk_monitor);
-			GtkLayerShell.set_anchor(this, GtkLayerShell.Edge.TOP, false);
-			GtkLayerShell.set_anchor(this, GtkLayerShell.Edge.LEFT, false);
-			GtkLayerShell.set_keyboard_mode(this, GtkLayerShell.KeyboardMode.ON_DEMAND);
+			var wayland_client = new WaylandClient();
+
+			if (!wayland_client.is_initialised()) {
+				warning("WaylandClient not initialized for ScreenshotHomeWindow");
+				// Could show error dialog or fallback behavior
+				return;
+			}
+
+			bool window_configured = wayland_client.with_valid_monitor(() => {
+				var monitor = wayland_client.gdk_monitor;
+				if (monitor == null) {
+					warning("Failed to get monitor for screenshot home window");
+					return false;
+				}
+
+				GtkLayerShell.init_for_window(this);
+				GtkLayerShell.set_layer(this, GtkLayerShell.Layer.TOP);
+				GtkLayerShell.set_monitor(this, monitor);
+				GtkLayerShell.set_anchor(this, GtkLayerShell.Edge.TOP, false);
+				GtkLayerShell.set_anchor(this, GtkLayerShell.Edge.LEFT, false);
+				GtkLayerShell.set_keyboard_mode(this, GtkLayerShell.KeyboardMode.ON_DEMAND);
+
+				return true;
+			});
+
+			if (!window_configured) {
+				warning("Failed to configure screenshot home window");
+				return;
+			}
 
 			this.set_decorated(true);
 
@@ -818,12 +799,33 @@ namespace Budgie {
 		}
 
 		public AfterShotWindow() {
-			GtkLayerShell.init_for_window(this);
-			GtkLayerShell.set_layer(this, GtkLayerShell.Layer.TOP);
-			GtkLayerShell.set_monitor(this, new WaylandClient().gdk_monitor);
-			GtkLayerShell.set_anchor(this, GtkLayerShell.Edge.TOP, false);
-			GtkLayerShell.set_anchor(this, GtkLayerShell.Edge.LEFT, false);
-			GtkLayerShell.set_keyboard_mode(this, GtkLayerShell.KeyboardMode.ON_DEMAND);
+			var wayland_client = new WaylandClient();
+
+			if (!wayland_client.is_initialised()) {
+				warning("WaylandClient not initialized for AfterShotWindow");
+				return;
+			}
+
+			bool window_configured = wayland_client.with_valid_monitor(() => {
+				var monitor = wayland_client.gdk_monitor;
+				if (monitor == null) {
+					warning("Failed to get monitor for after shot window");
+					return false;
+				}
+
+				GtkLayerShell.init_for_window(this);
+				GtkLayerShell.set_layer(this, GtkLayerShell.Layer.TOP);
+				GtkLayerShell.set_monitor(this, monitor);
+				GtkLayerShell.set_anchor(this, GtkLayerShell.Edge.TOP, false);
+				GtkLayerShell.set_anchor(this, GtkLayerShell.Edge.LEFT, false);
+				GtkLayerShell.set_keyboard_mode(this, GtkLayerShell.KeyboardMode.ON_DEMAND);
+				return true;
+			});
+
+			if (!window_configured) {
+				warning("Failed to configure after shot window");
+				return;
+			}
 
 			this.set_decorated(true);
 
@@ -1153,6 +1155,20 @@ namespace Budgie {
 			if (add_separator) {
 				create_row(null, null, null, true);
 			}
+
+			string saved_custom_path = windowstate.screenshot_settings.get_string("last-save-directory-path");
+			if (saved_custom_path != "") {
+				File custom_file = File.new_for_path(saved_custom_path);
+				if (custom_file.query_exists()) {
+					string ic_name = lookup_icon_name(custom_file);
+					string mention = GLib.Path.get_basename(saved_custom_path);
+					custompath_row = {saved_custom_path, mention, ic_name};
+				} else {
+					// Path no longer exists, clear it
+					windowstate.screenshot_settings.set_string("last-save-directory-path", "");
+				}
+			}
+
 			// second section: (possible) custom path
 			int r_index = -1;
 			if (custompath_row != null) {
@@ -1217,26 +1233,28 @@ namespace Budgie {
 		}
 
 		void save_customdir(Gtk.Dialog dialog, int response_id) {
-			// setting user response on dialog as custom path (the labor work)
+			// setting user response on dialog as custom path
 			var save_dialog = dialog as Gtk.FileChooserDialog;
 			if (response_id == Gtk.ResponseType.ACCEPT) {
 				File file = save_dialog.get_file();
 				string ic_name = lookup_icon_name(file);
-
-				// so, the actual path
 				string custompath = file.get_path();
+				string mention = GLib.Path.get_basename(custompath);
 
-				// ...and its mention in the dropdown
-				string[] custompath_data = custompath.split("/");
-				string mention = custompath_data[custompath_data.length - 1];
-
-				// delivering info to set new row
 				custompath_row = {custompath, mention, ic_name};
+
+				// save the custom path to GSettings
+				windowstate.screenshot_settings.set_string("last-save-directory-path", custompath);
+
 				update_dropdown();
 			} else {
 				pickdir_combo.set_active(windowstate.screenshot_settings.get_int("last-save-directory"));
 			}
+
 			dialog.destroy();
+
+			// Show the AfterShot window again after the file chooser is closed
+			this.show();
 		}
 
 		private string get_icon_fromgicon(Icon ic) {
@@ -1254,11 +1272,18 @@ namespace Budgie {
 		}
 
 		private void get_customdir() {
+			// Hide the AfterShot window while the file chooser is open
+			this.hide();
+
 			// set custom dir to found dir
 			Gtk.FileChooserDialog dialog = new Gtk.FileChooserDialog(
 				_("Open Folder"), this, Gtk.FileChooserAction.SELECT_FOLDER,
 				_("Cancel"), Gtk.ResponseType.CANCEL, _("Open"), Gtk.ResponseType.ACCEPT, null
 			);
+
+			// Make it modal and transient for the parent window
+			dialog.set_modal(true);
+			dialog.set_transient_for(this);
 
 			dialog.response.connect(save_customdir);
 			dialog.show();
@@ -1274,6 +1299,8 @@ namespace Budgie {
 			int new_selection = combo.get_active();
 			if (new_selection <= counted_dirs) {
 				windowstate.screenshot_settings.set_int("last-save-directory", new_selection);
+				// Clear custom path when selecting a standard directory
+				windowstate.screenshot_settings.set_string("last-save-directory-path", "");
 			}
 
 			// if we change directory, reset save button's icon
@@ -1291,8 +1318,14 @@ namespace Budgie {
 
 	private int get_scaling() {
 		// not very sophisticated, but for now, we'll assume one scale
-		int curr_scale = (int)new WaylandClient().scale;
-		return curr_scale;
+		var wayland_client = new WaylandClient();
+
+		if (!wayland_client.is_initialised()) {
+			warning("WaylandClient not initialized, using default scale of 1");
+			return 1;
+		}
+
+		return wayland_client.scale;
 	}
 
 	private int find_stringindex(string str, string[] arr) {
@@ -1307,23 +1340,43 @@ namespace Budgie {
 
 	public static int main(string[] args) {
 		Gtk.init(ref args);
-		WaylandClient client = new WaylandClient();
 
 		Intl.setlocale(LocaleCategory.ALL, "");
 		Intl.bindtextdomain(Budgie.GETTEXT_PACKAGE, Budgie.LOCALEDIR);
 		Intl.bind_textdomain_codeset(Budgie.GETTEXT_PACKAGE, "UTF-8");
 		Intl.textdomain(Budgie.GETTEXT_PACKAGE);
 
+		WaylandClient client = new WaylandClient();
+
+		// If already initialized (rare but possible), set up immediately
+		if (client.is_initialised()) {
+			setup_dbus();
+		} else {
+			// Wait for initialization signal
+			client.initialized.connect(() => {
+				debug("WaylandClient ready, setting up D-Bus");
+				setup_dbus();
+			});
+
+			client.initialization_failed.connect(() => {
+				critical("WaylandClient initialization failed, exiting");
+				Gtk.main_quit();
+			});
+		}
+
+		Gtk.main();
+		return 0;
+	}
+
+	private static void setup_dbus() {
 		Budgie.ScreenshotServer? screenshotcontrol;
 
 		try {
 			screenshotcontrol = new Budgie.ScreenshotServer();
 			screenshotcontrol.setup_dbus();
 		} catch (Error e) {
-			warning("ServiceManager %s", e.message);
+			warning("ScreenshotServer error: %s", e.message);
 		}
-
-		Gtk.main();
-		return 0;
 	}
+
 }

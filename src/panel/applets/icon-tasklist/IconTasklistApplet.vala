@@ -62,6 +62,8 @@ public class IconTasklistApplet : Budgie.Applet {
 	private Settings settings;
 	private Gtk.Box main_layout;
 
+	private Budgie.ApplicationMatcher matcher;
+
 	private bool lock_icons = false;
 	private bool restrict_to_workspace = false;
 	private bool only_show_pinned = false;
@@ -121,6 +123,8 @@ public class IconTasklistApplet : Budgie.Applet {
 		/* Somewhere to store the window mappings */
 		buttons = new HashTable<string, IconButton>(str_hash, str_equal);
 		main_layout = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
+
+		matcher = new Budgie.ApplicationMatcher();
 
 		/* Initial bootstrap of helpers */
 		windowing = new Budgie.Windowing.Windowing();
@@ -222,8 +226,6 @@ public class IconTasklistApplet : Budgie.Applet {
 			size = 32;
 		}
 
-		var scale_factor = button.get_scale_factor();
-
 		var icon_theme = Gtk.IconTheme.get_default();
 		var icon_info = icon_theme.lookup_icon(button.app.icon.to_string(), size, Gtk.IconLookupFlags.USE_BUILTIN);
 
@@ -244,7 +246,7 @@ public class IconTasklistApplet : Budgie.Applet {
 
 		if (pixbuf == null) return;
 
-		var surface = Gdk.cairo_surface_create_from_pixbuf(pixbuf, scale_factor, null);
+		var surface = Gdk.cairo_surface_create_from_pixbuf(pixbuf, 1, null);
 
 		Gtk.drag_set_icon_surface(context, surface);
 	}
@@ -383,24 +385,55 @@ public class IconTasklistApplet : Budgie.Applet {
 	}
 
 	/**
-	 * on_app_opened handles when we open a new app
+	 * Get the application ID for a window group
+	 *
+	 * This method first tries to get the app_id from group.app_info (standard case).
+	 * If that fails or doesn't match any existing buttons, it uses ApplicationMatcher
+	 * to handle non-standard apps like Tilix, jEdit, and snap applications.
+	 *
+	 * @param group The window group to get an ID for
+	 * @param application Output parameter set to the Application object if found
+	 * @return The application desktop ID (e.g., "firefox.desktop")
 	 */
-	private void on_app_opened(Budgie.Windowing.WindowGroup group) {
-		string application_id = group.group_id.to_string();
-
-		Budgie.Application? application = null;
-
+	private string get_app_id_by_group(Budgie.Windowing.WindowGroup group, ref Budgie.Application? application) {
+		// Standard case: group has app_info
 		if (group.app_info != null) {
 			application = new Budgie.Application(group.app_info);
 
 			if (application.desktop_id in buttons) {
-				application_id = application.desktop_id;
+				return application.desktop_id;
 			}
 		}
 
+		// Fallback: match for non-standard apps
+		// This handles apps like Tilix (com.gexperts.Tilix.desktop → tilix WM_CLASS),
+		// jEdit (jedit.desktop → org-gjt-sp-jedit-jEdit WM_CLASS),
+		// and snap apps (snap-store_ubuntu-software.desktop → snap-store WM_CLASS)
+		var match_result = matcher.match_window_group(group);
+
+		if (match_result.matched()) {
+			// Create Application from matched desktop ID
+			application = matcher.create_application(match_result.desktop_id);
+
+			if (application != null) {
+				return match_result.desktop_id;
+			}
+		}
+
+		// ultimate fallback - use the group_id as-is
+		return group.group_id.to_string();
+	}
+
+	/**
+	 * on_app_opened handles when we open a new app
+	 */
+	private void on_app_opened(Budgie.Windowing.WindowGroup group) {
+		Budgie.Application? application = null;
+		string app_id = get_app_id_by_group(group, ref application);
+
 		// Trigger an animation when a new instance of a window is launched while another is already open
-		if (application_id in buttons) {
-			var first_button = buttons[application_id];
+		if (app_id in buttons) {
+			var first_button = buttons[app_id];
 
 			if (!first_button.get_icon().waiting && first_button.get_icon().get_realized()) {
 				first_button.get_icon().waiting = true;
@@ -409,22 +442,25 @@ public class IconTasklistApplet : Budgie.Applet {
 		}
 
 		IconButton? button = null;
-		if (application_id in buttons) { // try to get existing button if any
-			button = buttons[application_id];
+		if (app_id in buttons) { // try to get existing button if any
+			button = buttons[app_id];
 
 			if (button != null) {
-				add_button(application_id, button); // map app to it's button so that we can update it later on
+				add_button(app_id, button); // map app to it's button so that we can update it later on
 			}
 		}
 
 		if (button == null) { // create a new button
 			button = new IconButton.with_group(group, manager, application);
 
+			// IMPORTANT: Set pinned BEFORE connecting signals to avoid spurious notify events
+			button.pinned = false;
+
 			button.button_press_event.connect(on_button_press);
 			button.button_release_event.connect(on_button_release);
 			button.notify["pinned"].connect(on_pinned_changed);
 
-			add_icon_button(application_id, button);
+			add_icon_button(app_id, button);
 		}
 
 		if (button.get_window_group() == null) { // button was pinned without app opened, set window group in button to properly group windows
@@ -434,21 +470,32 @@ public class IconTasklistApplet : Budgie.Applet {
 		update_button(button);
 	}
 
+	/**
+	 * on_app_closed handles when an app closes.
+	 *
+	 * find the correct button via:
+	 * 1. Try get_app_id_by_group() (includes matcher fallback)
+	 * 2. Search all buttons by window group reference
+	 */
 	private void on_app_closed(Budgie.Windowing.WindowGroup group) {
-		var app_id = group.group_id.to_string();
+		Budgie.Application? application = null;
+		var app_id = get_app_id_by_group(group, ref application);
+
 		IconButton? button = buttons.get(app_id);
 
-		if (button == null) { // Button might be pinned, try to get button from launcher instead
-			app_id = group.get_desktop_id();
-			button = buttons.get(app_id);
+		// If not found by app_id, search by window group reference
+		// This is critical for matched apps where the button was created
+		// with a different ID than what get_app_id_by_group returns
+		if (button == null) {
+			debug(@"Button not found by app_id '$app_id', searching by window group...");
 
-			// Because the only way to get a desktop_id from an application on X11 is basically
-			// to just guess, the casing may not be correct, e.g. Nemo.desktop vs nemo.desktop.
-			// Try again to get the button, this time making the desktop_id all lowercase.
-			if (button == null) {
-				app_id = app_id.down();
-				button = buttons.get(app_id);
-			}
+			buttons.foreach((key, btn) => {
+				if (btn.get_window_group() == group) {
+					button = btn;
+					app_id = key; // Update app_id to the actual key the button is stored under
+					debug(@"Found button by window group: key='$key'");
+				}
+			});
 		}
 
 		if (button == null) { // we don't manage this button
@@ -508,31 +555,45 @@ public class IconTasklistApplet : Budgie.Applet {
 				if (has_open_windows && settings.get_boolean("show-all-windows-on-click")) {
 					var group = button.get_window_group();
 					var windows = group.get_windows();
-					var has_active = false;
 
-					// Check if there are any un-minimized windows in this group
-					foreach (var window in windows) {
-						if (!window.is_minimized()) {
-							has_active = true;
-							break;
+					if (button.has_active_window) {
+						// remember active_window, because it should be the last one to minimize
+						var active_window = group.get_active_window();
+
+						// Hide any un-minimized windows in this group
+						foreach (var window in windows) {
+							if (window != active_window && !window.is_minimized()) {
+								try {
+									window.set_minimized(true);
+								} catch (Error e) {
+									warning("Unable to minimize window '%s': %s", window.get_name(), e.message);
+								}
+							}
+						}
+
+						// the active window gets minimized last
+						try {
+							active_window.set_minimized(true);
+						} catch (Error e) {
+							warning("Unable to minimize active window '%s': %s", active_window.get_name(), e.message);
 						}
 					}
+					else {
+						var last_active_window = group.get_active_window();
 
-					// If there are un-minimized windows, minimize all windows in this group.
-					// Otherwise, un-minimize all of the windows in the group.
-					foreach (var window in windows) {
-						if (has_active) {
+						foreach (var window in windows) {
 							try {
-								window.set_minimized(true);
+								if (window.is_minimized()) window.set_minimized(false);
+								if (window != last_active_window) window.activate(null, event.time);
 							} catch (Error e) {
 								warning("Unable to minimize window '%s': %s", window.get_name(), e.message);
 							}
-						} else {
+						}
+						if (last_active_window != null) {
 							try {
-								window.set_minimized(false);
-								window.activate(null, event.time);
+								last_active_window.activate(null, event.time);
 							} catch (Error e) {
-								warning("Unable to un-minimize or activate window '%s': %s", window.get_name(), e.message);
+								warning("Unable to activate last window '%s': %s", last_active_window.get_name(), e.message);
 							}
 						}
 					}
@@ -569,7 +630,7 @@ public class IconTasklistApplet : Budgie.Applet {
 				manager.show_popover(button);
 				return Gdk.EVENT_STOP;
 			case Gdk.BUTTON_MIDDLE:
-				if (settings.get_boolean("middle-click-launch-new-instance")) break;
+				if (!settings.get_boolean("middle-click-launch-new-instance")) break;
 
 				if (!button.launch()) {
 					warning("Failed to launch application: %s", button.app.name);
@@ -736,15 +797,6 @@ public class IconTasklistApplet : Budgie.Applet {
 	private void remove_button(string key) {
 		lock(this.buttons) {
 			this.buttons.remove(key);
-		}
-	}
-
-	/**
-	 * Ensure that we don't access the resource simultaneously when swapping a button's key.
-	 */
-	private void swap_button(string old_key, string new_key) {
-		lock(this.buttons) {
-			this.buttons.insert(new_key, this.buttons.take(old_key));
 		}
 	}
 }

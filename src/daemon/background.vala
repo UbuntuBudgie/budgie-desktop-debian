@@ -14,7 +14,7 @@ namespace Budgie {
 	public const string ACCOUNTS_SCHEMA = "org.freedesktop.Accounts";
 	public const string GNOME_COLOR_HACK = "budgie-control-center/pixmaps/noise-texture-light.png";
 
-	public class Background  {
+	public class Background : Object  {
 		private Settings? settings = null;
 
 		const int BACKGROUND_TIMEOUT = 850;
@@ -24,6 +24,7 @@ namespace Budgie {
 		*/
 		Gnome.BG? gnome_bg;
 		Subprocess? bg = null;
+		CrystalDockHelper? crystal_dock_helper = null;
 
 		/**
 		* Determine if the wallpaper is a colour wallpaper or not
@@ -36,6 +37,47 @@ namespace Budgie {
 				return true;
 			}
 			return false;
+		}
+
+		/**
+		* Translate GNOME desktop background picture-options to swaybg mode
+		*/
+		private string get_swaybg_mode() {
+			var placement = gnome_bg.get_placement();
+
+			switch (placement) {
+				case GDesktop.BackgroundStyle.NONE:
+					// No background image, but shouldn't reach here due to is_color_wallpaper check
+					return "fill";
+
+				case GDesktop.BackgroundStyle.WALLPAPER:
+					// Tiled wallpaper
+					return "tile";
+
+				case GDesktop.BackgroundStyle.CENTERED:
+					// Image centered on screen
+					return "center";
+
+				case GDesktop.BackgroundStyle.SCALED:
+					// Scale to fit screen while maintaining aspect ratio
+					return "fit";
+
+				case GDesktop.BackgroundStyle.STRETCHED:
+					// Stretch to fill screen, ignoring aspect ratio
+					return "stretch";
+
+				case GDesktop.BackgroundStyle.ZOOM:
+					// Scale to fill screen while maintaining aspect ratio (crop if needed)
+					return "fill";
+
+				case GDesktop.BackgroundStyle.SPANNED:
+					// Span across multiple monitors - swaybg doesn't have direct equivalent
+					// Use fill as closest approximation
+					return "fill";
+
+				default:
+					return "fill";
+			}
 		}
 
 		public Background() {
@@ -54,6 +96,14 @@ namespace Budgie {
 
 			/* Do the initial load */
 			gnome_bg.load_from_preferences(this.settings);
+
+			/* Setup Crystal Dock helper and monitor for changes */
+			crystal_dock_helper = new CrystalDockHelper();
+			crystal_dock_helper.dock_config_changed.connect(() => {
+				message("Crystal Dock configuration changed, updating wallpaper");
+				this.update();
+			});
+
 		}
 
 		/**
@@ -99,7 +149,7 @@ namespace Budgie {
 		}
 
 		void update() {
-			string? bg_filename = gnome_bg.get_filename();;
+			string? bg_filename = gnome_bg.get_filename();
 
 			// Check if background filename is valid before using it
 			if (bg_filename == null) {
@@ -109,9 +159,23 @@ namespace Budgie {
 
 			/* Set background image when appropriate, and for now dont parse .xml files */
 			if (!this.is_color_wallpaper(bg_filename) && !bg_filename.has_suffix(".xml")) {
+				string swaybg_mode = get_swaybg_mode();
+				string wallpaper_path = bg_filename;
+				bool is_modified = false;
+
+				// Check if Crystal Dock is running and add borders if needed
+				if (crystal_dock_helper != null) {
+					string? bordered_path = crystal_dock_helper.apply_borders(bg_filename);
+					if (bordered_path != null) {
+						wallpaper_path = bordered_path;
+						is_modified = true;
+					}
+				}
+
 				// we use swaybg to define the wallpaper - we need to keep track
 				// of what we create so that we kill it the next time a background is defined
-				string[] cmdline = { "swaybg", "-i", bg_filename, "--mode", "fill" };
+				string[] cmdline = { "swaybg", "-i", wallpaper_path, "--mode", swaybg_mode };
+
 				Subprocess new_bg;
 				try {
 					new_bg = new Subprocess.newv(cmdline, SubprocessFlags.NONE);
