@@ -2,9 +2,7 @@ version=4
 opts="\
     pgpsigurlmangle=s/$/.asc/,\
     compression=xz, \
-    dversionmangle=s/~/-/g;s/-/./g;s/\+(?:git)?[0-9]*(?:\+g[0-9a-f]*)//,\
-    uversionmangle=s/-/./g,\
-    downloadurlmangle=s#/releases/tag/v([\d.]+)-([\w.]+)#/releases/download/v$1-$2/budgie-desktop-v$1.$2.tar.xz#,\
-    filenamemangle=s#.*/releases/tag/v(\d+\.\d+)-([\w.]+)#budgie-desktop_$1~$2.orig.tar.xz#" \
-https://github.com/buddiesofbudgie/budgie-desktop/releases \
-    .*/releases/tag/v([\d.]+)-([\w.]+)
+    dversionmangle=s/\+(?:git)?[0-9]*(?:\+g[0-9a-f]*)//, \
+    downloadurlmangle=s#/tag/#/download/#;s#(v?@ANY_VERSION@)$#$1/@PACKAGE@-v$2.tar.xz#, \
+    filenamemangle=s#v?@ANY_VERSION@#@PACKAGE@-$1.tar.xz#" \
+https://github.com/buddiesofbudgie/@PACKAGE@/tags .*/releases/tag/v?@ANY_VERSION@
