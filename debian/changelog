@@ -1,3 +1,10 @@
+budgie-desktop (10.10.2-3) UNRELEASED; urgency=medium
+
+  * Add imagemagick-7.q16 as a recommends to allow crystal dock, if
+    installed to modify the wallpaper according to the picture style
+
+ -- David Mohammed <fossfreedom@ubuntu.com>  Mon, 06 Apr 2026 17:23:16 +0100
+
 budgie-desktop (10.10.2-2) unstable; urgency=medium
 
   * Upload to unstable now that all core components have been assembled

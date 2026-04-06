@@ -67,7 +67,7 @@ Depends:
  zenity (>= 3.99),
  ${misc:Depends},
  ${shlibs:Depends},
-Recommends: labwc, swaylock,
+Recommends: labwc, swaylock, imagemagick-7.q16
 Suggests: gtklock-userinfo-module,
 Conflicts: appmenu-gtk3-module, budgie-appmenu-applet, budgie-sntray-plugin,
 Description: Core package for Budgie-Desktop
