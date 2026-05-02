@@ -1,9 +1,11 @@
-budgie-desktop (10.10.2-3) UNRELEASED; urgency=medium
+budgie-desktop (10.10.2-3) unstable; urgency=medium
 
   * Add imagemagick-7.q16 as a recommends to allow crystal dock, if
     installed to modify the wallpaper according to the picture style
+  * Switch from the transitional package network-manager-gnome to
+    network-manager-applet (Closes: #1135529)
 
- -- David Mohammed <fossfreedom@ubuntu.com>  Mon, 06 Apr 2026 17:23:16 +0100
+ -- David Mohammed <fossfreedom@ubuntu.com>  Sat, 02 May 2026 10:53:22 +0100
 
 budgie-desktop (10.10.2-2) unstable; urgency=medium
 
