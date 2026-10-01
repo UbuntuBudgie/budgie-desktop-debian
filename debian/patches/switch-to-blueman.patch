@@ -108,7 +108,7 @@ Last-Update: 2025-01-02
 +Categories=GTK;GNOME;Settings;HardwareSettings;
 --- a/src/panel/applets/status/meson.build
 +++ b/src/panel/applets/status/meson.build
-@@ -67,3 +67,8 @@
+@@ -71,3 +71,8 @@
      'com.solus-project.status.gschema.xml',
      install_dir: join_paths(datadir, 'glib-2.0', 'schemas'),
  )

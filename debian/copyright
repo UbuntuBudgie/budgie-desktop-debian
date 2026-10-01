@@ -4,7 +4,7 @@ Upstream-Contact: Budgie Developers <admin@buddiesofbudgie.org>
 Source: https://github.com/buddiesofbudgie/budgie-desktop
 
 Files: *
-Copyright: 2014-2023, Budgie Desktop Developers
+Copyright: 2014-2026, Budgie Desktop Developers
 License: GPL-2+
 
 Files: data/icons/*
@@ -22,7 +22,7 @@ License: GPL-2
 
 Files: debian/*
 Copyright: 2017, Jeremy Bicha <jbicha@debian.org>
-  2016-2023, David Mohammed <fossfreedom@ubuntu.com>
+  2016-2026, David Mohammed <fossfreedom@ubuntu.com>
   2016, 2017, David Mohammed <foss.freedom@gmail.com>
 License: GPL-2+
 
@@ -34,10 +34,6 @@ License: GPL-2+
 Files: src/config/*
 Copyright: 2015-2021, Budgie Desktop Developers
 License: LGPL-2.1+
-
-Files: src/daemon/tabswitcher.vala
-Copyright: 2017, 2018, taaem <taaem@mailbox.org>
-License: GPL-2+
 
 Files: src/lib/*
 Copyright: 2015-2021, Budgie Desktop Developers

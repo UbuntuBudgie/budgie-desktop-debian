@@ -5,6 +5,16 @@ libbudgie-private.so.0 libbudgie-private0 #MINVER#
  budgie_animation_new@Base 10.4
  budgie_animation_start@Base 10.4
  budgie_animation_stop@Base 10.4
+ budgie_application_action_construct@Base 10.10.3
+ budgie_application_action_get_id@Base 10.10.3
+ budgie_application_action_get_name@Base 10.10.3
+ budgie_application_action_get_type@Base 10.10.3
+ budgie_application_action_list_construct@Base 10.10.3
+ budgie_application_action_list_get_app@Base 10.10.3
+ budgie_application_action_list_get_type@Base 10.10.3
+ budgie_application_action_list_is_empty@Base 10.10.3
+ budgie_application_action_list_new@Base 10.10.3
+ budgie_application_action_new@Base 10.10.3
  budgie_application_construct@Base 10.10~preview.1
  budgie_application_create_launch_context@Base 10.10~preview.1
  budgie_application_get_actions@Base 10.10~preview.1
@@ -115,8 +125,10 @@ libbudgie-private.so.0 libbudgie-private0 #MINVER#
  budgie_toplevel_get_intended_spacing@Base 10.6.2+git20220728
  budgie_toplevel_get_intersected@Base 10.4
  budgie_toplevel_get_position@Base 10.4
+ budgie_toplevel_get_reserved_size@Base 10.10.3
  budgie_toplevel_get_shadow_depth@Base 10.4
  budgie_toplevel_get_shadow_visible@Base 10.4
+ budgie_toplevel_get_targeted_size@Base 10.10.3
  budgie_toplevel_get_theme_regions@Base 10.4
  budgie_toplevel_get_transparency@Base 10.4
  budgie_toplevel_get_type@Base 10.4
@@ -130,6 +142,7 @@ libbudgie-private.so.0 libbudgie-private0 #MINVER#
  budgie_toplevel_set_intended_spacing@Base 10.6.2+git20220728
  budgie_toplevel_set_intersected@Base 10.4
  budgie_toplevel_set_position@Base 10.4
+ budgie_toplevel_set_reserved_size@Base 10.10.3
  budgie_toplevel_set_shadow_depth@Base 10.4
  budgie_toplevel_set_shadow_visible@Base 10.4
  budgie_toplevel_set_theme_regions@Base 10.4

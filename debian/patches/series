@@ -2,3 +2,6 @@ xdg_config_dirs.patch
 allow-AppIndicator-if-System-Tray-is-not-present.patch
 switch-to-blueman.patch
 lfwvapi.patch
+0001-fix-bridges-stop-left-click-on-the-desktop-opening-t.patch
+0002-fix-panel-stop-aborting-when-a-panel-has-no-stored-l.patch
+0003-fix-panel-store-a-new-panel-s-edge-before-it-is-show.patch

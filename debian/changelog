@@ -1,3 +1,23 @@
+budgie-desktop (10.10.3-1) unstable; urgency=medium
+
+  * New upstream release
+    - Supports labwc 0.20.2 (Closes: #1145779)
+    - Fix crash on mismatched wine icon (Closes: #1146123)
+    - add upstream patches to fix various panel crashes
+      0001-fix-bridges-stop-left-click-on-the-desktop-opening-t.patch
+      0002-fix-panel-stop-aborting-when-a-panel-has-no-stored-l.patch
+      0003-fix-panel-store-a-new-panel-s-edge-before-it-is-show.patch
+  * Packaging Changes
+    d/control remove B/D libwnck-3-dev, libibus-1.0-dev, cmake
+       add libgtop2-dev
+    patches: refresh to remove quilt fuzz
+    Refresh libraven.symbols, libbudgie-private0.symbols
+    d/rules add dh_fixperms override so that python submodules
+     installed in /usr/libexec are not given execute permissions
+    d/copyright update years, remove obsolete copyright for now removed file
+
+ -- David Mohammed <fossfreedom@ubuntu.com>  Thu, 01 Oct 2026 18:25:28 +0100
+
 budgie-desktop (10.10.2-3) unstable; urgency=medium
 
   * Add imagemagick-7.q16 as a recommends to allow crystal dock, if

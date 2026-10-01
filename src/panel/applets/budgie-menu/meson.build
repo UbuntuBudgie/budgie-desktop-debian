@@ -2,10 +2,14 @@
 
 applet_budgiemenu_dir = applets_dir + '.budgie-menu'
 
-custom_target('plugin-file-budgiemenuapplet',
-    input : 'BudgieMenu.plugin.in',
+budgie_pot_templates += files('BudgieMenu.plugin.desktop.in')
+
+i18n.merge_file(
+    input : 'BudgieMenu.plugin.desktop.in',
     output : 'BudgieMenu.plugin',
-    command : [intltool, '--desktop-style', podir, '@INPUT@', '@OUTPUT@'],
+    type : 'desktop',
+    po_dir : podir,
+    args : ['--keyword=Description'],
     install : true,
     install_dir : applet_budgiemenu_dir)
 
@@ -29,13 +33,16 @@ lib_applet_budgiemenu_resources = static_library(
 
 applet_budgiemenu_sources = [
     'BudgieMenu.vala',
-    'BudgieMenuButtons.vala',
     'BudgieMenuWindow.vala',
+    'MenuArrow.vala',
     'IconChooser.vala',
     'DBusInterfaces.vala',
+    'FavoritesManager.vala',
     'OverlayMenus.vala',
     'UserButton.vala',
     'MenuItem.vala',
+    'buttons/CategoryButton.vala',
+    'buttons/MenuButton.vala',
     'views/ListView.vala',
     'views/View.vala',
 ]
@@ -45,6 +52,7 @@ applet_budgiemenu_deps = [
     dep_gee,
     dep_giounix,
     dep_gtk3,
+    dep_gtk_layer_shell,
     dep_peas,
     dep_accountsservice,
     dep_cairo,
@@ -53,7 +61,7 @@ applet_budgiemenu_deps = [
     link_libappindexer,
 ]
 
-shared_library(
+budgie_pot_targets += shared_library(
     'budgiemenuapplet',
     applet_budgiemenu_sources,
     dependencies: applet_budgiemenu_deps,

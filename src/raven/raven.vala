@@ -97,41 +97,58 @@ namespace Budgie {
 			this.is_expanded = b;
 		}
 
-		public void Toggle() throws DBusError, IOError {
-			this.is_expanded = !this.is_expanded;
-
+		/**
+		* Close Raven if it is currently expanded (closing if it is),
+		* and if not, report if the caller should expand it instead
+		*/
+		private bool should_expand() {
 			if (this.is_expanded) {
-				if (this.notifications == 0){
-					parent.expose_main_view();
-				} else {
-					parent.expose_notification();
-					this.ReadNotifications();
-				}
+				this.is_expanded = false;
+				return false;
 			}
+
+			// If we are or just focused out of the window, Raven is currently closing
+			// So we do this check to not immediately re-trigger Raven to open
+			return !parent.consume_focus_out_close();
+		}
+
+		public void Toggle() throws DBusError, IOError {
+			if (!should_expand()) {
+				return;
+			}
+
+			if (this.notifications == 0) {
+				parent.expose_main_view();
+			} else {
+				parent.expose_notification();
+				this.ReadNotifications();
+			}
+
+			this.is_expanded = true;
 		}
 
 		/**
 		* Toggle Raven, opening only the "main" applet view
 		*/
 		public void ToggleAppletView() throws DBusError, IOError {
-			if (this.is_expanded) {
-				this.is_expanded = !this.is_expanded;
+			if (!should_expand()) {
 				return;
 			}
+
 			parent.expose_main_view();
-			this.is_expanded = !this.is_expanded;
+			this.is_expanded = true;
 		}
 
 		/**
-		* Toggle Raven, opening only the "main" applet view
+		* Toggle Raven, opening only the notifications view
 		*/
 		public void ToggleNotificationsView() throws DBusError, IOError {
-			if (this.is_expanded) {
-				this.is_expanded = !this.is_expanded;
+			if (!should_expand()) {
 				return;
 			}
+
 			parent.expose_notification();
-			this.is_expanded = !this.is_expanded;
+			this.is_expanded = true;
 		}
 
 		public void Dismiss() throws DBusError, IOError {
@@ -157,6 +174,8 @@ namespace Budgie {
 	}
 
 	public class Raven : Gtk.Window {
+		private const int64 FOCUS_OUT_CLOSE_WINDOW = 250 * Budgie.MSECOND;
+
 		private static Raven? _instance = null;
 
 		private Gtk.PositionType _screen_edge = Gtk.PositionType.RIGHT;
@@ -199,28 +218,34 @@ namespace Budgie {
 					raven_edge,
 					true
 				);
+
+				// Anchoring both of these leaves the compositor to size us to the
+				// usable area, which already excludes the panels
+				GtkLayerShell.set_anchor(this, GtkLayerShell.Edge.TOP, true);
+				GtkLayerShell.set_anchor(this, GtkLayerShell.Edge.BOTTOM, true);
 		}
 			public get {
 				return this._screen_edge;
 			}
 		}
 
-		int our_width = 0;
-		int our_height = 0;
-
 		private Budgie.ShadowBlock? shadow;
 		private RavenIface? iface = null;
 		private Settings? settings = null;
 		private Settings? widget_settings = null;
+		private Settings? wm_settings = null;
 
 		bool expanded = false;
 
-		Gdk.Rectangle old_rect;
+		// When focus-out last closed Raven; see consume_focus_out_close
+		private int64 last_focus_out = 0;
+
+		private Budgie.Animation? anim = null;
+		private uint hide_id = 0;
+
 		Gtk.Box layout;
 
 		private double scale = 0.0;
-
-		public int required_size { public get ; protected set; }
 
 		private Budgie.MainView? main_view = null;
 
@@ -285,9 +310,39 @@ namespace Budgie {
 
 		bool on_focus_out() {
 			if (this.expanded) {
+				this.last_focus_out = get_monotonic_time();
 				this.set_expanded(false);
 			}
 			return Gdk.EVENT_PROPAGATE;
+		}
+
+		/**
+		* Clicking a panel applet takes keyboard focus off Raven, closing it before
+		* the applet's toggle request arrives.
+		* Workaround the delay by ignoring requests within last 250ms, so we don't trigger re-opens
+		*/
+		public bool consume_focus_out_close() {
+			if (get_monotonic_time() - this.last_focus_out >= FOCUS_OUT_CLOSE_WINDOW) {
+				return false;
+			}
+
+			this.last_focus_out = 0;
+			return true;
+		}
+
+		/**
+		* Closing on click-away needs a focus-out event, and a surface only gets one
+		* if it can take keyboard focus. Under sloppy or mouse focus, moving the
+		* pointer toward Raven focuses each window it crosses, which would close
+		* Raven before the pointer arrives, so only ask for focus under click
+		*/
+		private void update_keyboard_mode() {
+			bool click_to_focus = wm_settings.get_string("window-focus-mode") == "click";
+
+			GtkLayerShell.set_keyboard_mode(
+				this,
+				click_to_focus ? GtkLayerShell.KeyboardMode.ON_DEMAND : GtkLayerShell.KeyboardMode.NONE
+			);
 		}
 
 		private void steal_focus() {
@@ -296,16 +351,20 @@ namespace Budgie {
 				return;
 			}
 			if (!has_toplevel_focus) {
-				Gdk.Display? display = screen.get_display();
 				window.focus(Gtk.get_current_event_time());
 			}
 		}
 
 		public Raven(Budgie.DesktopManager? manager, Budgie.RavenPluginManager? plugin_manager) {
 			Object(type_hint: Gdk.WindowTypeHint.DOCK, manager: manager);
+
+			wm_settings = new Settings("com.solus-project.budgie-wm");
+
 			if (Xfw.windowing_get() == Xfw.Windowing.WAYLAND) {
 				GtkLayerShell.init_for_window(this);
 				GtkLayerShell.set_layer(this, GtkLayerShell.Layer.OVERLAY);
+				update_keyboard_mode();
+				wm_settings.changed["window-focus-mode"].connect(update_keyboard_mode);
 			}
 
 			get_style_context().add_class("budgie-container");
@@ -328,7 +387,6 @@ namespace Budgie {
 
 			// Response to a scale factor change
 			notify["scale-factor"].connect(() => {
-				this.update_geometry(this.old_rect);
 				queue_resize();
 			});
 
@@ -379,47 +437,9 @@ namespace Budgie {
 			this.screen_edge = Gtk.PositionType.RIGHT;
 		}
 
-		public override void size_allocate(Gtk.Allocation rect) {
-			int w = 0;
-
-			base.size_allocate(rect);
-			if ((w = get_allocated_width()) != this.required_size) {
-				this.required_size = w;
-				this.update_geometry(this.old_rect);
-			}
-		}
-
 		public void setup_dbus() {
 			Bus.own_name(BusType.SESSION, Budgie.RAVEN_DBUS_NAME, BusNameOwnerFlags.ALLOW_REPLACEMENT|BusNameOwnerFlags.REPLACE,
 				on_bus_acquired, () => {}, () => { warning("Raven could not take dbus!"); });
-		}
-
-		/**
-		* Update our geometry based on other panels in the neighbourhood, and the screen we
-		* need to be on */
-		public void update_geometry(Gdk.Rectangle rect) {
-			int width = layout.get_allocated_width();
-
-			int height = rect.height;
-
-			this.old_rect = rect;
-
-			our_height = height;
-			our_width = width;
-
-			if (!get_visible()) {
-				queue_resize();
-			}
-		}
-
-		public override void get_preferred_height(out int m, out int n) {
-			m = our_height;
-			n = our_height;
-		}
-
-		public override void get_preferred_height_for_width(int w, out int m, out int n) {
-			m = our_height;
-			n = our_height;
 		}
 
 		public override bool draw(Cairo.Context cr) {
@@ -470,16 +490,20 @@ namespace Budgie {
 			if (exp == this.expanded) {
 				return;
 			}
-			double old_nscale_op, new_nscale_op;
-			if (exp) {
-				this.update_geometry(this.old_rect);
-				old_nscale_op = 0.0;
-				new_nscale_op = 1.0;
-			} else {
-				old_nscale_op = 1.0;
-				new_nscale_op = 0.0;
+
+			// A toggle can arrive mid-animation; the old animation and its deferred hide
+			// would otherwise still set nscale and hide the window after this one starts
+			if (anim != null) {
+				anim.stop();
+				anim = null;
 			}
-			nscale = old_nscale_op;
+
+			// If we have a hide_id set during animation completion in on_anim_complete,
+			// we will want to remote that source otherwise it'll trigger an on_hide
+			if (hide_id != 0) {
+				Source.remove(hide_id);
+				hide_id = 0;
+			}
 
 			this.expanded = exp;
 			main_view.raven_expanded(this.expanded);
@@ -488,11 +512,11 @@ namespace Budgie {
 			if (!this.get_settings().gtk_enable_animations) {
 				if (!exp) {
 					this.nscale = 0.0;
-					this.set_opacity(0.0);
+					this.opacity = 0.0;
 					this.hide();
 				} else {
 					this.nscale = 1.0;
-					this.set_opacity(1.0);
+					this.opacity = 1.0;
 					this.present();
 					this.grab_focus();
 					this.steal_focus();
@@ -500,7 +524,8 @@ namespace Budgie {
 				return;
 			}
 
-			var anim = new Budgie.Animation();
+			// Store our animation so we can stop if if necessary during a toggle
+			anim = new Budgie.Animation();
 			anim.widget = this;
 			if (exp) {
 				anim.length = 360 * Budgie.MSECOND;
@@ -509,11 +534,13 @@ namespace Budgie {
 				anim.tween = Budgie.sine_ease_in;
 				anim.length = 190 * Budgie.MSECOND;
 			}
+
+			// Pick up wherever the interrupted slide left off so a reversal doesn't jump
 			anim.changes = new Budgie.PropChange[] {
 				Budgie.PropChange() {
 					property = "nscale",
-					old = old_nscale_op,
-					@new = new_nscale_op
+					old = nscale,
+					@new = exp ? 1.0 : 0.0
 				},
 			};
 
@@ -525,28 +552,32 @@ namespace Budgie {
 			}
 
 			// Raven is invisible before fade-in animation; make window visible before we start the animation
-			set_opacity(1.0);
+			opacity = 1.0;
 			show();
 
-			anim.start((a) => {
-				Budgie.Raven? r = a.widget as Budgie.Raven;
-				Gtk.Window? w = a.widget as Gtk.Window;
+			anim.start(on_anim_complete);
+		}
 
-				if (r != null && r.nscale == 0.0) {
-					set_opacity(0.0); // Mask scaling weirdness
-					Timeout.add(100, () => {
-						r.hide();
-						return false;
-					}); // Defer until opacity set otherwise it glitches
-				} else if (w != null) {
-					shadow.set_opacity(1.0);
-					set_opacity(1.0);
-					w.present();
-					w.grab_focus();
-					this.steal_focus();
-					steal_focus();
-				}
-			});
+		private void on_anim_complete(Budgie.Animation? a) {
+			anim = null;
+
+			if (nscale == 0.0) {
+				opacity = 0.0; // Mask scaling weirdness
+				hide_id = Timeout.add(100, this.on_hide_timeout); // Defer until opacity set otherwise it glitches
+				return;
+			}
+
+			shadow.set_opacity(1.0);
+			opacity = 1.0;
+			present();
+			grab_focus();
+			steal_focus();
+		}
+
+		private bool on_hide_timeout() {
+			hide_id = 0;
+			hide();
+			return Source.REMOVE;
 		}
 
 		public bool get_expanded() {

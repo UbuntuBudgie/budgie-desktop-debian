@@ -31,3 +31,8 @@ endif
 
 override_dh_installchangelogs:
 	dh_installchangelogs debian/changelog-announcement.txt
+
+override_dh_fixperms:
+	dh_fixperms
+	find debian/budgie-core/usr/libexec/budgie-desktop/labwc_bridge \
+		-type f -name '*.py' -exec chmod 0644 {} +

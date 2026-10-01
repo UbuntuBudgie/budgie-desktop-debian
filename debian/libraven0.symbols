@@ -82,6 +82,7 @@ libraven.so.0 libraven0 #MINVER#
  budgie_raven_ReadNotifications@Base 10.3
  budgie_raven_UnreadNotifications@Base 10.3
  budgie_raven_construct@Base 10.3
+ budgie_raven_consume_focus_out_close@Base 10.10.3
  budgie_raven_create_widget_instance@Base 10.7
  budgie_raven_expander_construct@Base 10.3
  budgie_raven_expander_get_expanded@Base 10.3
@@ -95,7 +96,6 @@ libraven.so.0 libraven0 #MINVER#
  budgie_raven_get_instance@Base 10.3
  budgie_raven_get_manager@Base 10.3
  budgie_raven_get_nscale@Base 10.3
- budgie_raven_get_required_size@Base 10.3
  budgie_raven_get_screen_edge@Base 10.4
  budgie_raven_get_type@Base 10.3
  budgie_raven_iface_ClearNotifications@Base 10.4
@@ -138,10 +138,8 @@ libraven.so.0 libraven0 #MINVER#
  budgie_raven_set_manager@Base 10.3
  budgie_raven_set_notification_count@Base 10.3
  budgie_raven_set_nscale@Base 10.3
- budgie_raven_set_required_size@Base 10.3
  budgie_raven_set_screen_edge@Base 10.4
  budgie_raven_setup_dbus@Base 10.3
- budgie_raven_update_geometry@Base 10.3
  budgie_raven_update_uuids@Base 10.7
  budgie_raven_widget_creation_result_get_type@Base 10.7
  budgie_raven_widget_data_construct@Base 10.7

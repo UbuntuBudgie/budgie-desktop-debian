@@ -1,9 +1,13 @@
 raven_plugin_usage_monitor_dir = raven_plugin_dir + '.UsageMonitor'
 
-custom_target('raven-plugin-usage-monitor-file',
-    input : 'UsageMonitor.plugin.in',
+budgie_pot_templates += files('UsageMonitor.plugin.desktop.in')
+
+i18n.merge_file(
+    input : 'UsageMonitor.plugin.desktop.in',
     output : 'UsageMonitor.plugin',
-    command : [intltool, '--desktop-style', podir, '@INPUT@', '@OUTPUT@'],
+    type : 'desktop',
+    po_dir : podir,
+    args : ['--keyword=Description'],
     install : true,
     install_dir : raven_plugin_usage_monitor_dir)
 
@@ -26,13 +30,17 @@ raven_plugin_usage_monitor_deps = [
     libravenplugin_vapi,
     dep_gtk3,
     dep_peas,
+    dep_libgtop,
     link_libravenplugin
 ]
 
-shared_library(
+budgie_pot_targets += shared_library(
     'org.buddiesofbudgie.budgie-desktop.raven.widget.UsageMonitor',
     raven_plugin_usage_monitor_sources,
     dependencies: raven_plugin_usage_monitor_deps,
+    vala_args: [
+        '--vapidir', top_vapidir,
+    ],
     install: true,
     install_dir: raven_plugin_usage_monitor_dir,
 )
