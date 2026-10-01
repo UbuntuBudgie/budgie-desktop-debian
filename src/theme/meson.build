@@ -29,6 +29,7 @@ sass_depend_files = files([
     'common/_functions.scss',
     'common/_icon_tasklist.scss',
     'common/_imports.scss',
+    'common/_keyboard.scss',
     'common/_menubar.scss',
     'common/_menu.scss',
     'common/_nightlight.scss',
@@ -129,3 +130,5 @@ link_libtheme = declare_dependency(
 
 # Expose the current directory so that we can use vapidir
 dir_libtheme = meson.current_source_dir()
+
+budgie_pot_targets += lib_theme

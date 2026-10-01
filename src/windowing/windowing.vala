@@ -199,10 +199,6 @@ namespace Budgie.Windowing {
 				if (group.has_window(new_window)) {
 					group.set_active_window(new_window);
 				}
-
-				if (old_window != null && group.has_window(old_window)) {
-					group.set_last_active_window(old_window);
-				}
 			}
 
 			// Reset showing_desktop state when a new non-minimized window becomes active
@@ -419,7 +415,13 @@ namespace Budgie.Windowing {
 				windows.foreach((window) => {
 					if (should_filter_window(window, filter) || window.is_minimized()) return;
 
-					window.set_minimized(true);
+					try {
+						window.set_minimized(true);
+					} catch (GLib.Error e) {
+						warning("Unable to minimize window '%s': %s", window.get_name(), e.message);
+						return;
+					}
+
 					minimized_windows_by_show_desktop.append(window);
 				});
 
@@ -430,7 +432,11 @@ namespace Budgie.Windowing {
 			} else {
 				// Restore only windows we minimized
 				foreach (var window in minimized_windows_by_show_desktop) {
-					window.set_minimized(false);
+					try {
+						window.set_minimized(false);
+					} catch (GLib.Error e) {
+						warning("Unable to unminimize window '%s': %s", window.get_name(), e.message);
+					}
 				}
 			}
 

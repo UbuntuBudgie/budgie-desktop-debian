@@ -1,7 +1,7 @@
 project(
     'budgie-desktop',
     ['c', 'vala'],
-    version: '10.10.2',
+    version: '10.10.3',
     license: [
         'GPL-2.0',
         'LGPL-2.1',
@@ -21,6 +21,7 @@ add_global_arguments(am_cflags, language: 'c')
 meson.add_install_script('scripts/mesonPostInstall.sh')
 
 fs = import('fs')
+i18n = import('i18n')
 
 # Budgie needs a minimum GNOME 40 stack with GTK 3.24+
 gnome_minimum_version = '>= 40.0'
@@ -37,19 +38,16 @@ dep_vala = dependency('vapigen', version: '>= 0.52.5')
 dep_gst = dependency('gstreamer-1.0')
 dep_cairo = dependency('cairo')
 dep_gtk_layer_shell = dependency('gtk-layer-shell-0', version: '>= 0.8.0')
+dep_libgtop = dependency('libgtop-2.0')
 
 # Needed for Budgie Menu
 dep_cairo = dependency('cairo', version: '>= 1.15.10')
 
 # Needed for keyboardy bits
-dep_ibus = dependency('ibus-1.0', version: '>= 1.5.10')
 dep_notify = dependency('libnotify', version: '>= 0.7')
 dep_gnomedesktop = dependency('gnome-desktop-3.0', version: gnome_minimum_version)
 dep_gsettings = dependency('gsettings-desktop-schemas', version: gnome_minimum_version)
 dep_gsd = dependency('gnome-settings-daemon', version: gnome_minimum_version)
-
-# wnck used all over the place..
-dep_wnck = dependency('libwnck-3.0', version: '>= 3.36.0')
 
 # accountsservice in multiple applets
 dep_accountsservice = dependency('accountsservice', version: '>= 0.6.55')
@@ -113,12 +111,6 @@ cdata.set_quoted('SYSCONFDIR', confdir)
 cdata.set_quoted('LOCALEDIR', localedir)
 cdata.set_quoted('PACKAGE_URL', 'https://buddiesofbudgie.org')
 
-# Handle i18n on the .desktop file
-# Originally stolem from TingPing:
-# https://github.com/vinszent/gnome-twitch/blob/master/data/meson.build
-# Later changed to use intltool as we use _Key style files
-intltool = find_program('intltool-merge')
-
 # Make sure this is accessible to panel applet builds
 plugin_libdir = join_paths(libdir, meson.project_name(), 'plugins')
 plugin_datadir = join_paths(datadir, meson.project_name(), 'plugins')
@@ -180,6 +172,20 @@ if with_bluetooth == true
     add_project_arguments('-D', 'WITH_BLUETOOTH', language: 'vala')
 endif
 
+# oo7 provides the Secret Service and the xdg-desktop-portal Secret backend.
+oo7 = get_option('with-oo7')
+
+# Set the libexecdir for the oo7-* executables
+oo7_libexecdir = get_option('oo7-libexecdir')
+if oo7_libexecdir == ''
+    oo7_libexecdir = libexecdirroot
+endif
+
+if oo7 == true and get_option('with-runtime-dependencies')
+    find_program(join_paths(oo7_libexecdir, 'oo7-daemon'), required: true)
+    find_program(join_paths(oo7_libexecdir, 'oo7-portal'), required: true)
+endif
+
 # GVC rpath. it's evil, but gvc will bomb out glib2 due to static linking weirdness now,
 # so we have to use a shared library to prevent multiple registration of the same types..
 rpath_libdir = join_paths(libdir, meson.project_name())
@@ -209,11 +215,23 @@ gvc = subproject('gvc',
     ],
 )
 
-# Prep translations prior to build
-subdir('po')
+# src/ appends to these, po/ reads them, so subdir('po') must follow subdir('src')
+budgie_pot_targets = []
+budgie_pot_templates = []
+
+budgie_pot_ui = files(
+    run_command(
+        find_program('po/listUiFiles.py'),
+        meson.project_source_root(),
+        check: true,
+    ).stdout().strip().split('\n'),
+)
 
 # Now build Budgie proper
 subdir('src')
+
+# Prep translations, using what src/ collected
+subdir('po')
 
 # Take care of documentation
 with_gtk_doc = get_option('with-gtk-doc')
@@ -241,6 +259,7 @@ report = [
     '    gtk-doc:                                                                     @0@'.format(with_gtk_doc),
     '    stateless:                                                                   @0@'.format(with_stateless),
     '    bluetooth:                                                                   @0@'.format(with_bluetooth),
+    '    oo7:                                                                         @0@'.format(oo7),
 ]
 
 

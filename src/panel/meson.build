@@ -2,10 +2,13 @@
 
 subdir('plugin')
 
-custom_target('desktop-file-panel',
+budgie_pot_templates += files('budgie-panel.desktop.in')
+
+i18n.merge_file(
     input : 'budgie-panel.desktop.in',
     output : 'org.buddiesofbudgie.BudgiePanel.desktop',
-    command : [intltool, '--desktop-style', podir, '@INPUT@', '@OUTPUT@'],
+    type : 'desktop',
+    po_dir : podir,
     install : true,
     install_dir : join_paths(datadir, 'applications'))
 
@@ -27,6 +30,7 @@ panel_sources = [
     'uuid.vala',
     'settings/settings_autostart.vala',
     'settings/settings_desktop.vala',
+    'settings/settings_displays.vala',
     'settings/settings_fonts.vala',
     'settings/settings_item.vala',
     'settings/settings_main.vala',
@@ -63,6 +67,7 @@ panel_deps = [
     libravenplugin_vapi,
     link_libraven,
     link_libwindowing,
+    link_libbudgiewayland,
     gvc.get_variable('libgvc_dep'),
 ]
 
@@ -81,14 +86,14 @@ budgie_panel_vala_args = [
         join_paths(meson.project_source_root(), 'src', 'panel', 'plugin', 'plugin-manager.vapi'),
 ]
 
-executable(
+budgie_pot_targets += executable(
     'budgie-panel', panel_sources,
     dependencies: panel_deps,
     vala_args: budgie_panel_vala_args,
     install: true,
 )
 
-executable(
+budgie_pot_targets += executable(
     'budgie-desktop-settings',
     'budgie-desktop-settings.vala',
     dependencies: [
@@ -103,10 +108,13 @@ executable(
 )
 
 # Now merge the translations of the .desktop.in to a .desktop
-custom_target('desktop-file-settings',
+budgie_pot_templates += files('budgie-desktop-settings.desktop.in')
+
+i18n.merge_file(
     input : 'budgie-desktop-settings.desktop.in',
     output : 'org.buddiesofbudgie.BudgieDesktopSettings.desktop',
-    command : [intltool, '--desktop-style', podir, '@INPUT@', '@OUTPUT@'],
+    type : 'desktop',
+    po_dir : podir,
     install : true,
     install_dir : join_paths(datadir, 'applications'),
 )

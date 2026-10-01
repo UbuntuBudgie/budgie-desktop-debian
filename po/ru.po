@@ -5,18 +5,19 @@
 # 
 # Translators:
 # Alex Semёnov-Sherin, 2023
-# Joshua Strobl <joshua.strobl@outlook.com>, 2023
 # Victor, 2024
 # Yaroslav Popkov, 2025
+# Andrei Stepanov, 2026
+# Joshua Strobl <joshua.strobl@outlook.com>, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: budgie-desktop 10.10.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 17:28+0200\n"
+"POT-Creation-Date: 2026-09-22 15:27+0300\n"
 "PO-Revision-Date: 2022-01-02 09:45+0000\n"
-"Last-Translator: Yaroslav Popkov, 2025\n"
+"Last-Translator: Joshua Strobl <joshua.strobl@outlook.com>, 2026\n"
 "Language-Team: Russian (https://app.transifex.com/buddiesofbudgie/teams/129844/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -86,6 +87,18 @@ msgstr "Универсальный доступ"
 msgid "New Category"
 msgstr "Новая категория"
 
+#: src/daemon/endsession.vala:161
+msgid "Log out"
+msgstr "Выйти"
+
+#: src/daemon/endsession.vala:165
+msgid "Restart device"
+msgstr "Перезагрузить устройство"
+
+#: src/daemon/endsession.vala:177 src/daemon/endsession.ui:47
+msgid "Power Off"
+msgstr "Выключить"
+
 #. Do nothing if there were no held notifications
 #. translators: This is the title of a notification that is shown after
 #. notifications have been blocked because an application was in fullscreen
@@ -119,14 +132,30 @@ msgstr[3] ""
 msgid "View Notifications"
 msgstr "Посмотреть уведомления"
 
+#: src/daemon/osdkeys.vala:307
+msgid "Caps Lock is on"
+msgstr "Caps Lock включён"
+
+#: src/daemon/osdkeys.vala:314
+msgid "Caps Lock is off"
+msgstr "Caps Lock отключён"
+
+#: src/daemon/osdkeys.vala:324
+msgid "Num Lock is on"
+msgstr "Num Lock включён"
+
+#: src/daemon/osdkeys.vala:330
+msgid "Num Lock is off"
+msgstr "Num Lock отключён"
+
 #. Should show a notification
 #: src/daemon/settings.vala:416
 msgid "Turned on Caffeine Boost"
-msgstr "Caffeine Boost включен"
+msgstr "Caffeine Boost включён"
 
 #: src/daemon/settings.vala:416
 msgid "Turned off Caffeine Boost"
-msgstr "Caffeine Boost отключен"
+msgstr "Caffeine Boost отключён"
 
 #: src/daemon/settings.vala:421
 #, c-format
@@ -137,39 +166,11 @@ msgstr[1] "Отключение произойдёт через %d минуты"
 msgstr[2] "Отключение произойдёт через %d минут"
 msgstr[3] "Отключение произойдёт через %d минут"
 
-#: src/daemon/endsession.vala:161
-msgid "Log out"
-msgstr "Выйти"
-
-#: src/daemon/endsession.vala:165
-msgid "Restart device"
-msgstr "Перезагрузить устройство"
-
-#: src/daemon/endsession.vala:177 src/daemon/endsession.ui.h:1
-msgid "Power Off"
-msgstr "Выключить"
-
-#: src/daemon/osdkeys.vala:307
-msgid "Caps Lock is on"
-msgstr ""
-
-#: src/daemon/osdkeys.vala:314
-msgid "Caps Lock is off"
-msgstr ""
-
-#: src/daemon/osdkeys.vala:324
-msgid "Num Lock is on"
-msgstr ""
-
-#: src/daemon/osdkeys.vala:330
-msgid "Num Lock is off"
-msgstr ""
-
-#: src/dialogs/polkit/polkitdialog.vala:224
+#: src/dialogs/polkit/polkitdialog.vala:227
 msgid "Authentication failed"
 msgstr "Ошибка аутентификации"
 
-#: src/dialogs/polkit/polkitdialog.vala:312
+#: src/dialogs/polkit/polkitdialog.vala:315
 msgid "Group:"
 msgstr "Группа:"
 
@@ -201,6 +202,73 @@ msgstr "Выключить"
 #: src/dialogs/power/window.vala:183
 msgid "This system does not support hibernation."
 msgstr "Данная система не поддерживает гибернацию"
+
+#: src/dialogs/screenshot/screenshot.vala:363
+#: src/dialogs/screenshot/screenshot.vala:831
+#: src/daemon/org.buddiesofbudgie.BudgieScreenshot.desktop.in:3
+#: src/dialogs/screenshot/budgie-screenshot.desktop.in:3
+msgid "Budgie Screenshot"
+msgstr "Снимок экрана Budgie"
+
+#. Translators: be as brief as possible; popovers are cut off if broader than
+#. the window
+#: src/dialogs/screenshot/screenshot.vala:479
+msgid "Screenshot entire screen"
+msgstr "Снимок всего экрана"
+
+#: src/dialogs/screenshot/screenshot.vala:481
+msgid "Screenshot active window"
+msgstr "Сделать снимок экрана активного окна"
+
+#: src/dialogs/screenshot/screenshot.vala:483
+msgid "Screenshot selected area"
+msgstr "Снимок выбранной области экран"
+
+#. translate
+#: src/dialogs/screenshot/screenshot.vala:894
+msgid "Cancel screenshot"
+msgstr "Прекратить снимок экрана"
+
+#: src/dialogs/screenshot/screenshot.vala:895
+msgid "Save screenshot to the selected directory"
+msgstr "Сохранить снимок экрана в выбранном каталоге"
+
+#: src/dialogs/screenshot/screenshot.vala:896
+msgid "Copy screenshot to the clipboard"
+msgstr "Скопировать снимок экрана в буфер обмена"
+
+#: src/dialogs/screenshot/screenshot.vala:897
+msgid "Open screenshot in default application"
+msgstr "Открыть снимок экрана в стандартном приложении"
+
+#. Other -> call Filebrowser (path = null)
+#. 'Other' is about setting a custom directory on a dropdown list
+#: src/dialogs/screenshot/screenshot.vala:1188
+msgid "Other..."
+msgstr "Другие..."
+
+#. Hide the AfterShot window while the file chooser is open
+#. set custom dir to found dir
+#: src/dialogs/screenshot/screenshot.vala:1277
+msgid "Open Folder"
+msgstr "Открыть папку"
+
+#: src/dialogs/screenshot/screenshot.vala:1278
+#: src/dialogs/sendto/Dialog/BaseDialog.vala:109
+#: src/dialogs/sendto/Dialog/FileSender.vala:143
+#: src/dialogs/sendto/Dialog/FileSender.vala:224
+#: src/panel/applets/budgie-menu/IconChooser.vala:52
+#: src/panel/settings/settings_autostart.vala:194
+#: src/panel/settings/settings_autostart.vala:359
+#: src/panel/settings/settings_panel_dialogs.vala:158
+#: src/panel/settings/settings_plugin_chooser.vala:105
+#: src/daemon/endsession.ui:92 src/dialogs/polkit/dialog.ui:321
+msgid "Cancel"
+msgstr "Отмена"
+
+#: src/dialogs/screenshot/screenshot.vala:1278
+msgid "Open"
+msgstr "Открыть"
 
 #: src/dialogs/sendto/Application.vala:75
 msgid "Files to send"
@@ -239,7 +307,7 @@ msgstr "Получаемый файл"
 #: src/dialogs/sendto/Application.vala:315
 #, c-format
 msgid "Device '%s' wants to send a file: %s %s"
-msgstr "Устройство '%s' хочет отправить файл: %s %s"
+msgstr "Устройство «%s» хочет отправить файл: %s %s"
 
 #: src/dialogs/sendto/Application.vala:317
 msgid "Accept"
@@ -263,19 +331,6 @@ msgstr "Скорость передачи"
 #: src/panel/applets/tasklist/TasklistButtonPopover.vala:39
 msgid "Close"
 msgstr "Закрыть"
-
-#: src/dialogs/sendto/Dialog/BaseDialog.vala:109
-#: src/dialogs/sendto/Dialog/FileSender.vala:143
-#: src/dialogs/sendto/Dialog/FileSender.vala:224
-#: src/dialogs/screenshot/screenshot.vala:1281
-#: src/panel/applets/budgie-menu/IconChooser.vala:52
-#: src/panel/settings/settings_autostart.vala:194
-#: src/panel/settings/settings_autostart.vala:359
-#: src/panel/settings/settings_panel_dialogs.vala:158
-#: src/panel/settings/settings_plugin_chooser.vala:105
-#: src/daemon/endsession.ui.h:3 src/dialogs/polkit/dialog.ui.h:8
-msgid "Cancel"
-msgstr "Отмена"
 
 #: src/dialogs/sendto/Dialog/BaseDialog.vala:156
 #, c-format
@@ -391,12 +446,12 @@ msgstr "Не удалось передать файл"
 #: src/dialogs/sendto/Dialog/FileReceiver.vala:54
 #, c-format
 msgid "File '%s' not received from %s"
-msgstr "Файл '%s' не был получен от %s"
+msgstr "Файл «%s» не был получен от %s"
 
 #: src/dialogs/sendto/Dialog/FileReceiver.vala:75
 #, c-format
 msgid "File '%s' from %s not received: %s"
-msgstr "Файл '%s' от %s не был получен: %s"
+msgstr "Файл «%s» от %s не был получен: %s"
 
 #: src/dialogs/sendto/Dialog/FileReceiver.vala:92
 #: src/dialogs/sendto/Dialog/FileSender.vala:274
@@ -406,7 +461,7 @@ msgstr "Успешная передача файла"
 #: src/dialogs/sendto/Dialog/FileReceiver.vala:93
 #, c-format
 msgid "Saved file from %s to '%s'"
-msgstr "Сохраненный файл от %s на '%s'"
+msgstr "Сохранённый файл от %s на «%s»"
 
 #: src/dialogs/sendto/Dialog/FileSender.vala:33
 msgid "From"
@@ -424,7 +479,7 @@ msgstr "Попытка подключения к %s..."
 #: src/dialogs/sendto/Dialog/FileSender.vala:136
 #, c-format
 msgid "Connecting to '%s' failed"
-msgstr "Подключение к '%s' не удалось"
+msgstr "Подключение к «%s» не удалось"
 
 #: src/dialogs/sendto/Dialog/FileSender.vala:139
 #: src/dialogs/sendto/Dialog/FileSender.vala:220
@@ -444,7 +499,7 @@ msgstr "Ожидание принятия на %s..."
 #: src/dialogs/sendto/Dialog/FileSender.vala:217
 #, c-format
 msgid "Transferring '%s' failed"
-msgstr "Передача '%s' не удалась"
+msgstr "Передача «%s» не удалась"
 
 #: src/dialogs/sendto/Dialog/FileSender.vala:219
 #, c-format
@@ -471,66 +526,26 @@ msgstr "Убедитесь, что ваши устройства видны и �
 msgid "Available Devices"
 msgstr "Доступные устройства"
 
-#: src/dialogs/screenshot/screenshot.vala:365
-#: src/dialogs/screenshot/screenshot.vala:833
-#: src/daemon/org.buddiesofbudgie.BudgieScreenshot.desktop.in.h:1
-#: src/dialogs/screenshot/budgie-screenshot.desktop.in.h:1
-msgid "Budgie Screenshot"
-msgstr "Снимок экрана Budgie"
-
-#. Translators: be as brief as possible; popovers are cut off if broader than
-#. the window
-#: src/dialogs/screenshot/screenshot.vala:481
-msgid "Screenshot entire screen"
-msgstr "Снимок всего экрана"
-
-#: src/dialogs/screenshot/screenshot.vala:483
-msgid "Screenshot active window"
-msgstr "Сделать снимок экрана активного окна"
-
-#: src/dialogs/screenshot/screenshot.vala:485
-msgid "Screenshot selected area"
-msgstr "Снимок выбранной области экран"
-
-#. translate
-#: src/dialogs/screenshot/screenshot.vala:897
-msgid "Cancel screenshot"
-msgstr "Прекратить снимок экрана"
-
-#: src/dialogs/screenshot/screenshot.vala:898
-msgid "Save screenshot to the selected directory"
-msgstr "Сохранить снимок экрана в выбранном каталоге"
-
-#: src/dialogs/screenshot/screenshot.vala:899
-msgid "Copy screenshot to the clipboard"
-msgstr "Скопировать снимок экрана в буфер обмена"
-
-#: src/dialogs/screenshot/screenshot.vala:900
-msgid "Open screenshot in default application"
-msgstr "Открыть снимок экрана в стандартном приложении"
-
-#. Other -> call Filebrowser (path = null)
-#. 'Other' is about setting a custom directory on a dropdown list
-#: src/dialogs/screenshot/screenshot.vala:1191
-msgid "Other..."
-msgstr "Другие..."
-
-#. Hide the AfterShot window while the file chooser is open
-#. set custom dir to found dir
-#: src/dialogs/screenshot/screenshot.vala:1280
-msgid "Open Folder"
-msgstr "Открыть папку"
-
-#: src/dialogs/screenshot/screenshot.vala:1281
-msgid "Open"
-msgstr "Открыть"
-
 #. Caffeine Notification
 #. Prepare label widget
 #: src/lib/notification.vala:80
 #: src/panel/applets/caffeine/CaffeineWindow.vala:37
 msgid "Caffeine Mode"
 msgstr "Режим Caffeine"
+
+#: src/panel/applets/budgie-menu/BudgieMenuWindow.vala:108
+#: src/panel/settings/settings_main.vala:68
+#: src/panel/budgie-desktop-settings.desktop.in:2
+msgid "Budgie Desktop Settings"
+msgstr "Настройки рабочего стола Budgie"
+
+#: src/panel/applets/budgie-menu/BudgieMenuWindow.vala:111
+msgid "System Settings"
+msgstr "Настройки системы"
+
+#: src/panel/applets/budgie-menu/BudgieMenuWindow.vala:114
+msgid "Power"
+msgstr "Питание"
 
 #: src/panel/applets/budgie-menu/IconChooser.vala:24
 msgid "Set menu icon from file"
@@ -548,28 +563,27 @@ msgstr "Все файлы"
 msgid "Set icon"
 msgstr "Установить значок"
 
+#: src/panel/applets/budgie-menu/buttons/CategoryButton.vala:43
+#: src/panel/applets/budgie-menu/views/ListView.vala:523
+msgid "Favorites"
+msgstr ""
+
+#: src/panel/applets/budgie-menu/buttons/CategoryButton.vala:45
+msgid "All"
+msgstr "Все"
+
+#: src/panel/applets/budgie-menu/buttons/MenuButton.vala:163
+msgid "Remove from favorites"
+msgstr ""
+
+#: src/panel/applets/budgie-menu/buttons/MenuButton.vala:164
+msgid "Add to favorites"
+msgstr ""
+
 #. placeholder in case of no results
 #: src/panel/applets/budgie-menu/views/ListView.vala:111
 msgid "Sorry, no items found"
 msgstr "Извините, ничего не найдено"
-
-#: src/panel/applets/budgie-menu/BudgieMenuWindow.vala:66
-#: src/panel/settings/settings_main.vala:68
-#: src/panel/budgie-desktop-settings.desktop.in.h:1
-msgid "Budgie Desktop Settings"
-msgstr "Настройки рабочего стола Budgie"
-
-#: src/panel/applets/budgie-menu/BudgieMenuWindow.vala:69
-msgid "System Settings"
-msgstr "Настройки системы"
-
-#: src/panel/applets/budgie-menu/BudgieMenuWindow.vala:72
-msgid "Power"
-msgstr "Питание"
-
-#: src/panel/applets/budgie-menu/BudgieMenuButtons.vala:33
-msgid "All"
-msgstr "Все"
 
 #: src/panel/applets/caffeine/CaffeineWindow.vala:39
 msgid "Timer (minutes)"
@@ -580,53 +594,53 @@ msgid "System time and date settings"
 msgstr "Настройки времени и даты"
 
 #: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:30
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:122
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:87
 msgid "Unfavorite"
 msgstr "Удалить из избранного"
 
 #: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:30
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:122
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:87
 msgid "Favorite"
 msgstr "Добавить в избранное"
 
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:111
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:76
 msgid "Close all windows"
-msgstr ""
+msgstr "Закрыть все окна"
 
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:129
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:94
 msgid "Launch new instance"
-msgstr ""
+msgstr "Запустить новый экземпляр"
 
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:271
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:240
 #: src/panel/applets/tasklist/TasklistButtonPopover.vala:32
 msgid "Minimize"
 msgstr "Свернуть"
 
 #. Translators: This is used for buttons to move applications to another
 #. Workspace
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:338
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:307
 #: src/panel/applets/tasklist/TasklistButtonPopover.vala:106
 #, c-format
 msgid "Move to %s"
-msgstr ""
+msgstr "Переместить на %s"
 
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:361
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:330
 #: src/panel/applets/tasklist/TasklistButtonPopover.vala:129
 msgid "Unmaximize"
 msgstr "Восстановить размер"
 
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:361
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:330
 #: src/panel/applets/tasklist/TasklistButtonPopover.vala:129
 msgid "Maximize"
 msgstr "Развернуть"
 
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:400
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:369
 msgid "Close window"
-msgstr ""
+msgstr "Закрыть окно"
 
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:405
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:374
 msgid "Show window controls"
-msgstr ""
+msgstr "Показать управление окном"
 
 #: src/panel/applets/lock-keys/LockKeysApplet.vala:68
 msgid "Caps lock is active"
@@ -699,7 +713,7 @@ msgstr "Размонтировать"
 #: src/panel/applets/places-indicator/PlaceItem.vala:41
 #, c-format
 msgid "Open \"%s\""
-msgstr "Открыть \"%s\""
+msgstr "Открыть «%s»"
 
 #: src/panel/applets/places-indicator/MountItem.vala:75
 #: src/panel/applets/places-indicator/VolumeItem.vala:83
@@ -721,13 +735,26 @@ msgstr "Ошибка при размонтировании тома"
 #: src/panel/applets/places-indicator/PlacesIndicator.vala:80
 #: src/panel/applets/places-indicator/PlacesSection.vala:22
 #: src/panel/applets/places-indicator/PlacesSection.vala:44
+#: src/panel/applets/places-indicator/PlacesIndicator.plugin.desktop.in:4
 msgid "Places"
 msgstr "Места"
+
+#: src/panel/applets/places-indicator/PlacesIndicatorWindow.vala:179
+msgid "Nothing to display right now"
+msgstr "Сейчас нечего показывать"
+
+#: src/panel/applets/places-indicator/PlacesIndicatorWindow.vala:183
+msgid "Mount some drives"
+msgstr "Смонтируйте какие-нибудь диски"
+
+#: src/panel/applets/places-indicator/PlacesIndicatorWindow.vala:183
+msgid "Enable more sections"
+msgstr "Включите больше секций"
 
 #: src/panel/applets/places-indicator/VolumeItem.vala:41
 #, c-format
 msgid "Mount and open \"%s\""
-msgstr "Смонтировать и открыть \"%s\""
+msgstr "Смонтировать и открыть «%s»"
 
 #: src/panel/applets/places-indicator/VolumeItem.vala:73
 #: src/panel/applets/places-indicator/VolumeItem.vala:114
@@ -741,18 +768,6 @@ msgstr "Введенный пароль неверен"
 #: src/panel/applets/places-indicator/VolumeItem.vala:116
 msgid "An unknown error occurred while attempting to mount this volume"
 msgstr "Произошла неизвестная ошибка при попытке монтирования этого тома"
-
-#: src/panel/applets/places-indicator/PlacesIndicatorWindow.vala:179
-msgid "Nothing to display right now"
-msgstr "Сейчас нечего показывать"
-
-#: src/panel/applets/places-indicator/PlacesIndicatorWindow.vala:183
-msgid "Mount some drives"
-msgstr "Смонтируйте какие-нибудь диски"
-
-#: src/panel/applets/places-indicator/PlacesIndicatorWindow.vala:183
-msgid "Enable more sections"
-msgstr "Включите больше секций"
 
 #: src/panel/applets/show-desktop/ShowDesktopApplet.vala:37
 msgid "Toggle the desktop"
@@ -815,6 +830,7 @@ msgid "Failed to connect"
 msgstr "Ошибка подключения"
 
 #: src/panel/applets/status/BluetoothIndicator.vala:656
+#: src/panel/settings/settings_displays.vala:358
 msgid "Connected"
 msgstr "Подключено"
 
@@ -874,6 +890,82 @@ msgstr "Производительность"
 msgid "Power settings"
 msgstr "Настройки питания"
 
+#: src/panel/applets/trash/trash_applet.c:228
+#: src/panel/applets/trash/trash_item_row.c:332
+#: src/panel/applets/trash/trash_item_row.c:363
+msgid "Trash Error"
+msgstr ""
+
+#: src/panel/applets/trash/trash_item_row.c:155
+msgid "Permanently delete this item"
+msgstr ""
+
+#: src/panel/applets/trash/trash_item_row.c:162
+msgid "Are you sure you want to delete this item?"
+msgstr ""
+
+#: src/panel/applets/trash/trash_item_row.c:168
+#: src/panel/applets/trash/trash_popover.c:320
+msgid "No"
+msgstr ""
+
+#: src/panel/applets/trash/trash_item_row.c:169
+#: src/panel/applets/trash/trash_popover.c:321
+msgid "Yes"
+msgstr ""
+
+#: src/panel/applets/trash/trash_item_row.c:333
+#, c-format
+msgid "Unable to delete '%s': %s"
+msgstr ""
+
+#: src/panel/applets/trash/trash_item_row.c:364
+#, c-format
+msgid "Unable to restore '%s': %s"
+msgstr ""
+
+#: src/panel/applets/trash/trash_popover.c:119
+#: src/panel/applets/trash/TrashApplet.plugin.desktop.in:4
+msgid "Trash Bin"
+msgstr ""
+
+#: src/panel/applets/trash/trash_popover.c:125
+#: src/panel/settings/settings_panel.vala:103
+#: src/panel/settings/settings_raven.vala:48
+msgid "Settings"
+msgstr "Настройки"
+
+#. Header label
+#. Switcher to show or hide a shortcut to Trash
+#: src/panel/applets/trash/trash_popover.c:274
+#: src/panel/settings/settings_desktop.vala:103
+msgid "Trash"
+msgstr "Корзина"
+
+#: src/panel/applets/trash/trash_popover.c:283
+msgid "Trash Applet Settings"
+msgstr ""
+
+#: src/panel/applets/trash/trash_popover.c:300
+msgid "Restore"
+msgstr ""
+
+#: src/panel/applets/trash/trash_popover.c:301
+msgid "Restore selected items"
+msgstr ""
+
+#: src/panel/applets/trash/trash_popover.c:303
+msgid "Empty"
+msgstr ""
+
+#: src/panel/applets/trash/trash_popover.c:304
+msgid "Empty the trash bin"
+msgstr ""
+
+#: src/panel/applets/trash/trash_popover.c:311
+msgid "Are you sure you want to empty the trash bin?"
+msgstr ""
+
 #. User Menu Creation
 #: src/panel/applets/user-indicator/UserIndicatorWindow.vala:98
 msgid "User"
@@ -894,17 +986,17 @@ msgid "Hibernate"
 msgstr "Гибернация"
 
 #: src/panel/applets/user-indicator/UserIndicatorWindow.vala:107
-#: src/daemon/endsession.ui.h:5
+#: src/daemon/endsession.ui:124
 msgid "Restart"
 msgstr "Перезагрузить"
 
 #: src/panel/applets/user-indicator/UserIndicatorWindow.vala:108
-#: src/daemon/endsession.ui.h:6
+#: src/daemon/endsession.ui:142
 msgid "Shutdown"
 msgstr "Выключить"
 
 #: src/panel/applets/user-indicator/UserIndicatorWindow.vala:207
-#: src/daemon/endsession.ui.h:4
+#: src/daemon/endsession.ui:106
 msgid "Logout"
 msgstr "Выйти"
 
@@ -920,12 +1012,12 @@ msgstr "Удалить"
 #: src/panel/applets/workspaces/WorkspacesApplet.vala:121
 #: src/panel/applets/workspaces/WorkspacesApplet.vala:226
 msgid "Not able to create new workspaces"
-msgstr ""
+msgstr "Невозможно создать новые рабочие столы"
 
 #: src/panel/applets/workspaces/WorkspacesApplet.vala:123
 #: src/panel/applets/workspaces/WorkspacesApplet.vala:229
 msgid "Create a new workspace"
-msgstr ""
+msgstr "Создать новый рабочий стол"
 
 #: src/panel/settings/settings_autostart.vala:134
 msgid "Untitled"
@@ -1035,11 +1127,6 @@ msgstr "Домашняя папка"
 msgid "Add a shortcut to your home directory on the desktop."
 msgstr "Добавить ярлык домашней папки на рабочий стол."
 
-#. Switcher to show or hide a shortcut to Trash
-#: src/panel/settings/settings_desktop.vala:103
-msgid "Trash"
-msgstr "Корзина"
-
 #: src/panel/settings/settings_desktop.vala:104
 msgid "Add a shortcut to the Trash directory on the desktop."
 msgstr "Добавить ярлык корзины на рабочий стол."
@@ -1056,54 +1143,119 @@ msgstr "Размер значков"
 msgid "Set the desired size of icons on the desktop."
 msgstr "Установить желаемый размер значков на рабочем столе."
 
-#: src/panel/settings/settings_desktop.vala:148
+#: src/panel/settings/settings_desktop.vala:136
 msgid "Number of virtual desktops"
 msgstr "Число виртуальных рабочих столов"
 
-#: src/panel/settings/settings_desktop.vala:149
+#: src/panel/settings/settings_desktop.vala:137
 msgid ""
 "Number of virtual desktops / workspaces to create automatically on startup."
 msgstr ""
 "Количество создаваемых при загрузке виртуальных рабочих столов/пространств."
 
-#: src/panel/settings/settings_desktop.vala:217
+#: src/panel/settings/settings_desktop.vala:205
 msgid "Single"
 msgstr "Одиночный"
 
 #. If the click policy is to double click
-#: src/panel/settings/settings_desktop.vala:221
+#: src/panel/settings/settings_desktop.vala:209
 msgid "Double"
 msgstr "Двойной"
 
-#: src/panel/settings/settings_desktop.vala:236
+#: src/panel/settings/settings_desktop.vala:224
 msgid "Click Policy"
 msgstr "Политика нажатий"
 
-#: src/panel/settings/settings_desktop.vala:237
+#: src/panel/settings/settings_desktop.vala:225
 msgid ""
 "Click Policy determines if we should open items on a single or double click."
 msgstr ""
 "Политика нажатий определяет, следует ли открывать элементы одиночным или "
 "двойным нажатием."
 
-#: src/panel/settings/settings_desktop.vala:289
+#: src/panel/settings/settings_desktop.vala:277
 msgid "Normal"
 msgstr "Нормальный"
 
 #. Small
-#: src/panel/settings/settings_desktop.vala:292
+#: src/panel/settings/settings_desktop.vala:280
 msgid "Small"
 msgstr "Маленький"
 
 #. Large
-#: src/panel/settings/settings_desktop.vala:294
+#: src/panel/settings/settings_desktop.vala:282
 msgid "Large"
 msgstr "Большой"
 
 #. Massive
-#: src/panel/settings/settings_desktop.vala:296
+#: src/panel/settings/settings_desktop.vala:284
 msgid "Massive"
 msgstr "Огромный"
+
+#: src/panel/settings/settings_displays.vala:24
+msgid "Displays"
+msgstr ""
+
+#: src/panel/settings/settings_displays.vala:49
+msgid "Connected Monitors"
+msgstr ""
+
+#: src/panel/settings/settings_displays.vala:62
+msgid "Panel Placement"
+msgstr ""
+
+#: src/panel/settings/settings_displays.vala:62
+msgid ""
+"Select which monitor should be the primary display for panel placement."
+msgstr ""
+
+#: src/panel/settings/settings_displays.vala:64
+msgid "Use Automatic Selection"
+msgstr ""
+
+#: src/panel/settings/settings_displays.vala:68
+msgid "Clear Primary Monitor"
+msgstr ""
+
+#: src/panel/settings/settings_displays.vala:69
+msgid "Remove manual primary monitor selection."
+msgstr ""
+
+#: src/panel/settings/settings_displays.vala:83
+msgid "Fallback Monitors"
+msgstr ""
+
+#: src/panel/settings/settings_displays.vala:83
+msgid "Order used when primary is disconnected"
+msgstr ""
+
+#: src/panel/settings/settings_displays.vala:165
+msgid "No monitors detected"
+msgstr ""
+
+#: src/panel/settings/settings_displays.vala:195
+msgid "No fallback monitors configured"
+msgstr ""
+
+#: src/panel/settings/settings_displays.vala:232
+msgid "Primary"
+msgstr ""
+
+#: src/panel/settings/settings_displays.vala:256
+msgid "Unknown model"
+msgstr ""
+
+#: src/panel/settings/settings_displays.vala:278
+msgid "Set as Primary"
+msgstr ""
+
+#: src/panel/settings/settings_displays.vala:342
+msgid "(last known)"
+msgstr ""
+
+#: src/panel/settings/settings_displays.vala:349
+msgid "No cached information"
+msgstr ""
 
 #: src/panel/settings/settings_fonts.vala:31
 msgid "Fonts"
@@ -1164,7 +1316,7 @@ msgstr "Легкий"
 
 #: src/panel/settings/settings_fonts.vala:83
 #: src/panel/settings/settings_fonts.vala:109
-#: src/panel/settings/settings_panel.vala:246
+#: src/panel/settings/settings_panel.vala:318
 msgid "None"
 msgstr "Нет"
 
@@ -1204,36 +1356,193 @@ msgstr "Панели"
 msgid "Session"
 msgstr "Сессия"
 
-#: src/panel/settings/settings_main.vala:99
+#: src/panel/settings/settings_main.vala:100
 msgid "Create new panel"
 msgstr "Создать новую панель"
+
+#: src/panel/settings/settings_panel.vala:102
+#: src/panel/settings/settings_panel.vala:220
+msgid "Applets"
+msgstr "Апплеты"
+
+#: src/panel/settings/settings_panel.vala:105
+msgid "Remove Panel"
+msgstr "Удалить панель"
+
+#: src/panel/settings/settings_panel.vala:106
+msgid "Remove this panel from the screen"
+msgstr "Убрать эту панель с экрана"
+
+#: src/panel/settings/settings_panel.vala:243
+msgid "Top Dock"
+msgstr "Верхний док"
+
+#: src/panel/settings/settings_panel.vala:245
+msgid "Right Dock"
+msgstr "Правый док"
+
+#: src/panel/settings/settings_panel.vala:247
+msgid "Left Dock"
+msgstr "Левый док"
+
+#: src/panel/settings/settings_panel.vala:249
+msgid "Bottom Dock"
+msgstr "Нижний док"
+
+#: src/panel/settings/settings_panel.vala:254
+msgid "Top Panel"
+msgstr "Верхняя панель"
+
+#: src/panel/settings/settings_panel.vala:256
+msgid "Right Panel"
+msgstr "Правая панель"
+
+#: src/panel/settings/settings_panel.vala:258
+msgid "Left Panel"
+msgstr "Левая панель"
+
+#: src/panel/settings/settings_panel.vala:260
+msgid "Bottom Panel"
+msgstr "Нижняя панель"
+
+#: src/panel/settings/settings_panel.vala:297
+msgid "Top"
+msgstr "Сверху"
+
+#: src/panel/settings/settings_panel.vala:299 src/raven/raven.vala:35
+msgid "Right"
+msgstr "Справа"
+
+#: src/panel/settings/settings_panel.vala:301
+#: src/panel/settings/settings_wm.vala:84 src/raven/raven.vala:33
+msgid "Left"
+msgstr "Слева"
+
+#: src/panel/settings/settings_panel.vala:303
+msgid "Bottom"
+msgstr "Снизу"
+
+#: src/panel/settings/settings_panel.vala:313
+msgid "Always"
+msgstr "Всегда"
+
+#: src/panel/settings/settings_panel.vala:315
+msgid "Dynamic"
+msgstr "Динамически"
+
+#: src/panel/settings/settings_panel.vala:328 src/raven/raven.vala:38
+msgid "Automatic"
+msgstr "Автоматически"
+
+#: src/panel/settings/settings_panel.vala:330
+msgid "Intelligent"
+msgstr "Умно"
+
+#: src/panel/settings/settings_panel.vala:333
+msgid "Never"
+msgstr "Никогда"
+
+#: src/panel/settings/settings_panel.vala:350
+msgid "Position"
+msgstr "Расположение"
+
+#: src/panel/settings/settings_panel.vala:351
+msgid "Set the edge of the screen that this panel will stay on"
+msgstr "Задать край экрана для привязки панели"
+
+#: src/panel/settings/settings_panel.vala:359
+msgid "Size"
+msgstr "Размер"
+
+#: src/panel/settings/settings_panel.vala:360
+msgid "Set the size (width or height, depending on orientation) of this panel"
+msgstr ""
+"Задать размер (ширину или высоту, в зависимости от ориентации) этой панели"
+
+#: src/panel/settings/settings_panel.vala:367
+msgid "Spacing"
+msgstr "Интервал"
+
+#: src/panel/settings/settings_panel.vala:368
+msgid "Set the spacing between applets for this panel"
+msgstr "Установите интервал между апплетами для этой панели"
+
+#: src/panel/settings/settings_panel.vala:375
+msgid "Automatically hide"
+msgstr "Автоматически скрывать"
+
+#: src/panel/settings/settings_panel.vala:376
+msgid "When set, this panel will hide from view to maximize screen estate"
+msgstr ""
+"Если задано, эта панель будет скрываться для максимизации экранного "
+"пространства"
+
+#: src/panel/settings/settings_panel.vala:383
+msgid "Transparency"
+msgstr "Прозрачность"
+
+#: src/panel/settings/settings_panel.vala:384
+msgid "Control when this panel should have a solid background"
+msgstr "Задать прозрачность фона для этой панели"
+
+#: src/panel/settings/settings_panel.vala:389
+msgid "Shadow"
+msgstr "Тень"
+
+#: src/panel/settings/settings_panel.vala:390
+msgid "Adds a decorative drop-shadow, ideal for opaque panels"
+msgstr "Добавляет декоративную тень, идеально для прозрачных панелей"
+
+#: src/panel/settings/settings_panel.vala:396
+msgid "Stylize regions"
+msgstr "Стилизовать регионы"
+
+#: src/panel/settings/settings_panel.vala:397
+msgid ""
+"Adds a hint to the panel so that each of the panel's three main areas may be"
+" themed differently."
+msgstr ""
+"Настраивает панель так, что каждая из трех основных областей панели может "
+"иметь свою тему."
+
+#: src/panel/settings/settings_panel.vala:404
+msgid "Dock mode"
+msgstr "Режим дока"
+
+#: src/panel/settings/settings_panel.vala:405
+msgid ""
+"When in dock mode, the panel will use the minimal amount of space possible, "
+"freeing up valuable screen estate"
+msgstr ""
+"Находясь в режиме дока, панель будет использовать минимально возможную "
+"площадь, освобождая полезное экранное пространство"
 
 #: src/panel/settings/settings_panel_applets.vala:21
 msgid "Applet Settings"
 msgstr "Настройки апплета"
 
-#: src/panel/settings/settings_panel_applets.vala:235
+#: src/panel/settings/settings_panel_applets.vala:246
 msgid "Add applet"
 msgstr "Добавить апплет"
 
-#: src/panel/settings/settings_panel_applets.vala:236
+#: src/panel/settings/settings_panel_applets.vala:247
 msgid "Choose a new applet to add to this panel"
 msgstr "Выбрать новый апплет для добавления на эту панель"
 
-#: src/panel/settings/settings_panel_applets.vala:250
+#: src/panel/settings/settings_panel_applets.vala:261
 #: src/panel/settings/settings_raven_widgets.vala:164
 msgid "No settings available"
 msgstr "Нет доступных настроек"
 
-#: src/panel/settings/settings_panel_applets.vala:403
+#: src/panel/settings/settings_panel_applets.vala:414
 msgid "Start"
 msgstr "Начало"
 
-#: src/panel/settings/settings_panel_applets.vala:406
+#: src/panel/settings/settings_panel_applets.vala:417
 msgid "Center"
 msgstr "Центр"
 
-#: src/panel/settings/settings_panel_applets.vala:409
+#: src/panel/settings/settings_panel_applets.vala:420
 msgid "End"
 msgstr "Конец"
 
@@ -1309,15 +1618,10 @@ msgstr "около %s"
 msgid "No authors listed"
 msgstr "Нет списка артистов"
 
-#: src/panel/settings/settings_raven.vala:47
-#: src/panel/settings/settings_style.vala:52 src/raven/main_view.vala:53
+#: src/panel/settings/settings_raven.vala:47 src/raven/main_view.vala:53
+msgctxt "Raven"
 msgid "Widgets"
-msgstr "Виджеты"
-
-#: src/panel/settings/settings_raven.vala:48
-#: src/panel/settings/settings_panel.vala:91
-msgid "Settings"
-msgstr "Настройки"
+msgstr ""
 
 #: src/panel/settings/settings_raven_settings.vala:47
 msgid "Set Raven position"
@@ -1396,161 +1700,95 @@ msgstr ""
 msgid "Failed to create the widget instance due to an unknown failure."
 msgstr "Ошибка создания экземпляра виджета из-за неизвестной ошибки."
 
-#: src/panel/settings/settings_panel.vala:90
-msgid "Applets"
-msgstr "Апплеты"
+#: src/panel/settings/settings_style.vala:36
+msgid "Style"
+msgstr "Стиль"
 
-#: src/panel/settings/settings_panel.vala:93
-msgid "Remove Panel"
-msgstr "Удалить панель"
-
-#: src/panel/settings/settings_panel.vala:94
-msgid "Remove this panel from the screen"
-msgstr "Убрать эту панель с экрана"
-
-#: src/panel/settings/settings_panel.vala:171
-msgid "Top Dock"
-msgstr "Верхний док"
-
-#: src/panel/settings/settings_panel.vala:173
-msgid "Right Dock"
-msgstr "Правый док"
-
-#: src/panel/settings/settings_panel.vala:175
-msgid "Left Dock"
-msgstr "Левый док"
-
-#: src/panel/settings/settings_panel.vala:177
-msgid "Bottom Dock"
-msgstr "Нижний док"
-
-#: src/panel/settings/settings_panel.vala:182
-msgid "Top Panel"
-msgstr "Верхняя панель"
-
-#: src/panel/settings/settings_panel.vala:184
-msgid "Right Panel"
-msgstr "Правая панель"
-
-#: src/panel/settings/settings_panel.vala:186
-msgid "Left Panel"
-msgstr "Левая панель"
-
-#: src/panel/settings/settings_panel.vala:188
-msgid "Bottom Panel"
-msgstr "Нижняя панель"
-
-#: src/panel/settings/settings_panel.vala:225
-msgid "Top"
-msgstr "Сверху"
-
-#: src/panel/settings/settings_panel.vala:227 src/raven/raven.vala:35
-msgid "Right"
-msgstr "Справа"
-
-#: src/panel/settings/settings_panel.vala:229
-#: src/panel/settings/settings_wm.vala:84 src/raven/raven.vala:33
-msgid "Left"
-msgstr "Слева"
-
-#: src/panel/settings/settings_panel.vala:231
-msgid "Bottom"
-msgstr "Снизу"
-
-#: src/panel/settings/settings_panel.vala:241
-msgid "Always"
-msgstr "Всегда"
-
-#: src/panel/settings/settings_panel.vala:243
-msgid "Dynamic"
-msgstr "Динамически"
-
-#: src/panel/settings/settings_panel.vala:256 src/raven/raven.vala:38
-msgid "Automatic"
-msgstr "Автоматически"
-
-#: src/panel/settings/settings_panel.vala:258
-msgid "Intelligent"
-msgstr "Умно"
-
-#: src/panel/settings/settings_panel.vala:261
-msgid "Never"
-msgstr "Никогда"
-
-#: src/panel/settings/settings_panel.vala:278
-msgid "Position"
-msgstr "Расположение"
-
-#: src/panel/settings/settings_panel.vala:279
-msgid "Set the edge of the screen that this panel will stay on"
-msgstr "Задать край экрана для привязки панели"
-
-#: src/panel/settings/settings_panel.vala:287
-msgid "Size"
-msgstr "Размер"
-
-#: src/panel/settings/settings_panel.vala:288
-msgid "Set the size (width or height, depending on orientation) of this panel"
+#: src/panel/settings/settings_style.vala:52
+msgctxt "Styling"
+msgid "Widgets"
 msgstr ""
-"Задать размер (ширину или высоту, в зависимости от ориентации) этой панели"
 
-#: src/panel/settings/settings_panel.vala:295
-msgid "Spacing"
-msgstr "Интервал"
+#: src/panel/settings/settings_style.vala:53
+msgid "Set the appearance of window decorations and controls"
+msgstr "Устанавливает внешний вид окон и элементов управления"
 
-#: src/panel/settings/settings_panel.vala:296
-msgid "Set the spacing between applets for this panel"
-msgstr "Установите интервал между апплетами для этой панели"
+#: src/panel/settings/settings_style.vala:57
+msgid "Icons"
+msgstr "Значки"
 
-#: src/panel/settings/settings_panel.vala:303
-msgid "Automatically hide"
-msgstr "Автоматически скрывать"
+#: src/panel/settings/settings_style.vala:58
+msgid "Set the globally used icon theme"
+msgstr "Устанавливает глобально используемую тему значков"
 
-#: src/panel/settings/settings_panel.vala:304
-msgid "When set, this panel will hide from view to maximize screen estate"
-msgstr ""
-"Если задано, эта панель будет скрываться для максимизации экранного "
-"пространства"
+#: src/panel/settings/settings_style.vala:62
+msgid "Cursors"
+msgstr "Курсоры"
 
-#: src/panel/settings/settings_panel.vala:311
-msgid "Transparency"
-msgstr "Прозрачность"
+#: src/panel/settings/settings_style.vala:63
+msgid "Set the globally used mouse cursor theme"
+msgstr "Устанавливает глобально используемую тему курсоров мыши"
 
-#: src/panel/settings/settings_panel.vala:312
-msgid "Control when this panel should have a solid background"
-msgstr "Задать прозрачность фона для этой панели"
+#: src/panel/settings/settings_style.vala:67
+msgid "Notification Position"
+msgstr "Позиция уведомлений"
 
-#: src/panel/settings/settings_panel.vala:317
-msgid "Shadow"
-msgstr "Тень"
+#: src/panel/settings/settings_style.vala:68
+msgid "Set the location for notification popups"
+msgstr "Устанавливает местоположение всплывающих окон уведомлений"
 
-#: src/panel/settings/settings_panel.vala:318
-msgid "Adds a decorative drop-shadow, ideal for opaque panels"
-msgstr "Добавляет декоративную тень, идеально для прозрачных панелей"
+#: src/panel/settings/settings_style.vala:77
+msgid "Dark theme"
+msgstr "Тёмная тема"
 
-#: src/panel/settings/settings_panel.vala:324
-msgid "Stylize regions"
-msgstr "Стилизовать регионы"
+#: src/panel/settings/settings_style.vala:84
+msgid "Built-in theme"
+msgstr "Встроенная тема"
 
-#: src/panel/settings/settings_panel.vala:325
+#: src/panel/settings/settings_style.vala:85
 msgid ""
-"Adds a hint to the panel so that each of the panel's three main areas may be"
-" themed differently."
+"When enabled, the built-in theme will override the desktop component styling"
 msgstr ""
-"Настраивает панель так, что каждая из трех основных областей панели может "
-"иметь свою тему."
+"Когда включено, стиль компонентов рабочего стола будет заменен встроенной "
+"темой"
 
-#: src/panel/settings/settings_panel.vala:332
-msgid "Dock mode"
-msgstr "Режим дока"
+#: src/panel/settings/settings_style.vala:98
+msgid "Animations"
+msgstr "Анимации"
 
-#: src/panel/settings/settings_panel.vala:333
+#: src/panel/settings/settings_style.vala:99
+msgid "Control whether windows and controls use animations"
+msgstr "Управляет использованием анимаций окнами и элементами управления"
+
+#. Get display name for theme
+#: src/panel/settings/settings_style.vala:207
+msgid "Use theme"
+msgstr "Использовать тему"
+
+#: src/panel/settings/settings_style.vala:318
+msgid "Labwc Compositor Theme"
+msgstr "Тема композитора Labwc"
+
+#: src/panel/settings/settings_style.vala:319
 msgid ""
-"When in dock mode, the panel will use the minimal amount of space possible, "
-"freeing up valuable screen estate"
+"Override the labwc compositor theme independently from the desktop theme"
 msgstr ""
-"Находясь в режиме дока, панель будет использовать минимально возможную "
-"площадь, освобождая полезное экранное пространство"
+
+#: src/panel/settings/settings_style.vala:388
+msgid "Top Left"
+msgstr "Вверху слева"
+
+#: src/panel/settings/settings_style.vala:390
+msgid "Bottom Left"
+msgstr "Внизу слева"
+
+#: src/panel/settings/settings_style.vala:392
+msgid "Bottom Right"
+msgstr "Внизу справа"
+
+#: src/panel/settings/settings_style.vala:395
+msgid "Top Right"
+msgstr "Вверху справа"
 
 #: src/panel/settings/settings_wm.vala:29
 msgid "Windows"
@@ -1610,13 +1848,15 @@ msgstr ""
 
 #: src/panel/settings/settings_wm.vala:68
 msgid "Window focus mode"
-msgstr ""
+msgstr "Режим фокуса окон"
 
 #: src/panel/settings/settings_wm.vala:69
 msgid ""
 "Choose how windows receive focus: click to focus; sloppy to focus without "
 "raising windows; mouse to focus with raising."
 msgstr ""
+"Выберите, как окна получают фокус: по щелчку; «небрежный» — фокус без "
+"поднятия окон; по наведению мыши с поднятием окон."
 
 #: src/panel/settings/settings_wm.vala:74
 msgid "Show all windows in tab switcher"
@@ -1636,98 +1876,14 @@ msgstr "Справа (стандартное)"
 
 #: src/panel/settings/settings_wm.vala:97
 msgid "Click"
-msgstr ""
+msgstr "По щелчку"
 
 #: src/panel/settings/settings_wm.vala:99
 msgid "Sloppy"
-msgstr ""
-
-#: src/panel/settings/settings_style.vala:36
-msgid "Style"
-msgstr "Стиль"
-
-#: src/panel/settings/settings_style.vala:53
-msgid "Set the appearance of window decorations and controls"
-msgstr "Устанавливает внешний вид окон и элементов управления"
-
-#: src/panel/settings/settings_style.vala:57
-msgid "Icons"
-msgstr "Значки"
-
-#: src/panel/settings/settings_style.vala:58
-msgid "Set the globally used icon theme"
-msgstr "Устанавливает глобально используемую тему значков"
-
-#: src/panel/settings/settings_style.vala:62
-msgid "Cursors"
-msgstr "Курсоры"
-
-#: src/panel/settings/settings_style.vala:63
-msgid "Set the globally used mouse cursor theme"
-msgstr "Устанавливает глобально используемую тему курсоров мыши"
-
-#: src/panel/settings/settings_style.vala:67
-msgid "Notification Position"
-msgstr "Позиция уведомлений"
-
-#: src/panel/settings/settings_style.vala:68
-msgid "Set the location for notification popups"
-msgstr "Устанавливает местоположение всплывающих окон уведомлений"
-
-#: src/panel/settings/settings_style.vala:77
-msgid "Dark theme"
-msgstr "Тёмная тема"
-
-#: src/panel/settings/settings_style.vala:84
-msgid "Built-in theme"
-msgstr "Встроенная тема"
-
-#: src/panel/settings/settings_style.vala:85
-msgid ""
-"When enabled, the built-in theme will override the desktop component styling"
-msgstr ""
-"Когда включено, стиль компонентов рабочего стола будет заменен встроенной "
-"темой"
-
-#: src/panel/settings/settings_style.vala:98
-msgid "Animations"
-msgstr "Анимации"
-
-#: src/panel/settings/settings_style.vala:99
-msgid "Control whether windows and controls use animations"
-msgstr "Управляет использованием анимаций окнами и элементами управления"
-
-#. Get display name for theme
-#: src/panel/settings/settings_style.vala:207
-msgid "Use theme"
-msgstr ""
-
-#: src/panel/settings/settings_style.vala:318
-msgid "Labwc Compositor Theme"
-msgstr ""
-
-#: src/panel/settings/settings_style.vala:319
-msgid ""
-"Override the labwc compositor theme independently from the desktop theme."
-msgstr ""
-
-#: src/panel/settings/settings_style.vala:388
-msgid "Top Left"
-msgstr "Вверху слева"
-
-#: src/panel/settings/settings_style.vala:390
-msgid "Bottom Left"
-msgstr "Внизу слева"
-
-#: src/panel/settings/settings_style.vala:392
-msgid "Bottom Right"
-msgstr "Внизу справа"
-
-#: src/panel/settings/settings_style.vala:395
-msgid "Top Right"
-msgstr "Вверху справа"
+msgstr "Небрежный"
 
 #: src/raven/main_view.vala:56
+#: src/panel/applets/notifications/NotificationsApplet.plugin.desktop.in:4
 msgid "Notifications"
 msgstr "Уведомления"
 
@@ -1743,11 +1899,19 @@ msgstr "Не на что смотреть"
 msgid "No new notifications"
 msgstr "Нет новых уведомлений"
 
-#: src/raven/widgets/media-controls/media_controls.vala:155
+#: src/raven/raven.vala:49
+msgid "Oldest to newest"
+msgstr "От самого старого к самому новому"
+
+#: src/raven/raven.vala:52
+msgid "Newest to oldest"
+msgstr "От самого нового к самому старому"
+
+#: src/raven/widgets/media-controls/media_controls.vala:105
 msgid "No apps are currently playing audio."
 msgstr "Нет программ, проигрывающих аудио."
 
-#: src/raven/widgets/media-controls/media_controls.vala:164
+#: src/raven/widgets/media-controls/media_controls.vala:114
 msgid "Play some music"
 msgstr "Играть музыку"
 
@@ -1769,12 +1933,12 @@ msgstr "Неизвестный альбом"
 #: src/raven/widgets/media-controls/mpris_gui.vala:302
 #, c-format
 msgid "Playing - %s"
-msgstr "Проигрывается - %s"
+msgstr "Проигрывается — %s"
 
 #: src/raven/widgets/media-controls/mpris_gui.vala:309
 #, c-format
 msgid "Paused - %s"
-msgstr "Приостановлено - %s"
+msgstr "Приостановлено — %s"
 
 #: src/raven/widgets/sound-output/sound_output.vala:173
 msgid "No apps are playing audio."
@@ -1788,428 +1952,510 @@ msgstr "Приложения"
 msgid "Devices"
 msgstr "Устройства"
 
-#: src/raven/widgets/usage-monitor/usage_monitor.vala:47
-#: src/raven/widgets/usage-monitor/UsageMonitor.plugin.in.h:1
+#: src/raven/widgets/usage-monitor/usage_monitor.vala:52
+#: src/raven/widgets/usage-monitor/UsageMonitor.plugin.desktop.in:4
 msgid "Usage Monitor"
 msgstr "Монитор использования"
 
-#: src/raven/widgets/usage-monitor/usage_monitor.vala:83
-msgid "CPU"
-msgstr "ЦПУ"
-
 #: src/raven/widgets/usage-monitor/usage_monitor.vala:88
+msgid "CPU"
+msgstr "ЦП"
+
+#: src/raven/widgets/usage-monitor/usage_monitor.vala:93
 msgid "RAM"
 msgstr "ОЗУ"
 
-#: src/raven/widgets/usage-monitor/usage_monitor.vala:93
+#: src/raven/widgets/usage-monitor/usage_monitor.vala:98
 msgid "Swap"
-msgstr "Swap"
+msgstr "Подкачка"
 
-#: src/raven/raven.vala:49
-msgid "Oldest to newest"
-msgstr "От самого старого к самому новому"
-
-#: src/raven/raven.vala:52
-msgid "Newest to oldest"
-msgstr "От самого нового к самому старому"
-
-#: src/daemon/endsession.ui.h:2
+#: src/daemon/endsession.ui:71
 msgid "Are you sure you want to end your session?"
 msgstr "Вы уверены, что хотите завершить сессию?"
 
-#: src/dialogs/polkit/dialog.ui.h:1
+#: src/dialogs/polkit/dialog.ui:12 src/dialogs/polkit/dialog.ui:49
 msgid "Authentication Required"
 msgstr "Требуется аутентификация"
 
-#: src/dialogs/polkit/dialog.ui.h:2
+#: src/dialogs/polkit/dialog.ui:71
 msgid "Password:"
 msgstr "Пароль:"
 
-#: src/dialogs/polkit/dialog.ui.h:3
+#: src/dialogs/polkit/dialog.ui:103
 msgid "Username:"
-msgstr ""
+msgstr "Имя пользователя:"
 
-#: src/dialogs/polkit/dialog.ui.h:4
+#: src/dialogs/polkit/dialog.ui:131
 msgid "Authentication is required"
 msgstr "Требуется аутентификация"
 
-#: src/dialogs/polkit/dialog.ui.h:5
+#: src/dialogs/polkit/dialog.ui:184
 msgid "Details"
 msgstr "Детали"
 
-#: src/dialogs/polkit/dialog.ui.h:6
+#: src/dialogs/polkit/dialog.ui:224
 msgid "Action:"
 msgstr "Действие:"
 
-#: src/dialogs/polkit/dialog.ui.h:7
+#: src/dialogs/polkit/dialog.ui:259
 msgid "ID:"
 msgstr "ИД:"
 
-#: src/dialogs/polkit/dialog.ui.h:9
+#: src/dialogs/polkit/dialog.ui:335
 msgid "Authenticate"
 msgstr "Аутентифицироваться"
 
-#: src/dialogs/screenshot/aftershot.ui.h:1
+#: src/dialogs/screenshot/aftershot.ui:48
 msgid "Name:"
 msgstr "Имя:"
 
-#: src/dialogs/screenshot/aftershot.ui.h:2
+#: src/dialogs/screenshot/aftershot.ui:85
 msgid "Folder:"
 msgstr "Папка:"
 
-#: src/dialogs/screenshot/screenshothome.ui.h:1
+#: src/dialogs/screenshot/screenshothome.ui:35
 msgid "Delay in seconds"
 msgstr "Задержка в секундах"
 
-#: src/dialogs/screenshot/screenshothome.ui.h:2
+#: src/dialogs/screenshot/screenshothome.ui:91
 msgid "Show Pointer"
 msgstr "Показать курсор"
 
-#: src/dialogs/screenshot/screenshothome.ui.h:3
+#: src/dialogs/screenshot/screenshothome.ui:141
 msgid "Play sound when capturing"
 msgstr "Проигрывать звук при захвате"
 
-#: src/panel/applets/budgie-menu/settings.ui.h:1
+#: src/panel/applets/budgie-menu/settings.ui:23
 msgid "Show Menu Label"
 msgstr "Показывать подпись меню"
 
-#: src/panel/applets/budgie-menu/settings.ui.h:2
+#: src/panel/applets/budgie-menu/settings.ui:48
 msgid "Menu Label"
 msgstr "Подпись меню"
 
-#: src/panel/applets/budgie-menu/settings.ui.h:3
+#: src/panel/applets/budgie-menu/settings.ui:72
 msgid "Use Default Menu Icon"
 msgstr "Использовать стандартную иконку меню"
 
-#: src/panel/applets/budgie-menu/settings.ui.h:4
+#: src/panel/applets/budgie-menu/settings.ui:97
 msgid "Menu Icon"
 msgstr "Значок меню"
 
-#: src/panel/applets/budgie-menu/settings.ui.h:5
+#: src/panel/applets/budgie-menu/settings.ui:148
 msgid "Compact Mode"
 msgstr "Компактный режим"
 
-#: src/panel/applets/budgie-menu/settings.ui.h:6
+#: src/panel/applets/budgie-menu/settings.ui:172
 msgid "Show Headers"
 msgstr "Показывать заголовки"
 
-#: src/panel/applets/budgie-menu/settings.ui.h:7
+#: src/panel/applets/budgie-menu/settings.ui:196
 msgid "Roll-over mouse"
 msgstr "Активация при наведении мыши"
 
-#: src/panel/applets/budgie-menu/settings.ui.h:8
+#: src/panel/applets/budgie-menu/settings.ui:221
 msgid "Show settings items"
 msgstr "Показать элементы настроек"
 
-#: src/panel/applets/caffeine/settings.ui.h:1
+#: src/panel/applets/caffeine/settings.ui:23
 msgid "Enable notification"
 msgstr "Включить уведомления"
 
-#: src/panel/applets/caffeine/settings.ui.h:2
+#: src/panel/applets/caffeine/settings.ui:35
 msgid "Maximize brightness"
 msgstr "Максимально увеличить яркость"
 
-#: src/panel/applets/caffeine/settings.ui.h:3
+#: src/panel/applets/caffeine/settings.ui:47
 msgid "Brightness Level"
 msgstr "Уровень яркости"
 
-#: src/panel/applets/clock/settings.ui.h:1
+#: src/panel/applets/clock/settings.ui:15
 msgid "Show date"
 msgstr "Показывать дату"
 
-#: src/panel/applets/clock/settings.ui.h:2
+#: src/panel/applets/clock/settings.ui:38
 msgid "Show seconds"
 msgstr "Показывать секунды"
 
-#: src/panel/applets/clock/settings.ui.h:3
+#: src/panel/applets/clock/settings.ui:61
 msgid "Use 24 hour time"
 msgstr "Использовать 24-часовой формат"
 
-#: src/panel/applets/clock/settings.ui.h:4
+#: src/panel/applets/clock/settings.ui:84
 msgid "Custom Format"
 msgstr "Свой формат"
 
-#: src/panel/applets/clock/settings.ui.h:6
-#, no-c-format
+#: src/panel/applets/clock/settings.ui:107
 msgid "%H:%M:%S %d.%m.%Y"
 msgstr "%Ч:%М:%С %d.%м.%Г"
 
-#: src/panel/applets/clock/settings.ui.h:7
+#: src/panel/applets/clock/settings.ui:120
 msgid "Custom Timezone"
 msgstr "Своя временная зона"
 
-#: src/panel/applets/clock/settings.ui.h:8
+#: src/panel/applets/clock/settings.ui:143
 msgid "UTC"
 msgstr "UTC"
 
-#: src/panel/applets/icon-tasklist/settings.ui.h:1
+#: src/panel/applets/icon-tasklist/settings.ui:15
 msgid "Show all windows on click"
 msgstr "Показывать все окна при нажатии"
 
-#: src/panel/applets/icon-tasklist/settings.ui.h:2
+#: src/panel/applets/icon-tasklist/settings.ui:39
 msgid "Only show favorited"
 msgstr "Показывать только избранные приложения"
 
-#: src/panel/applets/icon-tasklist/settings.ui.h:3
+#: src/panel/applets/icon-tasklist/settings.ui:63
 msgid "Lock icons"
 msgstr "Закрепить значки"
 
-#: src/panel/applets/icon-tasklist/settings.ui.h:4
+#: src/panel/applets/icon-tasklist/settings.ui:88
 msgid "Restrict to Workspace"
 msgstr "Ограничить рабочим местом"
 
-#: src/panel/applets/icon-tasklist/settings.ui.h:5
+#: src/panel/applets/icon-tasklist/settings.ui:112
 msgid "Middle click to launch new window"
 msgstr "Открывать новое окно нажатием средней кнопки мыши"
 
-#: src/panel/applets/icon-tasklist/settings.ui.h:6
+#: src/panel/applets/icon-tasklist/settings.ui:136
 msgid "Require a double-click to launch new window"
 msgstr "Требовать двойной щелчок для запуска нового окна"
 
-#: src/panel/applets/night-light/indicator_window.ui.h:1
+#: src/panel/applets/keyboard-layout/keyboard-header.ui:28
+#: src/panel/applets/keyboard-layout/KeyboardLayoutApplet.plugin.desktop.in:4
+msgid "Keyboard Layout"
+msgstr ""
+
+#: src/panel/applets/keyboard-layout/keyboard-header.ui:44
+msgid "Keyboard Layout Settings"
+msgstr ""
+
+#: src/panel/applets/night-light/indicator_window.ui:37
+#: src/panel/applets/night-light/NightLight.plugin.desktop.in:4
 msgid "Night Light"
 msgstr "Ночной свет"
 
-#: src/panel/applets/night-light/indicator_window.ui.h:2
+#: src/panel/applets/night-light/indicator_window.ui:85
 msgid "Temperature"
 msgstr "Температура"
 
-#: src/panel/applets/night-light/indicator_window.ui.h:3
+#: src/panel/applets/night-light/indicator_window.ui:110
 msgid "Schedule"
 msgstr "Расписание"
 
-#: src/panel/applets/night-light/indicator_window.ui.h:4
+#: src/panel/applets/night-light/indicator_window.ui:124
 msgid "Sunset to Sunrise"
 msgstr "От заката до рассвета"
 
-#: src/panel/applets/night-light/indicator_window.ui.h:5
+#: src/panel/applets/night-light/indicator_window.ui:125
 msgid "Manual"
 msgstr "Вручную"
 
-#: src/panel/applets/night-light/indicator_window.ui.h:6
+#: src/panel/applets/night-light/indicator_window.ui:144
 msgid "Display Settings"
 msgstr "Настройки дисплея"
 
-#: src/panel/applets/places-indicator/settings.ui.h:1
+#: src/panel/applets/places-indicator/settings.ui:19
 msgid "Show label"
 msgstr "Показывать подпись"
 
-#: src/panel/applets/places-indicator/settings.ui.h:2
+#: src/panel/applets/places-indicator/settings.ui:55
 msgid "Show places"
 msgstr "Показывать места"
 
-#: src/panel/applets/places-indicator/settings.ui.h:3
+#: src/panel/applets/places-indicator/settings.ui:79
 msgid "Show network folders"
 msgstr "Показывать сетевые папки"
 
-#: src/panel/applets/places-indicator/settings.ui.h:4
+#: src/panel/applets/places-indicator/settings.ui:103
 msgid "Show removable drives"
 msgstr "Показывать съемные диски"
 
-#: src/panel/applets/places-indicator/settings.ui.h:5
+#: src/panel/applets/places-indicator/settings.ui:127
 msgid "Always expand places"
 msgstr "Всегда раскрывать места"
 
-#: src/panel/applets/spacer/settings.ui.h:1
+#: src/panel/applets/spacer/settings.ui:21
 msgid "Spacer size"
 msgstr "Размер расширителя"
 
-#: src/panel/applets/status/settings.ui.h:1
-#: src/panel/applets/tray/settings.ui.h:1
+#: src/panel/applets/status/settings.ui:22
+#: src/panel/applets/tray/settings.ui:22
 msgid "Icon Spacing"
 msgstr "Отступ между значками"
 
-#: src/panel/applets/status/settings.ui.h:2
+#: src/panel/applets/status/settings.ui:48
 msgid "Show battery percentage"
 msgstr "Показать процент заряда батареи"
 
-#: src/panel/applets/trash/settings.ui.h:1
+#: src/panel/applets/tasklist/settings.ui:16
+msgid "Show button icons"
+msgstr "Показывать значки кнопок"
+
+#: src/panel/applets/tasklist/settings.ui:41
+msgid "Show button labels"
+msgstr "Показывать подписи кнопок"
+
+#: src/panel/applets/trash/settings.ui:16
 msgid "Sort Mode"
 msgstr "Режим сортировки"
 
-#: src/panel/applets/trash/settings.ui.h:2
+#: src/panel/applets/trash/settings.ui:28
 msgid "Sort by type"
 msgstr "Тип сортировки"
 
-#: src/panel/applets/trash/settings.ui.h:3
+#: src/panel/applets/trash/settings.ui:43
 msgid "Sort alphabetically"
 msgstr "Сортировка по алфавиту"
 
-#: src/panel/applets/trash/settings.ui.h:4
+#: src/panel/applets/trash/settings.ui:58
 msgid "Sort reverse alphabetically"
 msgstr "Сортировка в обратном порядке по алфавиту"
 
-#: src/panel/applets/trash/settings.ui.h:5
+#: src/panel/applets/trash/settings.ui:73
 msgid "Sort by date ascending"
 msgstr "Сортировка по дате"
 
-#: src/panel/applets/trash/settings.ui.h:6
+#: src/panel/applets/trash/settings.ui:88
 msgid "Sort by date descending"
 msgstr "Сортировка в обратном порядке по дате"
 
-#: src/panel/applets/tray/settings.ui.h:2
+#: src/panel/applets/tray/settings.ui:48
 msgid "Scale icons with panel size"
 msgstr "Менять размер значков с размером панели"
 
-#: src/panel/applets/workspaces/settings.ui.h:1
+#: src/panel/applets/workspaces/settings.ui:17
 msgid "\"Add\" button visibility"
-msgstr "Видимость кнопки \"Добавить\""
+msgstr "Видимость кнопки «Добавить»"
 
-#: src/panel/applets/workspaces/settings.ui.h:2
+#: src/panel/applets/workspaces/settings.ui:31
 msgid "Item Size Multiplier"
 msgstr "Множитель размера элемента"
 
-#: src/panel/applets/workspaces/settings.ui.h:3
+#: src/panel/applets/workspaces/settings.ui:45
 msgid "Don't show"
 msgstr "Не показывать"
 
-#: src/panel/applets/workspaces/settings.ui.h:4
+#: src/panel/applets/workspaces/settings.ui:46
 msgid "Show on mouseover"
 msgstr "Показывать при наведении курсора мыши"
 
-#: src/panel/applets/workspaces/settings.ui.h:5
+#: src/panel/applets/workspaces/settings.ui:47
 msgid "Always show"
 msgstr "Всегда показывать"
 
-#: src/panel/applets/workspaces/settings.ui.h:6
+#: src/panel/applets/workspaces/settings.ui:65
 msgid "0.5x"
-msgstr "0.5x"
+msgstr "0,5x"
 
-#: src/panel/applets/workspaces/settings.ui.h:7
+#: src/panel/applets/workspaces/settings.ui:66
 msgid "0.75x"
-msgstr "0.75x"
+msgstr "0,75x"
 
-#: src/panel/applets/workspaces/settings.ui.h:8
+#: src/panel/applets/workspaces/settings.ui:67
 msgid "1.0x"
-msgstr "1.0x"
+msgstr "1,0x"
 
-#: src/panel/applets/workspaces/settings.ui.h:9
+#: src/panel/applets/workspaces/settings.ui:68
 msgid "1.5x"
-msgstr "1.5x"
+msgstr "1,5x"
 
-#: src/panel/applets/workspaces/settings.ui.h:10
+#: src/panel/applets/workspaces/settings.ui:69
 msgid "2.0x"
-msgstr "2.0x"
+msgstr "2,0x"
 
-#: src/panel/applets/tasklist/settings.ui.h:1
-msgid "Show button icons"
-msgstr ""
-
-#: src/panel/applets/tasklist/settings.ui.h:2
-msgid "Show button labels"
-msgstr ""
-
-#: src/raven/widgets/calendar/settings.ui.h:1
+#: src/raven/widgets/calendar/settings.ui:17
 msgid "Show Week Numbers"
 msgstr "Показывать номер недели"
 
-#: src/raven/widgets/calendar/settings.ui.h:2
+#: src/raven/widgets/calendar/settings.ui:43
 msgid "Show Day Names"
 msgstr "Показывать названия дней"
 
-#: src/raven/widgets/sound-input/settings.ui.h:1
-#: src/raven/widgets/sound-output/settings.ui.h:1
+#: src/raven/widgets/sound-input/settings.ui:17
+#: src/raven/widgets/sound-output/settings.ui:17
 msgid "Allow Volume Overdrive"
 msgstr "Разрешить перегрузку громкости"
 
-#: src/raven/widgets/usage-monitor/settings.ui.h:1
+#: src/raven/widgets/usage-monitor/settings.ui:17
 msgid "Show Swap Usage"
-msgstr "Показать использование Swap"
+msgstr "Показать использование подкачки"
 
-#: src/daemon/org.buddiesofbudgie.BudgieScreenshot.desktop.in.h:2
-#: src/dialogs/screenshot/budgie-screenshot.desktop.in.h:2
+#: src/daemon/budgie-daemon.desktop.in:3
+msgid "Budgie Background Services"
+msgstr ""
+
+#: src/daemon/org.buddiesofbudgie.BudgieScreenshot.desktop.in:4
+#: src/dialogs/screenshot/budgie-screenshot.desktop.in:4
 msgid "Budgie screenshot app"
 msgstr "Снимок экрана Budgie"
 
-#: src/panel/applets/budgie-menu/BudgieMenu.plugin.in.h:1
+#: src/daemon/org.buddiesofbudgie.BudgieScreenshot.desktop.in:8
+#: src/dialogs/screenshot/budgie-screenshot.desktop.in:8
+msgid "Screenshot;Snip;"
+msgstr ""
+
+#: src/dialogs/polkit/budgie-polkit.desktop.in.in:3
+msgid "Budgie PolicyKit UI"
+msgstr ""
+
+#: src/dialogs/polkit/budgie-polkit.desktop.in.in:4
+msgid "Budgie PolicyKit Authorisation UI"
+msgstr ""
+
+#: src/dialogs/screenshot/budgie-screenshot-dialog.desktop.in.in:3
+msgid "Budgie Screenshot UI"
+msgstr ""
+
+#: src/panel/applets/budgie-menu/BudgieMenu.plugin.desktop.in:4
+msgid "Budgie Menu"
+msgstr "Меню Budgie"
+
+#: src/panel/applets/budgie-menu/BudgieMenu.plugin.desktop.in:5
 msgid "Search for and start up applications."
 msgstr "Поиск и запуск приложений."
 
-#: src/panel/applets/caffeine/CaffeineApplet.plugin.in.h:1
+#: src/panel/applets/caffeine/CaffeineApplet.plugin.desktop.in:4
+msgid "Caffeine"
+msgstr "Caffeine"
+
+#: src/panel/applets/caffeine/CaffeineApplet.plugin.desktop.in:5
 msgid "Prevent the system and screen from sleeping."
 msgstr "Предотвратите переход системы и экрана в спящий режим."
 
-#: src/panel/applets/clock/ClockApplet.plugin.in.h:1
+#: src/panel/applets/clock/ClockApplet.plugin.desktop.in:4
+msgid "Clock"
+msgstr "Часы"
+
+#: src/panel/applets/clock/ClockApplet.plugin.desktop.in:5
 msgid "A digital clock with a customizable format."
 msgstr "Цифровые часы с настраиваемым форматом. "
 
-#: src/panel/applets/icon-tasklist/IconTasklistApplet.plugin.in.h:1
+#: src/panel/applets/icon-tasklist/IconTasklistApplet.plugin.desktop.in:4
+msgid "Icon Task List"
+msgstr "Список значков задач"
+
+#: src/panel/applets/icon-tasklist/IconTasklistApplet.plugin.desktop.in:5
 msgid "A configurable application task list."
 msgstr "Настраиваемый список задач приложения."
 
-#: src/panel/applets/keyboard-layout/KeyboardLayoutApplet.plugin.in.h:1
+#: src/panel/applets/keyboard-layout/KeyboardLayoutApplet.plugin.desktop.in:5
 msgid "Indicates which keyboard layout is currently in use."
 msgstr "Указывает, какая раскладка клавиатуры используется в данный момент."
 
-#: src/panel/applets/lock-keys/LockKeysApplet.plugin.in.h:1
+#: src/panel/applets/lock-keys/LockKeysApplet.plugin.desktop.in:4
+msgid "Lock Keys Indicator"
+msgstr "Индикатор Lock-клавиш"
+
+#: src/panel/applets/lock-keys/LockKeysApplet.plugin.desktop.in:5
 msgid "Show status of lock keys."
 msgstr "Посмотреть состояние кнопок lock."
 
-#: src/panel/applets/night-light/NightLight.plugin.in.h:1
+#: src/panel/applets/night-light/NightLight.plugin.desktop.in:5
 msgid "Toggle and modify Night Light settings."
 msgstr "Переключайте и изменяйте настройки ночного освещения."
 
-#: src/panel/applets/notifications/NotificationsApplet.plugin.in.h:1
+#: src/panel/applets/notifications/NotificationsApplet.plugin.desktop.in:5
 msgid "Open the Raven notifications view."
 msgstr "Открыть Raven для показа уведомлений."
 
-#: src/panel/applets/places-indicator/PlacesIndicator.plugin.in.h:1
+#: src/panel/applets/places-indicator/PlacesIndicator.plugin.desktop.in:5
 msgid "Show drives and favorite folders."
 msgstr "Показывать накопители и избранные папки."
 
-#: src/panel/applets/raven-trigger/RavenTriggerApplet.plugin.in.h:1
+#: src/panel/applets/raven-trigger/RavenTriggerApplet.plugin.desktop.in:4
+msgid "Raven Trigger"
+msgstr ""
+
+#: src/panel/applets/raven-trigger/RavenTriggerApplet.plugin.desktop.in:5
 msgid "Open the Raven sidebar."
 msgstr "Открыть боковую панель Raven."
 
-#: src/panel/applets/separator/SeparatorApplet.plugin.in.h:1
+#: src/panel/applets/separator/SeparatorApplet.plugin.desktop.in:4
+msgid "Separator"
+msgstr "Разделитель"
+
+#: src/panel/applets/separator/SeparatorApplet.plugin.desktop.in:5
 msgid "Visual separator between applets."
 msgstr "Визуальный разделитель между апплетами."
 
-#: src/panel/applets/show-desktop/ShowDesktopApplet.plugin.in.h:1
+#: src/panel/applets/show-desktop/ShowDesktopApplet.plugin.desktop.in:4
+msgid "Show Desktop Button"
+msgstr "Кнопка показа рабочего стола"
+
+#: src/panel/applets/show-desktop/ShowDesktopApplet.plugin.desktop.in:5
 msgid "A button that toggles visibility of the desktop."
 msgstr "Кнопка, которая переключает видимость рабочего стола."
 
-#: src/panel/applets/spacer/SpacerApplet.plugin.in.h:1
+#: src/panel/applets/spacer/SpacerApplet.plugin.desktop.in:4
+msgid "Spacer"
+msgstr "Расширитель"
+
+#: src/panel/applets/spacer/SpacerApplet.plugin.desktop.in:5
 msgid "Adjustable spacer to put between other applets."
 msgstr "Регулируемая прокладка для размещения между другими апплетами."
 
-#: src/panel/applets/status/StatusApplet.plugin.in.h:1
+#: src/panel/applets/status/StatusApplet.plugin.desktop.in:4
+msgid "Status Indicator"
+msgstr "Индикатор состояния"
+
+#: src/panel/applets/status/StatusApplet.plugin.desktop.in:5
 msgid "Show system status indicators, like sound, battery, and Bluetooth."
 msgstr ""
 "Показывать индикаторы состояния системы. К примеру: звук, батарею и "
 "Bluetooth."
 
-#: src/panel/applets/trash/TrashApplet.plugin.in.h:1
+#: src/panel/applets/tasklist/TasklistApplet.plugin.desktop.in:4
+msgid "Task List"
+msgstr "Список задач"
+
+#: src/panel/applets/tasklist/TasklistApplet.plugin.desktop.in:5
+msgid "An application task list with icons and labels."
+msgstr "Список задач приложения с пиктограммами и ярлыками."
+
+#: src/panel/applets/trash/TrashApplet.plugin.desktop.in:5
 msgid "Manage your trash from the Budgie panel"
 msgstr "Управляйте своим мусором с панели Budgie"
 
-#: src/panel/applets/tray/TrayApplet.plugin.in.h:1
+#: src/panel/applets/tray/TrayApplet.plugin.desktop.in:4
+msgid "System Tray"
+msgstr "Системный лоток"
+
+#: src/panel/applets/tray/TrayApplet.plugin.desktop.in:5
 msgid ""
 "System tray implementing the Freedesktop Status Notifier specification."
 msgstr ""
 "Системный трей, реализующий спецификацию уведомителя состояния Freedesktop."
 
-#: src/panel/applets/user-indicator/UserIndicator.plugin.in.h:1
+#: src/panel/applets/user-indicator/UserIndicator.plugin.desktop.in:4
+msgid "User Indicator"
+msgstr "Индикатор пользователя"
+
+#: src/panel/applets/user-indicator/UserIndicator.plugin.desktop.in:5
 msgid "Opens the power dialog."
 msgstr "Открытие диалога окна питания."
 
-#: src/panel/applets/workspaces/WorkspacesApplet.plugin.in.h:1
+#: src/panel/applets/workspaces/WorkspacesApplet.plugin.desktop.in:4
+msgid "Workspace Switcher"
+msgstr "Переключатель рабочих мест"
+
+#: src/panel/applets/workspaces/WorkspacesApplet.plugin.desktop.in:5
 msgid "Display workspaces and switch between them."
 msgstr "Отображение рабочих пространств и переключение между ними."
 
-#: src/panel/applets/tasklist/TasklistApplet.plugin.in.h:1
-msgid "An application task list with icons and labels."
-msgstr "Список задач приложения с пиктограммами и ярлыками."
-
-#: src/panel/budgie-desktop-settings.desktop.in.h:2
+#: src/panel/budgie-desktop-settings.desktop.in:3
 msgid "Change desktop appearance and behavior"
 msgstr "Изменить внешний вид и поведение рабочего стола"
 
-#: src/panel/budgie-panel.desktop.in.h:1
+#: src/panel/budgie-desktop-settings.desktop.in:12
+msgid "Preferences;Settings;"
+msgstr ""
+
+#: src/panel/budgie-panel.desktop.in:3
 msgid "Budgie Panel"
 msgstr "Панель Budgie"
 
-#: src/panel/budgie-panel.desktop.in.h:2
+#: src/panel/budgie-panel.desktop.in:4
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
@@ -2217,11 +2463,11 @@ msgstr ""
 "Запуск других приложений и предоставление различных утилит для управления "
 "окнами, отображения времени и т. д."
 
-#: src/raven/widgets/calendar/Calendar.plugin.in.h:1
+#: src/raven/widgets/calendar/Calendar.plugin.desktop.in:4
 msgid "Calendar"
 msgstr "Календарь"
 
-#: src/raven/widgets/calendar/Calendar.plugin.in.h:2
+#: src/raven/widgets/calendar/Calendar.plugin.desktop.in:5
 msgid ""
 "A simple calendar with a month view, using the built-in Gtk.Calendar widget."
 " The calendar shows the current date by default."
@@ -2229,11 +2475,11 @@ msgstr ""
 "Простой календарь с просмотром по месяцам, использующий встроенный виджет "
 "Gtk.Calendar. Календарь показывает текущую дату по умолчанию."
 
-#: src/raven/widgets/media-controls/MediaControls.plugin.in.h:1
+#: src/raven/widgets/media-controls/MediaControls.plugin.desktop.in:4
 msgid "Media Controls"
 msgstr "Настройка медиа"
 
-#: src/raven/widgets/media-controls/MediaControls.plugin.in.h:2
+#: src/raven/widgets/media-controls/MediaControls.plugin.desktop.in:5
 msgid ""
 "This widget uses the Mpris API to show actively playing media with metadata "
 "and playback controls, with support for audio and video."
@@ -2242,11 +2488,11 @@ msgstr ""
 "медиа с метаданными и элементами управления воспроизведением, с поддержкой "
 "аудио и видео."
 
-#: src/raven/widgets/sound-input/SoundInput.plugin.in.h:1
+#: src/raven/widgets/sound-input/SoundInput.plugin.desktop.in:4
 msgid "Sound Input"
 msgstr "Аудиовход"
 
-#: src/raven/widgets/sound-input/SoundInput.plugin.in.h:2
+#: src/raven/widgets/sound-input/SoundInput.plugin.desktop.in:5
 msgid ""
 "Allows adjustment of audio input volume, and displays a list of available "
 "audio input devices."
@@ -2254,11 +2500,11 @@ msgstr ""
 "Позволяет регулировать громкость аудиовхода и отображает список доступных "
 "устройств аудиовхода."
 
-#: src/raven/widgets/sound-output/SoundOutput.plugin.in.h:1
+#: src/raven/widgets/sound-output/SoundOutput.plugin.desktop.in:4
 msgid "Sound Output"
 msgstr "Аудиовыход"
 
-#: src/raven/widgets/sound-output/SoundOutput.plugin.in.h:2
+#: src/raven/widgets/sound-output/SoundOutput.plugin.desktop.in:5
 msgid ""
 "Allows global and per-app audio output volume control, and displays a list "
 "of available audio output devices."
@@ -2266,31 +2512,59 @@ msgstr ""
 "Позволяет регулировать громкость аудиовыхода везде и для каждого приложения,"
 " а также отображает список доступных устройств вывода звука."
 
-#: src/raven/widgets/usage-monitor/UsageMonitor.plugin.in.h:2
+#: src/raven/widgets/usage-monitor/UsageMonitor.plugin.desktop.in:5
 msgid ""
 "A view for system resource usage in bar graph form. Includes CPU, RAM, and "
 "Swap usage by default."
 msgstr ""
 "Представление использования системных ресурсов в виде гистограммы. Включает "
-"использование ЦПУ, ОЗУ и Swap по умолчанию."
+"использование ЦП, ОЗУ и подкачки по умолчанию."
 
-#: src/session/budgie-desktop.session.in.in.h:1
-#: src/session/budgie-desktop.desktop.in.in.h:1
-msgid "Budgie Desktop"
-msgstr "Рабочий стол Budgie"
-
-#: src/session/budgie-desktop-magpie.desktop.in.in.h:1
+#: src/session/budgie-desktop-magpie.desktop.in.in:2
 msgid "Budgie Desktop (magpie)"
-msgstr ""
+msgstr "Рабочий стол Budgie (magpie)"
 
-#: src/session/budgie-desktop-magpie.desktop.in.in.h:2
+#: src/session/budgie-desktop-magpie.desktop.in.in:3
 msgid ""
 "This session logs you into the Budgie Desktop using magpie as the window "
 "manager"
 msgstr ""
+"Этот сеанс входит в рабочий стол Budgie с использованием magpie в качестве "
+"оконного менеджера"
 
-#: src/session/budgie-desktop.desktop.in.in.h:2
+#: src/session/budgie-desktop-nm-applet.desktop.in:2
+msgid "Network (Budgie Desktop)"
+msgstr ""
+
+#: src/session/budgie-desktop-nm-applet.desktop.in:3
+msgid "Manage your network connections"
+msgstr ""
+
+#: src/session/budgie-desktop-powerdialog.desktop.in.in:3
+msgid "Budgie Power Dialog"
+msgstr ""
+
+#: src/session/budgie-desktop-powerdialog.desktop.in.in:4
+msgid "A button dialog to lock the screen, reboot, shutdown, etc."
+msgstr ""
+
+#: src/session/budgie-desktop-screenshotdialog.desktop.in.in:3
+msgid "Budgie Screenshot Dialog"
+msgstr ""
+
+#: src/session/budgie-desktop-screenshotdialog.desktop.in.in:4
+msgid "Screenshot interface"
+msgstr ""
+
+#: src/session/budgie-desktop.desktop.in.in:3
+#: src/session/budgie-desktop.session.desktop.in.in:2
+msgid "Budgie Desktop"
+msgstr "Рабочий стол Budgie"
+
+#: src/session/budgie-desktop.desktop.in.in:4
 msgid ""
 "This session logs you into the Budgie Desktop using labwc as the window "
 "manager"
 msgstr ""
+"Этот сеанс входит в рабочий стол Budgie с использованием labwc в качестве "
+"оконного менеджера"

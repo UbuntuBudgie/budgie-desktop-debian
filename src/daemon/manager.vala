@@ -18,8 +18,8 @@ namespace Budgie {
 		/* Keep track of our SessionManager */
 		private LibSession.SessionClient? sclient;
 
-		// define a reference to WaylandClient once for this process
-		private WaylandClient wayland_client = new WaylandClient();
+		// Holds the WaylandClient singleton for the daemon's lifetime, since [SingleInstance] only keeps a weak ref
+		public WaylandClient wayland_client = new WaylandClient();
 
 		/* On Screen Display */
 		Budgie.OSDManager? osd;
@@ -37,6 +37,12 @@ namespace Budgie {
 
 		/* screenshot */
 		ScreenshotManager? screenshot_manager;
+
+		/* MPRIS media-key controller */
+		Budgie.MprisController? mpris_controller;
+
+		/* Keyboard layout proxy: applet -> daemon -> compositor bridges */
+		Budgie.KeyboardLayoutManager? keyboard_layout_manager;
 
 		/**
 		* Construct a new ServiceManager and initialiase appropriately
@@ -78,6 +84,14 @@ namespace Budgie {
 
 			screenshot_manager = new ScreenshotManager();
 			screenshot_manager.serve();
+
+			// MPRIS controller: lets keybinds drive the current media player
+			mpris_controller = new Budgie.MprisController();
+			mpris_controller.setup_dbus(replace);
+
+			// Keyboard layout proxy: lets the keyboard layout applet request changes
+			keyboard_layout_manager = new Budgie.KeyboardLayoutManager();
+			keyboard_layout_manager.setup_dbus(replace);
 		}
 
 		/**

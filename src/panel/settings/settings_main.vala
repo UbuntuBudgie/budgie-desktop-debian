@@ -27,6 +27,9 @@ namespace Budgie {
 		}
 	}
 
+	[CCode (cname = "gdk_wayland_window_set_application_id", cheader_filename = "gdk/gdkwayland.h")]
+	extern void gdk_wayland_window_set_application_id(Gdk.Window window, string application_id);
+
 	public class SettingsWindow : Gtk.Window {
 		private SettingsIface? iface;
 		private DBusConnection? conn;
@@ -63,10 +66,10 @@ namespace Budgie {
 			layout = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
 			add(layout);
 
-			/* Have to override wmclass for pinning support */
 			set_icon_name("preferences-desktop");
 			set_title(_("Budgie Desktop Settings"));
-			set_wmclass("budgie-desktop-settings", "budgie-desktop-settings");
+
+			map.connect_after(on_map);
 
 			/* Fit even on a spud resolution */
 			set_default_size(750, 550);
@@ -77,6 +80,7 @@ namespace Budgie {
 			sidebar = new Gtk.ListBox();
 			sidebar.set_header_func(this.do_headers);
 			sidebar.set_sort_func(this.do_sort);
+			sidebar.set_filter_func(this.do_filter);
 			sidebar.row_activated.connect(this.on_row_activate);
 			sidebar.set_activate_on_single_click(true);
 			scroll.add(sidebar);
@@ -121,6 +125,34 @@ namespace Budgie {
 		}
 
 		/**
+		* Filter sidebar items based on page visibility
+		*/
+		bool do_filter(Gtk.ListBoxRow row) {
+			SettingsItem? item = row.get_child() as SettingsItem;
+			if (item == null) {
+				return true;
+			}
+
+			// Always show the add panel button
+			if (item == this.item_add_panel) {
+				return true;
+			}
+
+			// Check if the corresponding page is visible
+			Budgie.SettingsPage? page = this.page_map.lookup(item.content_id);
+			if (page == null) {
+				return true;
+			}
+
+			return page.get_visible();
+		}
+
+		public void refresh_sidebar_filter() {
+			this.sidebar.invalidate_filter();
+			this.sidebar.invalidate_headers();
+		}
+
+		/**
 		* Static pages that will always be part of the UI
 		*/
 		void build_content() {
@@ -130,6 +162,12 @@ namespace Budgie {
 			this.add_page(new Budgie.WindowsPage());
 			this.add_page(new Budgie.AutostartPage());
 			this.add_page(new Budgie.RavenPage(this.manager));
+			this.add_page(new Budgie.DisplaysPage(this.manager));
+		}
+
+		// GTK uses the process name, budgie-panel, as the app_id when mapping, so match the desktop file after that
+		private void on_map() {
+			gdk_wayland_window_set_application_id(get_window(), "budgie-desktop-settings");
 		}
 
 		public void requested_close() throws DBusError, IOError {
@@ -314,7 +352,12 @@ namespace Budgie {
 		*/
 		private void on_panel_added(string uuid, Budgie.Toplevel? toplevel) {
 			string content_id = "panel-" + uuid;
-			if (content_id in this.page_map) {
+
+			// A UUID we already have a page for is a panel that was recreated in
+			// place, such as by a move, so hand the page its replacement
+			PanelPage? existing = this.page_map.lookup(content_id) as PanelPage;
+			if (existing != null) {
+				existing.rebind(toplevel);
 				return;
 			}
 			this.add_page(new PanelPage(this.manager, toplevel));

@@ -6,21 +6,19 @@ session_data.set('PACKAGE_VERSION', package_version)
 session_data.set('libexecdir', libexecdir)
 session_data.set('libexecdirroot', libexecdirroot)
 
-# mandatory gnome-settings-daemon components
-budgie_session_324_components = [
-    'org.buddiesofbudgie.SettingsDaemon.A11ySettings',
-    'org.buddiesofbudgie.SettingsDaemon.Datetime',
-    'org.buddiesofbudgie.SettingsDaemon.DiskUtilityNotify',
-    'org.buddiesofbudgie.SettingsDaemon.Housekeeping',
-    'org.buddiesofbudgie.SettingsDaemon.Power',
-    'org.buddiesofbudgie.SettingsDaemon.PrintNotifications',
-    'org.buddiesofbudgie.SettingsDaemon.Rfkill',
-    'org.buddiesofbudgie.SettingsDaemon.Sharing',
-    'org.buddiesofbudgie.SettingsDaemon.Smartcard',
-    'org.buddiesofbudgie.SettingsDaemon.Sound',
-    'org.buddiesofbudgie.SettingsDaemon.UsbProtection',
-    'org.buddiesofbudgie.SettingsDaemon.Wwan'
-]
+# gnome-settings-daemon components
+gsd_components_excluded = get_option('gsd-components-excluded')
+gsd_components = []
+foreach component: get_option('gsd-components')
+    if component not in gsd_components_excluded
+        gsd_components += component
+    endif
+endforeach
+
+budgie_session_324_components = []
+foreach component: gsd_components
+    budgie_session_324_components += 'org.buddiesofbudgie.SettingsDaemon.' + component
+endforeach
 
 # Always in Budgie
 budgie_components = [
@@ -60,26 +58,58 @@ session_data.set('labwc_bindir', labwc_bindir)
 #endif
 #session_data.set('magpie_bindir', magpie_bindir)
 
+# Set libexecdir to budgie-session
+budgie_session_libexecdir = get_option('budgie-session-libexecdir')
+if budgie_session_libexecdir == ''
+    budgie_session_libexecdir = libexecdirroot
+endif
+session_data.set('budgie_session_libexecdir', budgie_session_libexecdir)
+
 # Set libexecdir to gnome-settings-daemon
 # Unfortunately this info is not provided by its pkgconfig file
 gsd_libexecdir = get_option('gsd-libexecdir')
 if gsd_libexecdir == ''
-    gsd_libexecdir = join_paths(get_option('prefix'), get_option('libexecdir'))
+    gsd_libexecdir = libexecdirroot
 endif
 session_data.set('gsd_libexecdir', gsd_libexecdir)
 
+# Set the libexecdir for xdg-desktop-portal
+xdp_libexecdir = get_option('xdp-libexecdir')
+if xdp_libexecdir == ''
+    xdp_libexecdir = libexecdirroot
+endif
+session_data.set('xdp_libexecdir', xdp_libexecdir)
+
+# Start oo7-daemon with the session when oo7 support is enabled
+if oo7 == true
+    session_data.set('oo7_daemon', '  ' + join_paths(oo7_libexecdir, 'oo7-daemon') + ' &')
+else
+    session_data.set('oo7_daemon', '')
+endif
+
+# magpie is here while its merge is commented out, to keep its translations
+budgie_pot_templates += files(
+    'budgie-desktop.session.desktop.in.in',
+    'budgie-desktop.desktop.in.in',
+    'budgie-desktop-magpie.desktop.in.in',
+    'budgie-desktop-nm-applet.desktop.in',
+    'budgie-desktop-powerdialog.desktop.in.in',
+    'budgie-desktop-screenshotdialog.desktop.in.in',
+)
+
 # Write the budgie-desktop.session.in file from the .in.in
 session_conf = configure_file(
-    input: 'budgie-desktop.session.in.in',
+    input: 'budgie-desktop.session.desktop.in.in',
     output: 'budgie-desktop.session.in',
     configuration: session_data,
 )
 
 # Now merge the translations of the .desktop.in to a .desktop
-custom_target('desktop-file-session-main',
+i18n.merge_file(
     input : session_conf,
     output : 'org.buddiesofbudgie.BudgieDesktop.session',
-    command : [intltool, '--desktop-style', podir, '@INPUT@', '@OUTPUT@'],
+    type : 'desktop',
+    po_dir : podir,
     install : true,
     install_dir : join_paths(datadir, 'gnome-session', 'sessions'),
 )
@@ -108,10 +138,11 @@ waylandsession_conf = configure_file(
 )
 
 # Now merge the translations of the .desktop.in to a .desktop
-custom_target('desktop-file-waylandsession',
+i18n.merge_file(
     input : waylandsession_conf,
     output : 'budgie-desktop.desktop',
-    command : [intltool, '--desktop-style', podir, '@INPUT@', '@OUTPUT@'],
+    type : 'desktop',
+    po_dir : podir,
     install : true,
     install_dir : join_paths(datadir, 'wayland-sessions'),
 )
@@ -124,19 +155,21 @@ custom_target('desktop-file-waylandsession',
 #)
 
 # Now merge the translations of the .desktop.in to a .desktop
-#custom_target('desktop-file-waylandmagpiesession',
+#i18n.merge_file(
 #    input : waylandmagpiesession_conf,
 #    output : 'budgie-desktop-magpie.desktop',
-#    command : [intltool, '--desktop-style', podir, '@INPUT@', '@OUTPUT@'],
+#    type : 'desktop',
+#    po_dir : podir,
 #    install : true,
 #    install_dir : join_paths(datadir, 'wayland-sessions'),
 #)
 
 # Merge + install nm-applet
-custom_target('desktop-file-nm-applet',
+i18n.merge_file(
     input : 'budgie-desktop-nm-applet.desktop.in',
     output : 'org.buddiesofbudgie.BudgieDesktopNmApplet.desktop',
-    command : [intltool, '--desktop-style', podir, '@INPUT@', '@OUTPUT@'],
+    type : 'desktop',
+    po_dir : podir,
     install : true,
     install_dir : xdg_appdir,
 )
@@ -148,10 +181,11 @@ session_power_dialog_desktop = configure_file(
     configuration: session_data,
 )
 
-custom_target('desktop-file-powerdialog',
+i18n.merge_file(
     input : session_power_dialog_desktop,
     output : 'org.buddiesofbudgie.BudgiePowerDialog.desktop',
-    command : [intltool, '--desktop-style', podir, '@INPUT@', '@OUTPUT@'],
+    type : 'desktop',
+    po_dir : podir,
     install : true,
     install_dir : xdg_appdir,
 )
@@ -163,23 +197,18 @@ session_screenshot_dialog_desktop = configure_file(
     configuration: session_data,
 )
 
-custom_target('desktop-file-screenshotdialog',
+i18n.merge_file(
     input : session_screenshot_dialog_desktop,
     output : 'org.buddiesofbudgie.BudgieScreenshotDialog.desktop',
-    command : [intltool, '--desktop-style', podir, '@INPUT@', '@OUTPUT@'],
+    type : 'desktop',
+    po_dir : podir,
     install : true,
     install_dir : xdg_appdir,
 )
 
 # install gnome-settings-daemon desktop files to ensure they autostart
 
-settings_daemon_components = budgie_session_324_components + [
-    'org.buddiesofbudgie.SettingsDaemon.DiskUtilityNotify',
-    'org.buddiesofbudgie.SettingsDaemon.UsbProtection',
-    'org.buddiesofbudgie.SettingsDaemon.Wwan',
-]
-
-foreach component: settings_daemon_components
+foreach component: budgie_session_324_components
     configure_file(
         input: join_paths('settingsdaemon', component + '.desktop.in'),
         output: '@BASENAME@',

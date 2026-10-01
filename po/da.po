@@ -5,16 +5,17 @@
 # 
 # Translators:
 # Kim Trolle Wadum, 2023
-# Joshua Strobl <joshua.strobl@outlook.com>, 2023
+# Joshua Strobl <joshua.strobl@outlook.com>, 2026
+# Patrick Olsen, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: budgie-desktop 10.10.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 17:28+0200\n"
+"POT-Creation-Date: 2026-09-22 15:27+0300\n"
 "PO-Revision-Date: 2022-01-02 09:45+0000\n"
-"Last-Translator: Joshua Strobl <joshua.strobl@outlook.com>, 2023\n"
+"Last-Translator: Patrick Olsen, 2026\n"
 "Language-Team: Danish (https://app.transifex.com/buddiesofbudgie/teams/129844/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -84,6 +85,18 @@ msgstr "Universel adgang"
 msgid "New Category"
 msgstr "Ny kategori"
 
+#: src/daemon/endsession.vala:161
+msgid "Log out"
+msgstr "Log ud"
+
+#: src/daemon/endsession.vala:165
+msgid "Restart device"
+msgstr "Genstart enhed"
+
+#: src/daemon/endsession.vala:177 src/daemon/endsession.ui:47
+msgid "Power Off"
+msgstr "Sluk"
+
 #. Do nothing if there were no held notifications
 #. translators: This is the title of a notification that is shown after
 #. notifications have been blocked because an application was in fullscreen
@@ -97,8 +110,9 @@ msgstr "Ulæste notifikationer"
 msgid "You received %d notification while an application was fullscreened."
 msgid_plural ""
 "You received %d notifications while an application was fullscreened."
-msgstr[0] ""
+msgstr[0] "Du modtog %dnotifikation mens et program var i fuldskærmstilstand"
 msgstr[1] ""
+"Du modtog %d notifikationer mens et program var i fuldskærmstilstand"
 
 #. No existing ref, make a new notification
 #. translators: Text for a button on the notification to open Raven to the
@@ -106,6 +120,22 @@ msgstr[1] ""
 #: src/daemon/notifications/dbus.vala:590
 msgid "View Notifications"
 msgstr "Vis notifikationer"
+
+#: src/daemon/osdkeys.vala:307
+msgid "Caps Lock is on"
+msgstr "Caps Lock er slået til"
+
+#: src/daemon/osdkeys.vala:314
+msgid "Caps Lock is off"
+msgstr "Caps Lock er slået fra"
+
+#: src/daemon/osdkeys.vala:324
+msgid "Num Lock is on"
+msgstr "Num Lock er slået til"
+
+#: src/daemon/osdkeys.vala:330
+msgid "Num Lock is off"
+msgstr "Num Lock er slået fra"
 
 #. Should show a notification
 #: src/daemon/settings.vala:416
@@ -120,42 +150,14 @@ msgstr "Caffeine Boost slået fra"
 #, c-format
 msgid "Will turn off in a minute"
 msgid_plural "Will turn off in %d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Slukker om et minut"
+msgstr[1] "Slukker om %d minutter"
 
-#: src/daemon/endsession.vala:161
-msgid "Log out"
-msgstr "Log ud"
-
-#: src/daemon/endsession.vala:165
-msgid "Restart device"
-msgstr "Genstart enhed"
-
-#: src/daemon/endsession.vala:177 src/daemon/endsession.ui.h:1
-msgid "Power Off"
-msgstr "Sluk"
-
-#: src/daemon/osdkeys.vala:307
-msgid "Caps Lock is on"
-msgstr ""
-
-#: src/daemon/osdkeys.vala:314
-msgid "Caps Lock is off"
-msgstr ""
-
-#: src/daemon/osdkeys.vala:324
-msgid "Num Lock is on"
-msgstr ""
-
-#: src/daemon/osdkeys.vala:330
-msgid "Num Lock is off"
-msgstr ""
-
-#: src/dialogs/polkit/polkitdialog.vala:224
+#: src/dialogs/polkit/polkitdialog.vala:227
 msgid "Authentication failed"
 msgstr "Autentifikation mislykkede"
 
-#: src/dialogs/polkit/polkitdialog.vala:312
+#: src/dialogs/polkit/polkitdialog.vala:315
 msgid "Group:"
 msgstr "Gruppe:"
 
@@ -188,158 +190,212 @@ msgstr "Luk_ned"
 msgid "This system does not support hibernation."
 msgstr "Systemet understøtter ikke dvale."
 
+#: src/dialogs/screenshot/screenshot.vala:363
+#: src/dialogs/screenshot/screenshot.vala:831
+#: src/daemon/org.buddiesofbudgie.BudgieScreenshot.desktop.in:3
+#: src/dialogs/screenshot/budgie-screenshot.desktop.in:3
+msgid "Budgie Screenshot"
+msgstr "Budgie skærmbillede"
+
+#. Translators: be as brief as possible; popovers are cut off if broader than
+#. the window
+#: src/dialogs/screenshot/screenshot.vala:479
+msgid "Screenshot entire screen"
+msgstr "Indfang hele skærmen"
+
+#: src/dialogs/screenshot/screenshot.vala:481
+msgid "Screenshot active window"
+msgstr "Indfang aktivt vindue"
+
+#: src/dialogs/screenshot/screenshot.vala:483
+msgid "Screenshot selected area"
+msgstr "Indfang udvalgt område"
+
+#. translate
+#: src/dialogs/screenshot/screenshot.vala:894
+msgid "Cancel screenshot"
+msgstr "Annullér skærmbillede"
+
+#: src/dialogs/screenshot/screenshot.vala:895
+msgid "Save screenshot to the selected directory"
+msgstr "Gem skærmbillede til den valgte mappe"
+
+#: src/dialogs/screenshot/screenshot.vala:896
+msgid "Copy screenshot to the clipboard"
+msgstr "Kopier skærmbillede til udklipsholder"
+
+#: src/dialogs/screenshot/screenshot.vala:897
+msgid "Open screenshot in default application"
+msgstr "Åbn skærmbillede i standardapplikationen"
+
+#. Other -> call Filebrowser (path = null)
+#. 'Other' is about setting a custom directory on a dropdown list
+#: src/dialogs/screenshot/screenshot.vala:1188
+msgid "Other..."
+msgstr "Andet..."
+
+#. Hide the AfterShot window while the file chooser is open
+#. set custom dir to found dir
+#: src/dialogs/screenshot/screenshot.vala:1277
+msgid "Open Folder"
+msgstr "Åbn mappe"
+
+#: src/dialogs/screenshot/screenshot.vala:1278
+#: src/dialogs/sendto/Dialog/BaseDialog.vala:109
+#: src/dialogs/sendto/Dialog/FileSender.vala:143
+#: src/dialogs/sendto/Dialog/FileSender.vala:224
+#: src/panel/applets/budgie-menu/IconChooser.vala:52
+#: src/panel/settings/settings_autostart.vala:194
+#: src/panel/settings/settings_autostart.vala:359
+#: src/panel/settings/settings_panel_dialogs.vala:158
+#: src/panel/settings/settings_plugin_chooser.vala:105
+#: src/daemon/endsession.ui:92 src/dialogs/polkit/dialog.ui:321
+msgid "Cancel"
+msgstr "Annullér"
+
+#: src/dialogs/screenshot/screenshot.vala:1278
+msgid "Open"
+msgstr "Åbn"
+
 #: src/dialogs/sendto/Application.vala:75
 msgid "Files to send"
-msgstr ""
+msgstr "Filer til overførsel"
 
 #: src/dialogs/sendto/Application.vala:78
 msgid "_Cancel"
-msgstr ""
+msgstr "_Afbryd"
 
 #: src/dialogs/sendto/Application.vala:79
 msgid "_Open"
-msgstr ""
+msgstr "_Åbn"
 
 #: src/dialogs/sendto/Application.vala:193
 msgid "Send Files via Bluetooth"
-msgstr ""
+msgstr "Send filer via Bluetooth"
 
 #: src/dialogs/sendto/Application.vala:195
 msgid "Send files to device…"
-msgstr ""
+msgstr "Send filer til enhed..."
 
 #: src/dialogs/sendto/Application.vala:301
 msgid "Rejected file"
-msgstr ""
+msgstr "Filen blev nægtet"
 
 #: src/dialogs/sendto/Application.vala:302
 #, c-format
 msgid "File already exists: %s"
-msgstr ""
+msgstr "Fil findes allerede: %s"
 
 #. Create a notification prompting the user what to do
 #: src/dialogs/sendto/Application.vala:314
 msgid "Receiving file"
-msgstr ""
+msgstr "Modtager fil"
 
 #: src/dialogs/sendto/Application.vala:315
 #, c-format
 msgid "Device '%s' wants to send a file: %s %s"
-msgstr ""
+msgstr "Enheden '%s' vil gerne sende en fil: %s%s"
 
 #: src/dialogs/sendto/Application.vala:317
 msgid "Accept"
-msgstr ""
+msgstr "Acceptér"
 
 #: src/dialogs/sendto/Application.vala:321
 msgid "Reject"
-msgstr ""
+msgstr "Afslå"
 
 #: src/dialogs/sendto/Dialog/BaseDialog.vala:62
 msgid "File name"
-msgstr ""
+msgstr "Filnavn"
 
 #: src/dialogs/sendto/Dialog/BaseDialog.vala:69
 msgid "Transfer rate"
-msgstr ""
+msgstr "Overførselshastighed"
 
 #. Now add the dialog buttons
 #: src/dialogs/sendto/Dialog/BaseDialog.vala:108
 #: src/dialogs/sendto/Dialog/ScanDialog.vala:114
 #: src/panel/applets/tasklist/TasklistButtonPopover.vala:39
 msgid "Close"
-msgstr ""
-
-#: src/dialogs/sendto/Dialog/BaseDialog.vala:109
-#: src/dialogs/sendto/Dialog/FileSender.vala:143
-#: src/dialogs/sendto/Dialog/FileSender.vala:224
-#: src/dialogs/screenshot/screenshot.vala:1281
-#: src/panel/applets/budgie-menu/IconChooser.vala:52
-#: src/panel/settings/settings_autostart.vala:194
-#: src/panel/settings/settings_autostart.vala:359
-#: src/panel/settings/settings_panel_dialogs.vala:158
-#: src/panel/settings/settings_plugin_chooser.vala:105
-#: src/daemon/endsession.ui.h:3 src/dialogs/polkit/dialog.ui.h:8
-msgid "Cancel"
-msgstr "Annullér"
+msgstr "Luk"
 
 #: src/dialogs/sendto/Dialog/BaseDialog.vala:156
 #, c-format
 msgid "<b>Transfer rate:</b> %s / s"
-msgstr ""
+msgstr "<b>Overførselshastighed\\:</b> %s / s "
 
 #: src/dialogs/sendto/Dialog/BaseDialog.vala:158
 #, c-format
 msgid "%s / %s: Time remaining: %s"
-msgstr ""
+msgstr "%s / %s\\: Tid tilbage\\: %s"
 
 #: src/dialogs/sendto/Dialog/BaseDialog.vala:169
 #, c-format
 msgid "%u hour"
 msgid_plural "%u hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%utime"
+msgstr[1] "%utimer"
 
 #: src/dialogs/sendto/Dialog/BaseDialog.vala:170
 #: src/dialogs/sendto/Dialog/BaseDialog.vala:175
 #, c-format
 msgid "%u minute"
 msgid_plural "%u minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%uminut"
+msgstr[1] "%uminutter"
 
 #: src/dialogs/sendto/Dialog/BaseDialog.vala:176
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%usekund"
+msgstr[1] "%usekunder"
 
 #: src/dialogs/sendto/Dialog/BaseDialog.vala:180
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%dsekund"
+msgstr[1] "%dsekunder"
 
 #: src/dialogs/sendto/Dialog/DeviceRow.vala:58
 msgid "Send"
-msgstr ""
+msgstr "Send"
 
 #: src/dialogs/sendto/Dialog/DeviceRow.vala:111
 msgid "Speaker"
-msgstr ""
+msgstr "Højtaler"
 
 #: src/dialogs/sendto/Dialog/DeviceRow.vala:113
 msgid "Controller"
-msgstr ""
+msgstr "Controller"
 
 #: src/dialogs/sendto/Dialog/DeviceRow.vala:115
 msgid "Keyboard"
-msgstr ""
+msgstr "Tastatur"
 
 #: src/dialogs/sendto/Dialog/DeviceRow.vala:117
 #: src/panel/settings/settings_wm.vala:101
 msgid "Mouse"
-msgstr ""
+msgstr "Mus"
 
 #: src/dialogs/sendto/Dialog/DeviceRow.vala:119
 msgid "Tablet"
-msgstr ""
+msgstr "Tablet"
 
 #: src/dialogs/sendto/Dialog/DeviceRow.vala:121
 msgid "Touchpad"
-msgstr ""
+msgstr "Touchpad"
 
 #: src/dialogs/sendto/Dialog/DeviceRow.vala:123
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #: src/dialogs/sendto/Dialog/FileReceiver.vala:24
 #: src/dialogs/sendto/Dialog/FileSender.vala:29
 #: src/dialogs/sendto/Dialog/ScanDialog.vala:26
 msgid "Bluetooth File Transfer"
-msgstr ""
+msgstr "Bluetooth filoverførsel"
 
 #. Update the labels
 #: src/dialogs/sendto/Dialog/FileReceiver.vala:30
@@ -347,161 +403,107 @@ msgstr ""
 #: src/dialogs/sendto/Dialog/FileSender.vala:174
 #, c-format
 msgid "<b>From</b>: %s"
-msgstr ""
+msgstr "<b>fra </b>: %s"
 
 #: src/dialogs/sendto/Dialog/FileReceiver.vala:31
 #: src/dialogs/sendto/Dialog/FileSender.vala:101
 #: src/dialogs/sendto/Dialog/FileSender.vala:175
 #, c-format
 msgid "<b>To</b>: %s"
-msgstr ""
+msgstr "<b>til </b>: %s"
 
 #: src/dialogs/sendto/Dialog/FileReceiver.vala:43
 #, c-format
 msgid "<b>File name</b>: %s"
-msgstr ""
+msgstr "<b>Fil navn </b>: %s"
 
 #: src/dialogs/sendto/Dialog/FileReceiver.vala:53
 #: src/dialogs/sendto/Dialog/FileReceiver.vala:74
 msgid "File transfer failed"
-msgstr ""
+msgstr "Filoverførsel fejlede"
 
 #: src/dialogs/sendto/Dialog/FileReceiver.vala:54
 #, c-format
 msgid "File '%s' not received from %s"
-msgstr ""
+msgstr "Filen '%s' ikke modtaget fra %s"
 
 #: src/dialogs/sendto/Dialog/FileReceiver.vala:75
 #, c-format
 msgid "File '%s' from %s not received: %s"
-msgstr ""
+msgstr "Filen '%s' fra %s ikke modtaget: %s"
 
 #: src/dialogs/sendto/Dialog/FileReceiver.vala:92
 #: src/dialogs/sendto/Dialog/FileSender.vala:274
 msgid "File transferred successfully"
-msgstr ""
+msgstr "Filoverførsel lykkedes"
 
 #: src/dialogs/sendto/Dialog/FileReceiver.vala:93
 #, c-format
 msgid "Saved file from %s to '%s'"
-msgstr ""
+msgstr "Gemte fil fra %s til '%s'"
 
 #: src/dialogs/sendto/Dialog/FileSender.vala:33
 msgid "From"
-msgstr ""
+msgstr "Fra"
 
 #: src/dialogs/sendto/Dialog/FileSender.vala:34
 msgid "To"
-msgstr ""
+msgstr "Til"
 
 #: src/dialogs/sendto/Dialog/FileSender.vala:103
 #, c-format
 msgid "Trying to connect to %s…"
-msgstr ""
+msgstr "Forsøger at forbinde til %s..."
 
 #: src/dialogs/sendto/Dialog/FileSender.vala:136
 #, c-format
 msgid "Connecting to '%s' failed"
-msgstr ""
+msgstr "Forbindelse til '%s' mislykkedes"
 
 #: src/dialogs/sendto/Dialog/FileSender.vala:139
 #: src/dialogs/sendto/Dialog/FileSender.vala:220
 msgid "The file has not been transferred."
-msgstr ""
+msgstr "Filen er ikke blevet overført."
 
 #: src/dialogs/sendto/Dialog/FileSender.vala:144
 #: src/dialogs/sendto/Dialog/FileSender.vala:225
 msgid "Retry"
-msgstr ""
+msgstr "Forsøg igen"
 
 #: src/dialogs/sendto/Dialog/FileSender.vala:177
 #, c-format
 msgid "Waiting for acceptance on %s…"
-msgstr ""
+msgstr "Venter på godkendelse fra %s"
 
 #: src/dialogs/sendto/Dialog/FileSender.vala:217
 #, c-format
 msgid "Transferring '%s' failed"
-msgstr ""
+msgstr "Overførsel af '%s' mislykkedes"
 
 #: src/dialogs/sendto/Dialog/FileSender.vala:219
 #, c-format
 msgid "The transfer was interrupted or declined by %s."
-msgstr ""
+msgstr "Overførslen blev afbrudt eller afslået af %s."
 
 #: src/dialogs/sendto/Dialog/ScanDialog.vala:33
 msgid "Select a Bluetooth device to send files to"
-msgstr ""
+msgstr "Vælg en Bluetooth-enhed at overføre til"
 
 #: src/dialogs/sendto/Dialog/ScanDialog.vala:49
 msgid "Discovering…"
-msgstr ""
+msgstr "Opdager..."
 
 #: src/dialogs/sendto/Dialog/ScanDialog.vala:64
 msgid "<b>No devices found</b>"
-msgstr ""
+msgstr "<b>Ingen enheder fandtes.</b> "
 
 #: src/dialogs/sendto/Dialog/ScanDialog.vala:68
 msgid "Ensure that your devices are visable and ready for pairing"
-msgstr ""
+msgstr "Vær sikker på at dine enheder er synlige og klar til parring"
 
 #: src/dialogs/sendto/Dialog/ScanDialog.vala:231
 msgid "Available Devices"
-msgstr ""
-
-#: src/dialogs/screenshot/screenshot.vala:365
-#: src/dialogs/screenshot/screenshot.vala:833
-#: src/daemon/org.buddiesofbudgie.BudgieScreenshot.desktop.in.h:1
-#: src/dialogs/screenshot/budgie-screenshot.desktop.in.h:1
-msgid "Budgie Screenshot"
-msgstr "Budgie skærmbillede"
-
-#. Translators: be as brief as possible; popovers are cut off if broader than
-#. the window
-#: src/dialogs/screenshot/screenshot.vala:481
-msgid "Screenshot entire screen"
-msgstr "Indfang hele skærmen"
-
-#: src/dialogs/screenshot/screenshot.vala:483
-msgid "Screenshot active window"
-msgstr "Indfang aktivt vindue"
-
-#: src/dialogs/screenshot/screenshot.vala:485
-msgid "Screenshot selected area"
-msgstr "Indfang udvalgt område"
-
-#. translate
-#: src/dialogs/screenshot/screenshot.vala:897
-msgid "Cancel screenshot"
-msgstr "Annullér skærmbillede"
-
-#: src/dialogs/screenshot/screenshot.vala:898
-msgid "Save screenshot to the selected directory"
-msgstr "Gem skærmbillede til den valgte mappe"
-
-#: src/dialogs/screenshot/screenshot.vala:899
-msgid "Copy screenshot to the clipboard"
-msgstr "Kopier skærmbillede til udklipsholder"
-
-#: src/dialogs/screenshot/screenshot.vala:900
-msgid "Open screenshot in default application"
-msgstr "Åbn skærmbillede i standardapplikationen"
-
-#. Other -> call Filebrowser (path = null)
-#. 'Other' is about setting a custom directory on a dropdown list
-#: src/dialogs/screenshot/screenshot.vala:1191
-msgid "Other..."
-msgstr "Andet..."
-
-#. Hide the AfterShot window while the file chooser is open
-#. set custom dir to found dir
-#: src/dialogs/screenshot/screenshot.vala:1280
-msgid "Open Folder"
-msgstr "Åbn mappe"
-
-#: src/dialogs/screenshot/screenshot.vala:1281
-msgid "Open"
-msgstr "Åbn"
+msgstr "Ledige enheder"
 
 #. Caffeine Notification
 #. Prepare label widget
@@ -509,6 +511,20 @@ msgstr "Åbn"
 #: src/panel/applets/caffeine/CaffeineWindow.vala:37
 msgid "Caffeine Mode"
 msgstr "Caffeine-tilstand"
+
+#: src/panel/applets/budgie-menu/BudgieMenuWindow.vala:108
+#: src/panel/settings/settings_main.vala:68
+#: src/panel/budgie-desktop-settings.desktop.in:2
+msgid "Budgie Desktop Settings"
+msgstr "Budgie-skrivebordsindstillinger"
+
+#: src/panel/applets/budgie-menu/BudgieMenuWindow.vala:111
+msgid "System Settings"
+msgstr "Systemindstillinger"
+
+#: src/panel/applets/budgie-menu/BudgieMenuWindow.vala:114
+msgid "Power"
+msgstr "Strøm"
 
 #: src/panel/applets/budgie-menu/IconChooser.vala:24
 msgid "Set menu icon from file"
@@ -526,28 +542,27 @@ msgstr "Enhver fil"
 msgid "Set icon"
 msgstr "Angiv ikon"
 
+#: src/panel/applets/budgie-menu/buttons/CategoryButton.vala:43
+#: src/panel/applets/budgie-menu/views/ListView.vala:523
+msgid "Favorites"
+msgstr "Favoritter"
+
+#: src/panel/applets/budgie-menu/buttons/CategoryButton.vala:45
+msgid "All"
+msgstr "Alle"
+
+#: src/panel/applets/budgie-menu/buttons/MenuButton.vala:163
+msgid "Remove from favorites"
+msgstr "Fjern fra favoritter"
+
+#: src/panel/applets/budgie-menu/buttons/MenuButton.vala:164
+msgid "Add to favorites"
+msgstr "Tilføj til favoritter"
+
 #. placeholder in case of no results
 #: src/panel/applets/budgie-menu/views/ListView.vala:111
 msgid "Sorry, no items found"
 msgstr "Beklager, ingenting fundet"
-
-#: src/panel/applets/budgie-menu/BudgieMenuWindow.vala:66
-#: src/panel/settings/settings_main.vala:68
-#: src/panel/budgie-desktop-settings.desktop.in.h:1
-msgid "Budgie Desktop Settings"
-msgstr "Budgie-skrivebordsindstillinger"
-
-#: src/panel/applets/budgie-menu/BudgieMenuWindow.vala:69
-msgid "System Settings"
-msgstr "Systemindstillinger"
-
-#: src/panel/applets/budgie-menu/BudgieMenuWindow.vala:72
-msgid "Power"
-msgstr "Strøm"
-
-#: src/panel/applets/budgie-menu/BudgieMenuButtons.vala:33
-msgid "All"
-msgstr "Alle"
 
 #: src/panel/applets/caffeine/CaffeineWindow.vala:39
 msgid "Timer (minutes)"
@@ -558,53 +573,53 @@ msgid "System time and date settings"
 msgstr "Systemindstillinger for dato og tid"
 
 #: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:30
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:122
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:87
 msgid "Unfavorite"
 msgstr "Fjern favorit"
 
 #: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:30
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:122
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:87
 msgid "Favorite"
 msgstr "Tilføj favorit"
 
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:111
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:76
 msgid "Close all windows"
-msgstr ""
+msgstr "Luk alle vinduer"
 
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:129
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:94
 msgid "Launch new instance"
-msgstr ""
+msgstr "Opret ny instans"
 
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:271
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:240
 #: src/panel/applets/tasklist/TasklistButtonPopover.vala:32
 msgid "Minimize"
 msgstr "Minimér"
 
 #. Translators: This is used for buttons to move applications to another
 #. Workspace
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:338
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:307
 #: src/panel/applets/tasklist/TasklistButtonPopover.vala:106
 #, c-format
 msgid "Move to %s"
-msgstr ""
+msgstr "Flyt til %s"
 
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:361
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:330
 #: src/panel/applets/tasklist/TasklistButtonPopover.vala:129
 msgid "Unmaximize"
 msgstr "Gendan"
 
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:361
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:330
 #: src/panel/applets/tasklist/TasklistButtonPopover.vala:129
 msgid "Maximize"
 msgstr "Maksimér"
 
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:400
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:369
 msgid "Close window"
-msgstr ""
+msgstr "Luk vindue"
 
-#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:405
+#: src/panel/applets/icon-tasklist/widgets/ButtonPopover.vala:374
 msgid "Show window controls"
-msgstr ""
+msgstr "Vis vinduesinstillinger"
 
 #: src/panel/applets/lock-keys/LockKeysApplet.vala:68
 msgid "Caps lock is active"
@@ -627,8 +642,8 @@ msgstr "Num Lock er ikke aktiv"
 #, c-format
 msgid "%u unread notification"
 msgid_plural "%u unread notifications"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%uulæst notifikation"
+msgstr[1] "%uulæste notifikationer"
 
 #: src/panel/applets/notifications/NotificationsApplet.vala:124
 #: src/raven/notifications_view.vala:343
@@ -697,8 +712,21 @@ msgstr "Fejl ved afmontering af diskenhed"
 #: src/panel/applets/places-indicator/PlacesIndicator.vala:80
 #: src/panel/applets/places-indicator/PlacesSection.vala:22
 #: src/panel/applets/places-indicator/PlacesSection.vala:44
+#: src/panel/applets/places-indicator/PlacesIndicator.plugin.desktop.in:4
 msgid "Places"
 msgstr "Steder"
+
+#: src/panel/applets/places-indicator/PlacesIndicatorWindow.vala:179
+msgid "Nothing to display right now"
+msgstr "Intet at vise lige nu"
+
+#: src/panel/applets/places-indicator/PlacesIndicatorWindow.vala:183
+msgid "Mount some drives"
+msgstr "Monter nogle drev"
+
+#: src/panel/applets/places-indicator/PlacesIndicatorWindow.vala:183
+msgid "Enable more sections"
+msgstr "Aktivér flere afsnit"
 
 #: src/panel/applets/places-indicator/VolumeItem.vala:41
 #, c-format
@@ -718,25 +746,13 @@ msgstr "Adgangskoden som du har indtastet er forkert"
 msgid "An unknown error occurred while attempting to mount this volume"
 msgstr "Der opstod en fejl ved forsøg på at montere diskenheden"
 
-#: src/panel/applets/places-indicator/PlacesIndicatorWindow.vala:179
-msgid "Nothing to display right now"
-msgstr "Intet at vise lige nu"
-
-#: src/panel/applets/places-indicator/PlacesIndicatorWindow.vala:183
-msgid "Mount some drives"
-msgstr "Monter nogle drev"
-
-#: src/panel/applets/places-indicator/PlacesIndicatorWindow.vala:183
-msgid "Enable more sections"
-msgstr "Aktivér flere afsnit"
-
 #: src/panel/applets/show-desktop/ShowDesktopApplet.vala:37
 msgid "Toggle the desktop"
 msgstr "Skrivebord til/fra"
 
 #: src/panel/applets/status/BluetoothIndicator.vala:104
 msgid "Bluetooth"
-msgstr ""
+msgstr "Bluetooth"
 
 #: src/panel/applets/status/BluetoothIndicator.vala:114
 msgid "Bluetooth Settings"
@@ -745,73 +761,74 @@ msgstr "Indstillinger for Bluetooth"
 #. Bluetooth switch
 #: src/panel/applets/status/BluetoothIndicator.vala:120
 msgid "Turn Bluetooth on or off"
-msgstr ""
+msgstr "Sluk eller tænd for Bluetooth"
 
 #. Update the tray icon and placeholder text
 #. Airplane mode is on, so Bluetooth is disabled
 #: src/panel/applets/status/BluetoothIndicator.vala:279
 msgid "Airplane mode is on."
-msgstr ""
+msgstr "Flytilstand er slået til."
 
 #: src/panel/applets/status/BluetoothIndicator.vala:280
 msgid "Bluetooth is disabled while airplane mode is on."
-msgstr ""
+msgstr "Bluetooth er slukket når flytilstand er aktiveret."
 
 #. Airplane mode is off, so Bluetooth is enabled
 #: src/panel/applets/status/BluetoothIndicator.vala:283
 msgid "No paired Bluetooth devices found."
-msgstr ""
+msgstr "Ingen parrede Bluetooth-enheder fandtes."
 
 #: src/panel/applets/status/BluetoothIndicator.vala:284
 msgid "Visit Bluetooth settings to pair a device."
-msgstr ""
+msgstr "Gå til Bluetooth-indstillinger for at parre en enhed."
 
 #: src/panel/applets/status/BluetoothIndicator.vala:440
 msgid "Send file"
-msgstr ""
+msgstr "Send fil"
 
 #: src/panel/applets/status/BluetoothIndicator.vala:465
 msgid "Disconnect"
-msgstr ""
+msgstr "Afbryd"
 
 #: src/panel/applets/status/BluetoothIndicator.vala:577
 msgid "Disconnecting…"
-msgstr ""
+msgstr "Afbryder..."
 
 #: src/panel/applets/status/BluetoothIndicator.vala:580
 msgid "Connecting…"
-msgstr ""
+msgstr "Forbinder..."
 
 #: src/panel/applets/status/BluetoothIndicator.vala:585
 msgid "Failed to disconnect"
-msgstr ""
+msgstr "Afbrydelse mislykkedes"
 
 #: src/panel/applets/status/BluetoothIndicator.vala:585
 msgid "Failed to connect"
-msgstr ""
+msgstr "Forbindelse mislykkedes"
 
 #: src/panel/applets/status/BluetoothIndicator.vala:656
+#: src/panel/settings/settings_displays.vala:358
 msgid "Connected"
-msgstr ""
+msgstr "Forbundet"
 
 #: src/panel/applets/status/BluetoothIndicator.vala:656
 msgid "Disconnected"
-msgstr ""
+msgstr "Afbrudt"
 
 #: src/panel/applets/status/BluetoothIndicator.vala:702
 #, c-format
 msgid "<b>Filename</b>: %s"
-msgstr ""
+msgstr "<b>Filnavn </b>:%s"
 
 #: src/panel/applets/status/BluetoothIndicator.vala:709
 #, c-format
 msgid "Receiving… %s of %s"
-msgstr ""
+msgstr "Modtager... %s af %s"
 
 #: src/panel/applets/status/BluetoothIndicator.vala:714
 #, c-format
 msgid "Sending… %s of %s"
-msgstr ""
+msgstr "Sender %s af %s"
 
 #: src/panel/applets/status/PowerIndicator.vala:103
 msgid "Battery fully charged."
@@ -832,23 +849,99 @@ msgstr "Tilbageværende batteri"
 
 #: src/panel/applets/status/PowerIndicator.vala:191
 msgid "Performance Mode"
-msgstr ""
+msgstr "Ydelsestilstand"
 
 #: src/panel/applets/status/PowerIndicator.vala:200
 msgid "Power Saver"
-msgstr ""
+msgstr "Strømsparetilstand"
 
 #: src/panel/applets/status/PowerIndicator.vala:207
 msgid "Balanced"
-msgstr ""
+msgstr "Balanceret"
 
 #: src/panel/applets/status/PowerIndicator.vala:214
 msgid "Performance"
-msgstr ""
+msgstr "Ydelse"
 
 #: src/panel/applets/status/PowerIndicator.vala:276
 msgid "Power settings"
 msgstr "Strømindstillinger"
+
+#: src/panel/applets/trash/trash_applet.c:228
+#: src/panel/applets/trash/trash_item_row.c:332
+#: src/panel/applets/trash/trash_item_row.c:363
+msgid "Trash Error"
+msgstr "Papirkurvsfejl"
+
+#: src/panel/applets/trash/trash_item_row.c:155
+msgid "Permanently delete this item"
+msgstr "Slet dette indhold permanent"
+
+#: src/panel/applets/trash/trash_item_row.c:162
+msgid "Are you sure you want to delete this item?"
+msgstr "Er du sikker på at du vil slette denne genstand?"
+
+#: src/panel/applets/trash/trash_item_row.c:168
+#: src/panel/applets/trash/trash_popover.c:320
+msgid "No"
+msgstr "Nej"
+
+#: src/panel/applets/trash/trash_item_row.c:169
+#: src/panel/applets/trash/trash_popover.c:321
+msgid "Yes"
+msgstr "Ja"
+
+#: src/panel/applets/trash/trash_item_row.c:333
+#, c-format
+msgid "Unable to delete '%s': %s"
+msgstr ""
+
+#: src/panel/applets/trash/trash_item_row.c:364
+#, c-format
+msgid "Unable to restore '%s': %s"
+msgstr ""
+
+#: src/panel/applets/trash/trash_popover.c:119
+#: src/panel/applets/trash/TrashApplet.plugin.desktop.in:4
+msgid "Trash Bin"
+msgstr ""
+
+#: src/panel/applets/trash/trash_popover.c:125
+#: src/panel/settings/settings_panel.vala:103
+#: src/panel/settings/settings_raven.vala:48
+msgid "Settings"
+msgstr "Indstillinger"
+
+#. Header label
+#. Switcher to show or hide a shortcut to Trash
+#: src/panel/applets/trash/trash_popover.c:274
+#: src/panel/settings/settings_desktop.vala:103
+msgid "Trash"
+msgstr "Papirkurv"
+
+#: src/panel/applets/trash/trash_popover.c:283
+msgid "Trash Applet Settings"
+msgstr ""
+
+#: src/panel/applets/trash/trash_popover.c:300
+msgid "Restore"
+msgstr ""
+
+#: src/panel/applets/trash/trash_popover.c:301
+msgid "Restore selected items"
+msgstr ""
+
+#: src/panel/applets/trash/trash_popover.c:303
+msgid "Empty"
+msgstr ""
+
+#: src/panel/applets/trash/trash_popover.c:304
+msgid "Empty the trash bin"
+msgstr ""
+
+#: src/panel/applets/trash/trash_popover.c:311
+msgid "Are you sure you want to empty the trash bin?"
+msgstr ""
 
 #. User Menu Creation
 #: src/panel/applets/user-indicator/UserIndicatorWindow.vala:98
@@ -870,17 +963,17 @@ msgid "Hibernate"
 msgstr "Dvale"
 
 #: src/panel/applets/user-indicator/UserIndicatorWindow.vala:107
-#: src/daemon/endsession.ui.h:5
+#: src/daemon/endsession.ui:124
 msgid "Restart"
 msgstr "Genstart"
 
 #: src/panel/applets/user-indicator/UserIndicatorWindow.vala:108
-#: src/daemon/endsession.ui.h:6
+#: src/daemon/endsession.ui:142
 msgid "Shutdown"
 msgstr "Luk ned"
 
 #: src/panel/applets/user-indicator/UserIndicatorWindow.vala:207
-#: src/daemon/endsession.ui.h:4
+#: src/daemon/endsession.ui:106
 msgid "Logout"
 msgstr "Log ud"
 
@@ -896,12 +989,12 @@ msgstr "Fjern"
 #: src/panel/applets/workspaces/WorkspacesApplet.vala:121
 #: src/panel/applets/workspaces/WorkspacesApplet.vala:226
 msgid "Not able to create new workspaces"
-msgstr ""
+msgstr "Ikke i stand til at oprette nye arbejdsområder"
 
 #: src/panel/applets/workspaces/WorkspacesApplet.vala:123
 #: src/panel/applets/workspaces/WorkspacesApplet.vala:229
 msgid "Create a new workspace"
-msgstr ""
+msgstr "Opret et nyt arbejdsområde"
 
 #: src/panel/settings/settings_autostart.vala:134
 msgid "Untitled"
@@ -1011,11 +1104,6 @@ msgstr "Hjemmemappe"
 msgid "Add a shortcut to your home directory on the desktop."
 msgstr "Tilføj en genvej til din hjemmemappe på skrivebordet."
 
-#. Switcher to show or hide a shortcut to Trash
-#: src/panel/settings/settings_desktop.vala:103
-msgid "Trash"
-msgstr "Papirkurv"
-
 #: src/panel/settings/settings_desktop.vala:104
 msgid "Add a shortcut to the Trash directory on the desktop."
 msgstr "Tilføj en genvej til papirkurvsmappen på skrivebordet."
@@ -1032,54 +1120,119 @@ msgstr "Ikonstørrelse"
 msgid "Set the desired size of icons on the desktop."
 msgstr "Angiv ønsket størrelse på skrivebordsikoner"
 
-#: src/panel/settings/settings_desktop.vala:148
+#: src/panel/settings/settings_desktop.vala:136
 msgid "Number of virtual desktops"
 msgstr "Antal af virtuelle skriveborde"
 
-#: src/panel/settings/settings_desktop.vala:149
+#: src/panel/settings/settings_desktop.vala:137
 msgid ""
 "Number of virtual desktops / workspaces to create automatically on startup."
 msgstr ""
 "Antal af virtuelle skriveborde / arbejdsområder, der skal oprettes "
 "automatisk ved systemstart."
 
-#: src/panel/settings/settings_desktop.vala:217
+#: src/panel/settings/settings_desktop.vala:205
 msgid "Single"
 msgstr "Enkelt"
 
 #. If the click policy is to double click
-#: src/panel/settings/settings_desktop.vala:221
+#: src/panel/settings/settings_desktop.vala:209
 msgid "Double"
 msgstr "Dobbelt"
 
-#: src/panel/settings/settings_desktop.vala:236
+#: src/panel/settings/settings_desktop.vala:224
 msgid "Click Policy"
 msgstr "Klik politik"
 
-#: src/panel/settings/settings_desktop.vala:237
+#: src/panel/settings/settings_desktop.vala:225
 msgid ""
 "Click Policy determines if we should open items on a single or double click."
 msgstr ""
 "Klik politik bestemmer om ting skal åbnes med enkelt- eller dobbeltklik."
 
-#: src/panel/settings/settings_desktop.vala:289
+#: src/panel/settings/settings_desktop.vala:277
 msgid "Normal"
 msgstr "Normal"
 
 #. Small
-#: src/panel/settings/settings_desktop.vala:292
+#: src/panel/settings/settings_desktop.vala:280
 msgid "Small"
 msgstr "Lille"
 
 #. Large
-#: src/panel/settings/settings_desktop.vala:294
+#: src/panel/settings/settings_desktop.vala:282
 msgid "Large"
 msgstr "Stor"
 
 #. Massive
-#: src/panel/settings/settings_desktop.vala:296
+#: src/panel/settings/settings_desktop.vala:284
 msgid "Massive"
 msgstr "Massiv"
+
+#: src/panel/settings/settings_displays.vala:24
+msgid "Displays"
+msgstr "Skærme"
+
+#: src/panel/settings/settings_displays.vala:49
+msgid "Connected Monitors"
+msgstr "Forbundede skærme"
+
+#: src/panel/settings/settings_displays.vala:62
+msgid "Panel Placement"
+msgstr "Panelplacering"
+
+#: src/panel/settings/settings_displays.vala:62
+msgid ""
+"Select which monitor should be the primary display for panel placement."
+msgstr "Vælg hvilken skærm der skal være den primære til panelplacering."
+
+#: src/panel/settings/settings_displays.vala:64
+msgid "Use Automatic Selection"
+msgstr "Brug automatisk markering"
+
+#: src/panel/settings/settings_displays.vala:68
+msgid "Clear Primary Monitor"
+msgstr "Ryd primær skærm"
+
+#: src/panel/settings/settings_displays.vala:69
+msgid "Remove manual primary monitor selection."
+msgstr "Fjern manuel markering af skærmvalg"
+
+#: src/panel/settings/settings_displays.vala:83
+msgid "Fallback Monitors"
+msgstr "Reserveskærme"
+
+#: src/panel/settings/settings_displays.vala:83
+msgid "Order used when primary is disconnected"
+msgstr "Beordre brug når den primære afbrydes"
+
+#: src/panel/settings/settings_displays.vala:165
+msgid "No monitors detected"
+msgstr "Ingen skærme blev fundet"
+
+#: src/panel/settings/settings_displays.vala:195
+msgid "No fallback monitors configured"
+msgstr "Ingen reserveskærme er konfigureret"
+
+#: src/panel/settings/settings_displays.vala:232
+msgid "Primary"
+msgstr "Primær"
+
+#: src/panel/settings/settings_displays.vala:256
+msgid "Unknown model"
+msgstr "Ukendt model"
+
+#: src/panel/settings/settings_displays.vala:278
+msgid "Set as Primary"
+msgstr "Sæt som primær"
+
+#: src/panel/settings/settings_displays.vala:342
+msgid "(last known)"
+msgstr "(sidst kendte)"
+
+#: src/panel/settings/settings_displays.vala:349
+msgid "No cached information"
+msgstr "Ingen lagrede oplysninger"
 
 #: src/panel/settings/settings_fonts.vala:31
 msgid "Fonts"
@@ -1140,7 +1293,7 @@ msgstr "Let"
 
 #: src/panel/settings/settings_fonts.vala:83
 #: src/panel/settings/settings_fonts.vala:109
-#: src/panel/settings/settings_panel.vala:246
+#: src/panel/settings/settings_panel.vala:318
 msgid "None"
 msgstr "Ingen"
 
@@ -1180,36 +1333,192 @@ msgstr "Paneler"
 msgid "Session"
 msgstr "Session"
 
-#: src/panel/settings/settings_main.vala:99
+#: src/panel/settings/settings_main.vala:100
 msgid "Create new panel"
 msgstr "Opret nyt panel"
 
+#: src/panel/settings/settings_panel.vala:102
+#: src/panel/settings/settings_panel.vala:220
+msgid "Applets"
+msgstr "Applets"
+
+#: src/panel/settings/settings_panel.vala:105
+msgid "Remove Panel"
+msgstr "Fjern panel"
+
+#: src/panel/settings/settings_panel.vala:106
+msgid "Remove this panel from the screen"
+msgstr "Fjern panelet fra skærmen"
+
+#: src/panel/settings/settings_panel.vala:243
+msgid "Top Dock"
+msgstr "Øverste dok"
+
+#: src/panel/settings/settings_panel.vala:245
+msgid "Right Dock"
+msgstr "Højre dok"
+
+#: src/panel/settings/settings_panel.vala:247
+msgid "Left Dock"
+msgstr "Venstre dok"
+
+#: src/panel/settings/settings_panel.vala:249
+msgid "Bottom Dock"
+msgstr "Nederste dok"
+
+#: src/panel/settings/settings_panel.vala:254
+msgid "Top Panel"
+msgstr "Toppanel"
+
+#: src/panel/settings/settings_panel.vala:256
+msgid "Right Panel"
+msgstr "Højre panel"
+
+#: src/panel/settings/settings_panel.vala:258
+msgid "Left Panel"
+msgstr "Venstre panel"
+
+#: src/panel/settings/settings_panel.vala:260
+msgid "Bottom Panel"
+msgstr "Bundpanel"
+
+#: src/panel/settings/settings_panel.vala:297
+msgid "Top"
+msgstr "Øverst"
+
+#: src/panel/settings/settings_panel.vala:299 src/raven/raven.vala:35
+msgid "Right"
+msgstr "Højre"
+
+#: src/panel/settings/settings_panel.vala:301
+#: src/panel/settings/settings_wm.vala:84 src/raven/raven.vala:33
+msgid "Left"
+msgstr "Venstre"
+
+#: src/panel/settings/settings_panel.vala:303
+msgid "Bottom"
+msgstr "Nederst"
+
+#: src/panel/settings/settings_panel.vala:313
+msgid "Always"
+msgstr "Altid"
+
+#: src/panel/settings/settings_panel.vala:315
+msgid "Dynamic"
+msgstr "Dynamisk"
+
+#: src/panel/settings/settings_panel.vala:328 src/raven/raven.vala:38
+msgid "Automatic"
+msgstr "Automatisk"
+
+#: src/panel/settings/settings_panel.vala:330
+msgid "Intelligent"
+msgstr "Intelligent"
+
+#: src/panel/settings/settings_panel.vala:333
+msgid "Never"
+msgstr "Aldrig"
+
+#: src/panel/settings/settings_panel.vala:350
+msgid "Position"
+msgstr "Placering"
+
+#: src/panel/settings/settings_panel.vala:351
+msgid "Set the edge of the screen that this panel will stay on"
+msgstr "Sæt skærmkanten hvor panelet skal være på"
+
+#: src/panel/settings/settings_panel.vala:359
+msgid "Size"
+msgstr "Størrelse"
+
+#: src/panel/settings/settings_panel.vala:360
+msgid "Set the size (width or height, depending on orientation) of this panel"
+msgstr "Sæt panelets størrelse (bredde og højde, afhænger af orientering)"
+
+#: src/panel/settings/settings_panel.vala:367
+msgid "Spacing"
+msgstr "Afstand"
+
+#: src/panel/settings/settings_panel.vala:368
+msgid "Set the spacing between applets for this panel"
+msgstr "Angiv afstand mellem applets i dette panel"
+
+#: src/panel/settings/settings_panel.vala:375
+msgid "Automatically hide"
+msgstr "Skjul automatisk"
+
+#: src/panel/settings/settings_panel.vala:376
+msgid "When set, this panel will hide from view to maximize screen estate"
+msgstr ""
+"Hvis den er sat, så skjules panelet fra visningen for at gøre bedst brug af "
+"skærmens område"
+
+#: src/panel/settings/settings_panel.vala:383
+msgid "Transparency"
+msgstr "Transparens"
+
+#: src/panel/settings/settings_panel.vala:384
+msgid "Control when this panel should have a solid background"
+msgstr "Bestem hvornår panelet skal bruge en ensfarvet baggrund"
+
+#: src/panel/settings/settings_panel.vala:389
+msgid "Shadow"
+msgstr "Skygge"
+
+#: src/panel/settings/settings_panel.vala:390
+msgid "Adds a decorative drop-shadow, ideal for opaque panels"
+msgstr "Tilføj en dekorativ slagskygge, ideelt til uigennemsigtige paneler"
+
+#: src/panel/settings/settings_panel.vala:396
+msgid "Stylize regions"
+msgstr "Stilisér regioner"
+
+#: src/panel/settings/settings_panel.vala:397
+msgid ""
+"Adds a hint to the panel so that each of the panel's three main areas may be"
+" themed differently."
+msgstr ""
+"Tilføjer et hint til panelet, så hver af panelernes tre hovedområder kan "
+"bruge forskellige temaer."
+
+#: src/panel/settings/settings_panel.vala:404
+msgid "Dock mode"
+msgstr "Doktilstand"
+
+#: src/panel/settings/settings_panel.vala:405
+msgid ""
+"When in dock mode, the panel will use the minimal amount of space possible, "
+"freeing up valuable screen estate"
+msgstr ""
+"I doktilstand, bruger panelet mindst muligt plads, så værdifulde områder af "
+"skærmen frigøres"
+
 #: src/panel/settings/settings_panel_applets.vala:21
 msgid "Applet Settings"
-msgstr ""
+msgstr "Applet indstillinger"
 
-#: src/panel/settings/settings_panel_applets.vala:235
+#: src/panel/settings/settings_panel_applets.vala:246
 msgid "Add applet"
 msgstr "Tilføj applet"
 
-#: src/panel/settings/settings_panel_applets.vala:236
+#: src/panel/settings/settings_panel_applets.vala:247
 msgid "Choose a new applet to add to this panel"
 msgstr "Vælg en ny applet som skal tilføjes til panelet"
 
-#: src/panel/settings/settings_panel_applets.vala:250
+#: src/panel/settings/settings_panel_applets.vala:261
 #: src/panel/settings/settings_raven_widgets.vala:164
 msgid "No settings available"
 msgstr "Ingen indstillinger tilgængelige"
 
-#: src/panel/settings/settings_panel_applets.vala:403
+#: src/panel/settings/settings_panel_applets.vala:414
 msgid "Start"
 msgstr "Start"
 
-#: src/panel/settings/settings_panel_applets.vala:406
+#: src/panel/settings/settings_panel_applets.vala:417
 msgid "Center"
 msgstr "Midt"
 
-#: src/panel/settings/settings_panel_applets.vala:409
+#: src/panel/settings/settings_panel_applets.vala:420
 msgid "End"
 msgstr "Slut"
 
@@ -1281,15 +1590,10 @@ msgstr "af %s"
 msgid "No authors listed"
 msgstr "Ingen forfattere listet"
 
-#: src/panel/settings/settings_raven.vala:47
-#: src/panel/settings/settings_style.vala:52 src/raven/main_view.vala:53
+#: src/panel/settings/settings_raven.vala:47 src/raven/main_view.vala:53
+msgctxt "Raven"
 msgid "Widgets"
-msgstr "Widgets"
-
-#: src/panel/settings/settings_raven.vala:48
-#: src/panel/settings/settings_panel.vala:91
-msgid "Settings"
-msgstr "Indstillinger"
+msgstr ""
 
 #: src/panel/settings/settings_raven_settings.vala:47
 msgid "Set Raven position"
@@ -1305,13 +1609,15 @@ msgstr ""
 
 #: src/panel/settings/settings_raven_settings.vala:71
 msgid "Set notification sort order"
-msgstr ""
+msgstr "Sæt sorteringsrækkefølge for notifikationer"
 
 #: src/panel/settings/settings_raven_settings.vala:72
 msgid ""
 "Set whether notifications are sorted from oldest to newest, or newest to "
 "oldest."
 msgstr ""
+"Sæt hvorledes notifikationer skal sorteres fra ældste til nyeste, eller fra "
+"nyeste til ældste."
 
 #: src/panel/settings/settings_raven_widgets.vala:21
 msgid "Widget Settings"
@@ -1365,160 +1671,95 @@ msgstr ""
 msgid "Failed to create the widget instance due to an unknown failure."
 msgstr "Fejl ved oprettelse af widget instans på grund af en ukendt fejl."
 
-#: src/panel/settings/settings_panel.vala:90
-msgid "Applets"
-msgstr "Applets"
+#: src/panel/settings/settings_style.vala:36
+msgid "Style"
+msgstr "Stil"
 
-#: src/panel/settings/settings_panel.vala:93
-msgid "Remove Panel"
-msgstr "Fjern panel"
-
-#: src/panel/settings/settings_panel.vala:94
-msgid "Remove this panel from the screen"
-msgstr "Fjern panelet fra skærmen"
-
-#: src/panel/settings/settings_panel.vala:171
-msgid "Top Dock"
-msgstr "Øverste dok"
-
-#: src/panel/settings/settings_panel.vala:173
-msgid "Right Dock"
-msgstr "Højre dok"
-
-#: src/panel/settings/settings_panel.vala:175
-msgid "Left Dock"
-msgstr "Venstre dok"
-
-#: src/panel/settings/settings_panel.vala:177
-msgid "Bottom Dock"
-msgstr "Nederste dok"
-
-#: src/panel/settings/settings_panel.vala:182
-msgid "Top Panel"
-msgstr "Toppanel"
-
-#: src/panel/settings/settings_panel.vala:184
-msgid "Right Panel"
-msgstr "Højre panel"
-
-#: src/panel/settings/settings_panel.vala:186
-msgid "Left Panel"
-msgstr "Venstre panel"
-
-#: src/panel/settings/settings_panel.vala:188
-msgid "Bottom Panel"
-msgstr "Bundpanel"
-
-#: src/panel/settings/settings_panel.vala:225
-msgid "Top"
-msgstr "Øverst"
-
-#: src/panel/settings/settings_panel.vala:227 src/raven/raven.vala:35
-msgid "Right"
-msgstr "Højre"
-
-#: src/panel/settings/settings_panel.vala:229
-#: src/panel/settings/settings_wm.vala:84 src/raven/raven.vala:33
-msgid "Left"
-msgstr "Venstre"
-
-#: src/panel/settings/settings_panel.vala:231
-msgid "Bottom"
-msgstr "Nederst"
-
-#: src/panel/settings/settings_panel.vala:241
-msgid "Always"
-msgstr "Altid"
-
-#: src/panel/settings/settings_panel.vala:243
-msgid "Dynamic"
-msgstr "Dynamisk"
-
-#: src/panel/settings/settings_panel.vala:256 src/raven/raven.vala:38
-msgid "Automatic"
-msgstr "Automatisk"
-
-#: src/panel/settings/settings_panel.vala:258
-msgid "Intelligent"
-msgstr "Intelligent"
-
-#: src/panel/settings/settings_panel.vala:261
-msgid "Never"
-msgstr "Aldrig"
-
-#: src/panel/settings/settings_panel.vala:278
-msgid "Position"
-msgstr "Placering"
-
-#: src/panel/settings/settings_panel.vala:279
-msgid "Set the edge of the screen that this panel will stay on"
-msgstr "Sæt skærmkanten hvor panelet skal være på"
-
-#: src/panel/settings/settings_panel.vala:287
-msgid "Size"
-msgstr "Størrelse"
-
-#: src/panel/settings/settings_panel.vala:288
-msgid "Set the size (width or height, depending on orientation) of this panel"
-msgstr "Sæt panelets størrelse (bredde og højde, afhænger af orientering)"
-
-#: src/panel/settings/settings_panel.vala:295
-msgid "Spacing"
-msgstr "Afstand"
-
-#: src/panel/settings/settings_panel.vala:296
-msgid "Set the spacing between applets for this panel"
-msgstr "Angiv afstand mellem applets i dette panel"
-
-#: src/panel/settings/settings_panel.vala:303
-msgid "Automatically hide"
-msgstr "Skjul automatisk"
-
-#: src/panel/settings/settings_panel.vala:304
-msgid "When set, this panel will hide from view to maximize screen estate"
+#: src/panel/settings/settings_style.vala:52
+msgctxt "Styling"
+msgid "Widgets"
 msgstr ""
-"Hvis den er sat, så skjules panelet fra visningen for at gøre bedst brug af "
-"skærmens område"
 
-#: src/panel/settings/settings_panel.vala:311
-msgid "Transparency"
-msgstr "Transparens"
+#: src/panel/settings/settings_style.vala:53
+msgid "Set the appearance of window decorations and controls"
+msgstr "Sæt udseendet af vinduesdekorationer og kontroller"
 
-#: src/panel/settings/settings_panel.vala:312
-msgid "Control when this panel should have a solid background"
-msgstr "Bestem hvornår panelet skal bruge en ensfarvet baggrund"
+#: src/panel/settings/settings_style.vala:57
+msgid "Icons"
+msgstr "Ikoner"
 
-#: src/panel/settings/settings_panel.vala:317
-msgid "Shadow"
-msgstr "Skygge"
+#: src/panel/settings/settings_style.vala:58
+msgid "Set the globally used icon theme"
+msgstr "Sæt det ikontema som skal bruges globalt"
 
-#: src/panel/settings/settings_panel.vala:318
-msgid "Adds a decorative drop-shadow, ideal for opaque panels"
-msgstr "Tilføj en dekorativ slagskygge, ideelt til uigennemsigtige paneler"
+#: src/panel/settings/settings_style.vala:62
+msgid "Cursors"
+msgstr "Markører"
 
-#: src/panel/settings/settings_panel.vala:324
-msgid "Stylize regions"
-msgstr "Stilisér regioner"
+#: src/panel/settings/settings_style.vala:63
+msgid "Set the globally used mouse cursor theme"
+msgstr "Sæt det musemarkørtema som skal bruges globalt"
 
-#: src/panel/settings/settings_panel.vala:325
+#: src/panel/settings/settings_style.vala:67
+msgid "Notification Position"
+msgstr "Notifikationsposition"
+
+#: src/panel/settings/settings_style.vala:68
+msgid "Set the location for notification popups"
+msgstr "Vælg notifikation-popup placering"
+
+#: src/panel/settings/settings_style.vala:77
+msgid "Dark theme"
+msgstr "Mørkt tema"
+
+#: src/panel/settings/settings_style.vala:84
+msgid "Built-in theme"
+msgstr "Indbygget tema"
+
+#: src/panel/settings/settings_style.vala:85
 msgid ""
-"Adds a hint to the panel so that each of the panel's three main areas may be"
-" themed differently."
+"When enabled, the built-in theme will override the desktop component styling"
 msgstr ""
-"Tilføjer et hint til panelet, så hver af panelernes tre hovedområder kan "
-"bruge forskellige temaer."
+"Når aktiveret, tilsidesættes skrivebordskomponentstilen med den indbyggede "
+"stil"
 
-#: src/panel/settings/settings_panel.vala:332
-msgid "Dock mode"
-msgstr "Doktilstand"
+#: src/panel/settings/settings_style.vala:98
+msgid "Animations"
+msgstr "Animationer"
 
-#: src/panel/settings/settings_panel.vala:333
+#: src/panel/settings/settings_style.vala:99
+msgid "Control whether windows and controls use animations"
+msgstr "Bestem hvorvidt vinduer og kontroller skal bruge animationer"
+
+#. Get display name for theme
+#: src/panel/settings/settings_style.vala:207
+msgid "Use theme"
+msgstr "Anvend tema"
+
+#: src/panel/settings/settings_style.vala:318
+msgid "Labwc Compositor Theme"
+msgstr "Labwc Compositor Tema"
+
+#: src/panel/settings/settings_style.vala:319
 msgid ""
-"When in dock mode, the panel will use the minimal amount of space possible, "
-"freeing up valuable screen estate"
+"Override the labwc compositor theme independently from the desktop theme"
 msgstr ""
-"I doktilstand, bruger panelet mindst muligt plads, så værdifulde områder af "
-"skærmen frigøres"
+
+#: src/panel/settings/settings_style.vala:388
+msgid "Top Left"
+msgstr "Øverst til venstre"
+
+#: src/panel/settings/settings_style.vala:390
+msgid "Bottom Left"
+msgstr "Bunden til venstre"
+
+#: src/panel/settings/settings_style.vala:392
+msgid "Bottom Right"
+msgstr "Bunden til højre"
+
+#: src/panel/settings/settings_style.vala:395
+msgid "Top Right"
+msgstr "Toppen til højre"
 
 #: src/panel/settings/settings_wm.vala:29
 msgid "Windows"
@@ -1578,13 +1819,15 @@ msgstr ""
 
 #: src/panel/settings/settings_wm.vala:68
 msgid "Window focus mode"
-msgstr ""
+msgstr "Vindue fokustilstand"
 
 #: src/panel/settings/settings_wm.vala:69
 msgid ""
 "Choose how windows receive focus: click to focus; sloppy to focus without "
 "raising windows; mouse to focus with raising."
 msgstr ""
+"Vælg hvordan vinduer får fokus: klik for at fokusér; sløset til fokus uden "
+"at åbne vinduer; mus til fokus med rejsning."
 
 #: src/panel/settings/settings_wm.vala:74
 msgid "Show all windows in tab switcher"
@@ -1603,98 +1846,14 @@ msgstr "Højre (standard)"
 
 #: src/panel/settings/settings_wm.vala:97
 msgid "Click"
-msgstr ""
+msgstr "Klik"
 
 #: src/panel/settings/settings_wm.vala:99
 msgid "Sloppy"
-msgstr ""
-
-#: src/panel/settings/settings_style.vala:36
-msgid "Style"
-msgstr "Stil"
-
-#: src/panel/settings/settings_style.vala:53
-msgid "Set the appearance of window decorations and controls"
-msgstr "Sæt udseendet af vinduesdekorationer og kontroller"
-
-#: src/panel/settings/settings_style.vala:57
-msgid "Icons"
-msgstr "Ikoner"
-
-#: src/panel/settings/settings_style.vala:58
-msgid "Set the globally used icon theme"
-msgstr "Sæt det ikontema som skal bruges globalt"
-
-#: src/panel/settings/settings_style.vala:62
-msgid "Cursors"
-msgstr "Markører"
-
-#: src/panel/settings/settings_style.vala:63
-msgid "Set the globally used mouse cursor theme"
-msgstr "Sæt det musemarkørtema som skal bruges globalt"
-
-#: src/panel/settings/settings_style.vala:67
-msgid "Notification Position"
-msgstr "Notifikationsposition"
-
-#: src/panel/settings/settings_style.vala:68
-msgid "Set the location for notification popups"
-msgstr "Vælg notifikation-popup placering"
-
-#: src/panel/settings/settings_style.vala:77
-msgid "Dark theme"
-msgstr "Mørkt tema"
-
-#: src/panel/settings/settings_style.vala:84
-msgid "Built-in theme"
-msgstr "Indbygget tema"
-
-#: src/panel/settings/settings_style.vala:85
-msgid ""
-"When enabled, the built-in theme will override the desktop component styling"
-msgstr ""
-"Når aktiveret, tilsidesættes skrivebordskomponentstilen med den indbyggede "
-"stil"
-
-#: src/panel/settings/settings_style.vala:98
-msgid "Animations"
-msgstr "Animationer"
-
-#: src/panel/settings/settings_style.vala:99
-msgid "Control whether windows and controls use animations"
-msgstr "Bestem hvorvidt vinduer og kontroller skal bruge animationer"
-
-#. Get display name for theme
-#: src/panel/settings/settings_style.vala:207
-msgid "Use theme"
-msgstr ""
-
-#: src/panel/settings/settings_style.vala:318
-msgid "Labwc Compositor Theme"
-msgstr ""
-
-#: src/panel/settings/settings_style.vala:319
-msgid ""
-"Override the labwc compositor theme independently from the desktop theme."
-msgstr ""
-
-#: src/panel/settings/settings_style.vala:388
-msgid "Top Left"
-msgstr "Øverst til venstre"
-
-#: src/panel/settings/settings_style.vala:390
-msgid "Bottom Left"
-msgstr "Bunden til venstre"
-
-#: src/panel/settings/settings_style.vala:392
-msgid "Bottom Right"
-msgstr "Bunden til højre"
-
-#: src/panel/settings/settings_style.vala:395
-msgid "Top Right"
-msgstr "Toppen til højre"
+msgstr "Sløset"
 
 #: src/raven/main_view.vala:56
+#: src/panel/applets/notifications/NotificationsApplet.plugin.desktop.in:4
 msgid "Notifications"
 msgstr "Notifikationer"
 
@@ -1710,11 +1869,19 @@ msgstr "Intet at se her"
 msgid "No new notifications"
 msgstr "Ingen nye notifikationer"
 
-#: src/raven/widgets/media-controls/media_controls.vala:155
+#: src/raven/raven.vala:49
+msgid "Oldest to newest"
+msgstr "Ældste til nyeste"
+
+#: src/raven/raven.vala:52
+msgid "Newest to oldest"
+msgstr "Nyeste til ældste"
+
+#: src/raven/widgets/media-controls/media_controls.vala:105
 msgid "No apps are currently playing audio."
 msgstr "Ingen programmer afspiller i øjeblikket lyd."
 
-#: src/raven/widgets/media-controls/media_controls.vala:164
+#: src/raven/widgets/media-controls/media_controls.vala:114
 msgid "Play some music"
 msgstr "Spil noget musik"
 
@@ -1736,12 +1903,12 @@ msgstr "Ukendt album"
 #: src/raven/widgets/media-controls/mpris_gui.vala:302
 #, c-format
 msgid "Playing - %s"
-msgstr ""
+msgstr "Afspiller - %s"
 
 #: src/raven/widgets/media-controls/mpris_gui.vala:309
 #, c-format
 msgid "Paused - %s"
-msgstr ""
+msgstr "På pause - %s"
 
 #: src/raven/widgets/sound-output/sound_output.vala:173
 msgid "No apps are playing audio."
@@ -1755,425 +1922,507 @@ msgstr "Applikationer"
 msgid "Devices"
 msgstr "Enheder"
 
-#: src/raven/widgets/usage-monitor/usage_monitor.vala:47
-#: src/raven/widgets/usage-monitor/UsageMonitor.plugin.in.h:1
+#: src/raven/widgets/usage-monitor/usage_monitor.vala:52
+#: src/raven/widgets/usage-monitor/UsageMonitor.plugin.desktop.in:4
 msgid "Usage Monitor"
 msgstr "Systemovervågning"
 
-#: src/raven/widgets/usage-monitor/usage_monitor.vala:83
+#: src/raven/widgets/usage-monitor/usage_monitor.vala:88
 msgid "CPU"
 msgstr "CPU"
 
-#: src/raven/widgets/usage-monitor/usage_monitor.vala:88
+#: src/raven/widgets/usage-monitor/usage_monitor.vala:93
 msgid "RAM"
 msgstr "RAM"
 
-#: src/raven/widgets/usage-monitor/usage_monitor.vala:93
+#: src/raven/widgets/usage-monitor/usage_monitor.vala:98
 msgid "Swap"
 msgstr "Swap"
 
-#: src/raven/raven.vala:49
-msgid "Oldest to newest"
-msgstr ""
-
-#: src/raven/raven.vala:52
-msgid "Newest to oldest"
-msgstr ""
-
-#: src/daemon/endsession.ui.h:2
+#: src/daemon/endsession.ui:71
 msgid "Are you sure you want to end your session?"
 msgstr "Er du sikker på, at du vil afslutte din session?"
 
-#: src/dialogs/polkit/dialog.ui.h:1
+#: src/dialogs/polkit/dialog.ui:12 src/dialogs/polkit/dialog.ui:49
 msgid "Authentication Required"
 msgstr "Autentifikation kræves"
 
-#: src/dialogs/polkit/dialog.ui.h:2
+#: src/dialogs/polkit/dialog.ui:71
 msgid "Password:"
 msgstr "Adgangskode:"
 
-#: src/dialogs/polkit/dialog.ui.h:3
+#: src/dialogs/polkit/dialog.ui:103
 msgid "Username:"
-msgstr ""
+msgstr "Brugernavn:"
 
-#: src/dialogs/polkit/dialog.ui.h:4
+#: src/dialogs/polkit/dialog.ui:131
 msgid "Authentication is required"
 msgstr "Autentifikation kræves"
 
-#: src/dialogs/polkit/dialog.ui.h:5
+#: src/dialogs/polkit/dialog.ui:184
 msgid "Details"
-msgstr ""
+msgstr "Detaljer"
 
-#: src/dialogs/polkit/dialog.ui.h:6
+#: src/dialogs/polkit/dialog.ui:224
 msgid "Action:"
-msgstr ""
+msgstr "Handling:"
 
-#: src/dialogs/polkit/dialog.ui.h:7
+#: src/dialogs/polkit/dialog.ui:259
 msgid "ID:"
-msgstr ""
+msgstr "ID:"
 
-#: src/dialogs/polkit/dialog.ui.h:9
+#: src/dialogs/polkit/dialog.ui:335
 msgid "Authenticate"
 msgstr "Autentificer"
 
-#: src/dialogs/screenshot/aftershot.ui.h:1
+#: src/dialogs/screenshot/aftershot.ui:48
 msgid "Name:"
-msgstr ""
+msgstr "Navn:"
 
-#: src/dialogs/screenshot/aftershot.ui.h:2
+#: src/dialogs/screenshot/aftershot.ui:85
 msgid "Folder:"
-msgstr ""
+msgstr "Mappe:"
 
-#: src/dialogs/screenshot/screenshothome.ui.h:1
+#: src/dialogs/screenshot/screenshothome.ui:35
 msgid "Delay in seconds"
-msgstr ""
+msgstr "Forsinkelse i sekunder"
 
-#: src/dialogs/screenshot/screenshothome.ui.h:2
+#: src/dialogs/screenshot/screenshothome.ui:91
 msgid "Show Pointer"
-msgstr ""
+msgstr "Vis markør"
 
-#: src/dialogs/screenshot/screenshothome.ui.h:3
+#: src/dialogs/screenshot/screenshothome.ui:141
 msgid "Play sound when capturing"
-msgstr ""
+msgstr "Afspil lyd ved optagelse"
 
-#: src/panel/applets/budgie-menu/settings.ui.h:1
+#: src/panel/applets/budgie-menu/settings.ui:23
 msgid "Show Menu Label"
 msgstr "Vis menuetiket"
 
-#: src/panel/applets/budgie-menu/settings.ui.h:2
+#: src/panel/applets/budgie-menu/settings.ui:48
 msgid "Menu Label"
 msgstr "Menuetiket"
 
-#: src/panel/applets/budgie-menu/settings.ui.h:3
+#: src/panel/applets/budgie-menu/settings.ui:72
 msgid "Use Default Menu Icon"
 msgstr "Brug standard menuikon"
 
-#: src/panel/applets/budgie-menu/settings.ui.h:4
+#: src/panel/applets/budgie-menu/settings.ui:97
 msgid "Menu Icon"
 msgstr "Menuikon"
 
-#: src/panel/applets/budgie-menu/settings.ui.h:5
+#: src/panel/applets/budgie-menu/settings.ui:148
 msgid "Compact Mode"
 msgstr "Kompakt tilstand"
 
-#: src/panel/applets/budgie-menu/settings.ui.h:6
+#: src/panel/applets/budgie-menu/settings.ui:172
 msgid "Show Headers"
 msgstr "Vis hoveder"
 
-#: src/panel/applets/budgie-menu/settings.ui.h:7
+#: src/panel/applets/budgie-menu/settings.ui:196
 msgid "Roll-over mouse"
 msgstr "Hold musen over"
 
-#: src/panel/applets/budgie-menu/settings.ui.h:8
+#: src/panel/applets/budgie-menu/settings.ui:221
 msgid "Show settings items"
 msgstr "Vis indstillinger"
 
-#: src/panel/applets/caffeine/settings.ui.h:1
+#: src/panel/applets/caffeine/settings.ui:23
 msgid "Enable notification"
 msgstr "Slå notifikation til"
 
-#: src/panel/applets/caffeine/settings.ui.h:2
+#: src/panel/applets/caffeine/settings.ui:35
 msgid "Maximize brightness"
 msgstr "Maksimer lysstyrke"
 
-#: src/panel/applets/caffeine/settings.ui.h:3
+#: src/panel/applets/caffeine/settings.ui:47
 msgid "Brightness Level"
 msgstr "Lysstyrke"
 
-#: src/panel/applets/clock/settings.ui.h:1
+#: src/panel/applets/clock/settings.ui:15
 msgid "Show date"
 msgstr "Vis dato"
 
-#: src/panel/applets/clock/settings.ui.h:2
+#: src/panel/applets/clock/settings.ui:38
 msgid "Show seconds"
 msgstr "Vis sekunder"
 
-#: src/panel/applets/clock/settings.ui.h:3
+#: src/panel/applets/clock/settings.ui:61
 msgid "Use 24 hour time"
 msgstr "Brug 24-timers tid"
 
-#: src/panel/applets/clock/settings.ui.h:4
+#: src/panel/applets/clock/settings.ui:84
 msgid "Custom Format"
 msgstr "Brugerdefineret format"
 
-#: src/panel/applets/clock/settings.ui.h:6
-#, no-c-format
+#: src/panel/applets/clock/settings.ui:107
 msgid "%H:%M:%S %d.%m.%Y"
 msgstr "%H:%M:%S %d.%m.%Y"
 
-#: src/panel/applets/clock/settings.ui.h:7
+#: src/panel/applets/clock/settings.ui:120
 msgid "Custom Timezone"
 msgstr "Brugerdefineret tidszone"
 
-#: src/panel/applets/clock/settings.ui.h:8
+#: src/panel/applets/clock/settings.ui:143
 msgid "UTC"
 msgstr "UTC"
 
-#: src/panel/applets/icon-tasklist/settings.ui.h:1
+#: src/panel/applets/icon-tasklist/settings.ui:15
 msgid "Show all windows on click"
 msgstr "Vis alle vinduer ved klik"
 
-#: src/panel/applets/icon-tasklist/settings.ui.h:2
+#: src/panel/applets/icon-tasklist/settings.ui:39
 msgid "Only show favorited"
 msgstr "Vis kun favoriserede"
 
-#: src/panel/applets/icon-tasklist/settings.ui.h:3
+#: src/panel/applets/icon-tasklist/settings.ui:63
 msgid "Lock icons"
 msgstr "Lås ikoner"
 
-#: src/panel/applets/icon-tasklist/settings.ui.h:4
+#: src/panel/applets/icon-tasklist/settings.ui:88
 msgid "Restrict to Workspace"
 msgstr "Fastlås til arbejdsområde"
 
-#: src/panel/applets/icon-tasklist/settings.ui.h:5
+#: src/panel/applets/icon-tasklist/settings.ui:112
 msgid "Middle click to launch new window"
 msgstr "Klik med midterste knap for at åbne nyt vindue"
 
-#: src/panel/applets/icon-tasklist/settings.ui.h:6
+#: src/panel/applets/icon-tasklist/settings.ui:136
 msgid "Require a double-click to launch new window"
 msgstr "Kræv dobbeltklik for at åbne nyt vindue"
 
-#: src/panel/applets/night-light/indicator_window.ui.h:1
+#: src/panel/applets/keyboard-layout/keyboard-header.ui:28
+#: src/panel/applets/keyboard-layout/KeyboardLayoutApplet.plugin.desktop.in:4
+msgid "Keyboard Layout"
+msgstr "Tastaturlayout"
+
+#: src/panel/applets/keyboard-layout/keyboard-header.ui:44
+msgid "Keyboard Layout Settings"
+msgstr "Tastaturlayout-indstillinger"
+
+#: src/panel/applets/night-light/indicator_window.ui:37
+#: src/panel/applets/night-light/NightLight.plugin.desktop.in:4
 msgid "Night Light"
 msgstr "Nattelys"
 
-#: src/panel/applets/night-light/indicator_window.ui.h:2
+#: src/panel/applets/night-light/indicator_window.ui:85
 msgid "Temperature"
 msgstr "Temperatur"
 
-#: src/panel/applets/night-light/indicator_window.ui.h:3
+#: src/panel/applets/night-light/indicator_window.ui:110
 msgid "Schedule"
 msgstr "Planlægning"
 
-#: src/panel/applets/night-light/indicator_window.ui.h:4
+#: src/panel/applets/night-light/indicator_window.ui:124
 msgid "Sunset to Sunrise"
 msgstr "Solnedgang til solopgang"
 
-#: src/panel/applets/night-light/indicator_window.ui.h:5
+#: src/panel/applets/night-light/indicator_window.ui:125
 msgid "Manual"
 msgstr "Manuelt"
 
-#: src/panel/applets/night-light/indicator_window.ui.h:6
+#: src/panel/applets/night-light/indicator_window.ui:144
 msgid "Display Settings"
 msgstr "Visningsindstillinger"
 
-#: src/panel/applets/places-indicator/settings.ui.h:1
+#: src/panel/applets/places-indicator/settings.ui:19
 msgid "Show label"
 msgstr "Vis etiket"
 
-#: src/panel/applets/places-indicator/settings.ui.h:2
+#: src/panel/applets/places-indicator/settings.ui:55
 msgid "Show places"
 msgstr "Vis steder"
 
-#: src/panel/applets/places-indicator/settings.ui.h:3
+#: src/panel/applets/places-indicator/settings.ui:79
 msgid "Show network folders"
 msgstr "Vis netværksmapper"
 
-#: src/panel/applets/places-indicator/settings.ui.h:4
+#: src/panel/applets/places-indicator/settings.ui:103
 msgid "Show removable drives"
 msgstr "Vis drev der kan fjernes"
 
-#: src/panel/applets/places-indicator/settings.ui.h:5
+#: src/panel/applets/places-indicator/settings.ui:127
 msgid "Always expand places"
 msgstr "Udvid altid steder"
 
-#: src/panel/applets/spacer/settings.ui.h:1
+#: src/panel/applets/spacer/settings.ui:21
 msgid "Spacer size"
 msgstr "Størrelse på afstandsstykke"
 
-#: src/panel/applets/status/settings.ui.h:1
-#: src/panel/applets/tray/settings.ui.h:1
+#: src/panel/applets/status/settings.ui:22
+#: src/panel/applets/tray/settings.ui:22
 msgid "Icon Spacing"
 msgstr "Ikonafstand"
 
-#: src/panel/applets/status/settings.ui.h:2
+#: src/panel/applets/status/settings.ui:48
 msgid "Show battery percentage"
 msgstr "Vis batteriets procent"
 
-#: src/panel/applets/trash/settings.ui.h:1
+#: src/panel/applets/tasklist/settings.ui:16
+msgid "Show button icons"
+msgstr "Vis knapikoner"
+
+#: src/panel/applets/tasklist/settings.ui:41
+msgid "Show button labels"
+msgstr "Vis knapetiketter"
+
+#: src/panel/applets/trash/settings.ui:16
 msgid "Sort Mode"
-msgstr ""
+msgstr "Sortér tilstand"
 
-#: src/panel/applets/trash/settings.ui.h:2
+#: src/panel/applets/trash/settings.ui:28
 msgid "Sort by type"
-msgstr ""
+msgstr "Sortér type"
 
-#: src/panel/applets/trash/settings.ui.h:3
+#: src/panel/applets/trash/settings.ui:43
 msgid "Sort alphabetically"
-msgstr ""
+msgstr "Sortér alfabetisk"
 
-#: src/panel/applets/trash/settings.ui.h:4
+#: src/panel/applets/trash/settings.ui:58
 msgid "Sort reverse alphabetically"
-msgstr ""
+msgstr "Sortér efter modsat alfabetisk rækkefølge"
 
-#: src/panel/applets/trash/settings.ui.h:5
+#: src/panel/applets/trash/settings.ui:73
 msgid "Sort by date ascending"
-msgstr ""
+msgstr "Sortér efter nyeste dato"
 
-#: src/panel/applets/trash/settings.ui.h:6
+#: src/panel/applets/trash/settings.ui:88
 msgid "Sort by date descending"
-msgstr ""
+msgstr "Sortér efter ældste dato"
 
-#: src/panel/applets/tray/settings.ui.h:2
+#: src/panel/applets/tray/settings.ui:48
 msgid "Scale icons with panel size"
-msgstr ""
+msgstr "Skalér ikoner med panelstørrelse"
 
-#: src/panel/applets/workspaces/settings.ui.h:1
+#: src/panel/applets/workspaces/settings.ui:17
 msgid "\"Add\" button visibility"
 msgstr "Synlighed for \"tilføj\"-knap"
 
-#: src/panel/applets/workspaces/settings.ui.h:2
+#: src/panel/applets/workspaces/settings.ui:31
 msgid "Item Size Multiplier"
 msgstr "Enhedsstørrelses faktor"
 
-#: src/panel/applets/workspaces/settings.ui.h:3
+#: src/panel/applets/workspaces/settings.ui:45
 msgid "Don't show"
 msgstr "Vis ikke"
 
-#: src/panel/applets/workspaces/settings.ui.h:4
+#: src/panel/applets/workspaces/settings.ui:46
 msgid "Show on mouseover"
 msgstr "Vis ved cursoroverføring"
 
-#: src/panel/applets/workspaces/settings.ui.h:5
+#: src/panel/applets/workspaces/settings.ui:47
 msgid "Always show"
 msgstr "Vis altid"
 
-#: src/panel/applets/workspaces/settings.ui.h:6
+#: src/panel/applets/workspaces/settings.ui:65
 msgid "0.5x"
 msgstr "0.5x"
 
-#: src/panel/applets/workspaces/settings.ui.h:7
+#: src/panel/applets/workspaces/settings.ui:66
 msgid "0.75x"
 msgstr "0.75x"
 
-#: src/panel/applets/workspaces/settings.ui.h:8
+#: src/panel/applets/workspaces/settings.ui:67
 msgid "1.0x"
 msgstr "1.0x"
 
-#: src/panel/applets/workspaces/settings.ui.h:9
+#: src/panel/applets/workspaces/settings.ui:68
 msgid "1.5x"
 msgstr "1.5x"
 
-#: src/panel/applets/workspaces/settings.ui.h:10
+#: src/panel/applets/workspaces/settings.ui:69
 msgid "2.0x"
 msgstr "2.0x"
 
-#: src/panel/applets/tasklist/settings.ui.h:1
-msgid "Show button icons"
-msgstr ""
-
-#: src/panel/applets/tasklist/settings.ui.h:2
-msgid "Show button labels"
-msgstr ""
-
-#: src/raven/widgets/calendar/settings.ui.h:1
+#: src/raven/widgets/calendar/settings.ui:17
 msgid "Show Week Numbers"
 msgstr "Vis ugenumre"
 
-#: src/raven/widgets/calendar/settings.ui.h:2
+#: src/raven/widgets/calendar/settings.ui:43
 msgid "Show Day Names"
 msgstr "Vis navne på dage"
 
-#: src/raven/widgets/sound-input/settings.ui.h:1
-#: src/raven/widgets/sound-output/settings.ui.h:1
+#: src/raven/widgets/sound-input/settings.ui:17
+#: src/raven/widgets/sound-output/settings.ui:17
 msgid "Allow Volume Overdrive"
 msgstr "Tillad at volumen overskrides"
 
-#: src/raven/widgets/usage-monitor/settings.ui.h:1
+#: src/raven/widgets/usage-monitor/settings.ui:17
 msgid "Show Swap Usage"
 msgstr "Vis swap forbrug"
 
-#: src/daemon/org.buddiesofbudgie.BudgieScreenshot.desktop.in.h:2
-#: src/dialogs/screenshot/budgie-screenshot.desktop.in.h:2
+#: src/daemon/budgie-daemon.desktop.in:3
+msgid "Budgie Background Services"
+msgstr ""
+
+#: src/daemon/org.buddiesofbudgie.BudgieScreenshot.desktop.in:4
+#: src/dialogs/screenshot/budgie-screenshot.desktop.in:4
 msgid "Budgie screenshot app"
 msgstr "Budgie skærmbillede app"
 
-#: src/panel/applets/budgie-menu/BudgieMenu.plugin.in.h:1
+#: src/daemon/org.buddiesofbudgie.BudgieScreenshot.desktop.in:8
+#: src/dialogs/screenshot/budgie-screenshot.desktop.in:8
+msgid "Screenshot;Snip;"
+msgstr ""
+
+#: src/dialogs/polkit/budgie-polkit.desktop.in.in:3
+msgid "Budgie PolicyKit UI"
+msgstr ""
+
+#: src/dialogs/polkit/budgie-polkit.desktop.in.in:4
+msgid "Budgie PolicyKit Authorisation UI"
+msgstr ""
+
+#: src/dialogs/screenshot/budgie-screenshot-dialog.desktop.in.in:3
+msgid "Budgie Screenshot UI"
+msgstr ""
+
+#: src/panel/applets/budgie-menu/BudgieMenu.plugin.desktop.in:4
+msgid "Budgie Menu"
+msgstr "Budgie-menu"
+
+#: src/panel/applets/budgie-menu/BudgieMenu.plugin.desktop.in:5
 msgid "Search for and start up applications."
 msgstr "Søg efter og start applikationer."
 
-#: src/panel/applets/caffeine/CaffeineApplet.plugin.in.h:1
+#: src/panel/applets/caffeine/CaffeineApplet.plugin.desktop.in:4
+msgid "Caffeine"
+msgstr "Caffeine"
+
+#: src/panel/applets/caffeine/CaffeineApplet.plugin.desktop.in:5
 msgid "Prevent the system and screen from sleeping."
 msgstr "Forhindr systemet og skærmen i at sove."
 
-#: src/panel/applets/clock/ClockApplet.plugin.in.h:1
+#: src/panel/applets/clock/ClockApplet.plugin.desktop.in:4
+msgid "Clock"
+msgstr "Ur"
+
+#: src/panel/applets/clock/ClockApplet.plugin.desktop.in:5
 msgid "A digital clock with a customizable format."
 msgstr "Et digitalt ur med justerbart format."
 
-#: src/panel/applets/icon-tasklist/IconTasklistApplet.plugin.in.h:1
+#: src/panel/applets/icon-tasklist/IconTasklistApplet.plugin.desktop.in:4
+msgid "Icon Task List"
+msgstr "Opgaveliste med ikoner"
+
+#: src/panel/applets/icon-tasklist/IconTasklistApplet.plugin.desktop.in:5
 msgid "A configurable application task list."
 msgstr "En konfigurerbar opgaveliste."
 
-#: src/panel/applets/keyboard-layout/KeyboardLayoutApplet.plugin.in.h:1
+#: src/panel/applets/keyboard-layout/KeyboardLayoutApplet.plugin.desktop.in:5
 msgid "Indicates which keyboard layout is currently in use."
 msgstr "Indikerer hvilket tastaturlayout der er i brug."
 
-#: src/panel/applets/lock-keys/LockKeysApplet.plugin.in.h:1
+#: src/panel/applets/lock-keys/LockKeysApplet.plugin.desktop.in:4
+msgid "Lock Keys Indicator"
+msgstr "Indikator for låsetaster"
+
+#: src/panel/applets/lock-keys/LockKeysApplet.plugin.desktop.in:5
 msgid "Show status of lock keys."
 msgstr "Vis status for låseknapper."
 
-#: src/panel/applets/night-light/NightLight.plugin.in.h:1
+#: src/panel/applets/night-light/NightLight.plugin.desktop.in:5
 msgid "Toggle and modify Night Light settings."
 msgstr "Skift og modificer nattelys indstillinger."
 
-#: src/panel/applets/notifications/NotificationsApplet.plugin.in.h:1
+#: src/panel/applets/notifications/NotificationsApplet.plugin.desktop.in:5
 msgid "Open the Raven notifications view."
 msgstr "Åbn Raven notifikations visning."
 
-#: src/panel/applets/places-indicator/PlacesIndicator.plugin.in.h:1
+#: src/panel/applets/places-indicator/PlacesIndicator.plugin.desktop.in:5
 msgid "Show drives and favorite folders."
 msgstr "Vis drev og favoritmapper."
 
-#: src/panel/applets/raven-trigger/RavenTriggerApplet.plugin.in.h:1
+#: src/panel/applets/raven-trigger/RavenTriggerApplet.plugin.desktop.in:4
+msgid "Raven Trigger"
+msgstr ""
+
+#: src/panel/applets/raven-trigger/RavenTriggerApplet.plugin.desktop.in:5
 msgid "Open the Raven sidebar."
 msgstr "Åbn Raven sidebjælke."
 
-#: src/panel/applets/separator/SeparatorApplet.plugin.in.h:1
+#: src/panel/applets/separator/SeparatorApplet.plugin.desktop.in:4
+msgid "Separator"
+msgstr "Separator"
+
+#: src/panel/applets/separator/SeparatorApplet.plugin.desktop.in:5
 msgid "Visual separator between applets."
 msgstr "Visuel separator mellem applets."
 
-#: src/panel/applets/show-desktop/ShowDesktopApplet.plugin.in.h:1
+#: src/panel/applets/show-desktop/ShowDesktopApplet.plugin.desktop.in:4
+msgid "Show Desktop Button"
+msgstr "Vis skrivebordsknap"
+
+#: src/panel/applets/show-desktop/ShowDesktopApplet.plugin.desktop.in:5
 msgid "A button that toggles visibility of the desktop."
 msgstr "En knap der skifter synligheden for skrivebordet."
 
-#: src/panel/applets/spacer/SpacerApplet.plugin.in.h:1
+#: src/panel/applets/spacer/SpacerApplet.plugin.desktop.in:4
+msgid "Spacer"
+msgstr "Afstandsstykke"
+
+#: src/panel/applets/spacer/SpacerApplet.plugin.desktop.in:5
 msgid "Adjustable spacer to put between other applets."
 msgstr "Justerbart mellemrum til at placere mellem andre applets."
 
-#: src/panel/applets/status/StatusApplet.plugin.in.h:1
+#: src/panel/applets/status/StatusApplet.plugin.desktop.in:4
+msgid "Status Indicator"
+msgstr "Statusindikator"
+
+#: src/panel/applets/status/StatusApplet.plugin.desktop.in:5
 msgid "Show system status indicators, like sound, battery, and Bluetooth."
 msgstr "Vis system statusindikatorer, som lyd, batteri, og Bluetooth."
 
-#: src/panel/applets/trash/TrashApplet.plugin.in.h:1
-msgid "Manage your trash from the Budgie panel"
-msgstr ""
+#: src/panel/applets/tasklist/TasklistApplet.plugin.desktop.in:4
+msgid "Task List"
+msgstr "Opgaveliste"
 
-#: src/panel/applets/tray/TrayApplet.plugin.in.h:1
-msgid ""
-"System tray implementing the Freedesktop Status Notifier specification."
-msgstr ""
-
-#: src/panel/applets/user-indicator/UserIndicator.plugin.in.h:1
-msgid "Opens the power dialog."
-msgstr "Åbner strømdialogen."
-
-#: src/panel/applets/workspaces/WorkspacesApplet.plugin.in.h:1
-msgid "Display workspaces and switch between them."
-msgstr "Viser arbejdsområder, og skifter mellem dem."
-
-#: src/panel/applets/tasklist/TasklistApplet.plugin.in.h:1
+#: src/panel/applets/tasklist/TasklistApplet.plugin.desktop.in:5
 msgid "An application task list with icons and labels."
 msgstr "En applikation opgaveliste med ikoner og tekster."
 
-#: src/panel/budgie-desktop-settings.desktop.in.h:2
+#: src/panel/applets/trash/TrashApplet.plugin.desktop.in:5
+msgid "Manage your trash from the Budgie panel"
+msgstr "Håndter din papirkurv fra Budgie-panelet"
+
+#: src/panel/applets/tray/TrayApplet.plugin.desktop.in:4
+msgid "System Tray"
+msgstr "Statusbakke"
+
+#: src/panel/applets/tray/TrayApplet.plugin.desktop.in:5
+msgid ""
+"System tray implementing the Freedesktop Status Notifier specification."
+msgstr "Systembakke implementerer Freedesktop Status Notifier specifikation."
+
+#: src/panel/applets/user-indicator/UserIndicator.plugin.desktop.in:4
+msgid "User Indicator"
+msgstr "Brugerindikator"
+
+#: src/panel/applets/user-indicator/UserIndicator.plugin.desktop.in:5
+msgid "Opens the power dialog."
+msgstr "Åbner strømdialogen."
+
+#: src/panel/applets/workspaces/WorkspacesApplet.plugin.desktop.in:4
+msgid "Workspace Switcher"
+msgstr "Arbejdsområdeskifter"
+
+#: src/panel/applets/workspaces/WorkspacesApplet.plugin.desktop.in:5
+msgid "Display workspaces and switch between them."
+msgstr "Viser arbejdsområder, og skifter mellem dem."
+
+#: src/panel/budgie-desktop-settings.desktop.in:3
 msgid "Change desktop appearance and behavior"
 msgstr "Skift skrivebordsudseende og -opførsel"
 
-#: src/panel/budgie-panel.desktop.in.h:1
+#: src/panel/budgie-desktop-settings.desktop.in:12
+msgid "Preferences;Settings;"
+msgstr ""
+
+#: src/panel/budgie-panel.desktop.in:3
 msgid "Budgie Panel"
 msgstr "Budgie-panel"
 
-#: src/panel/budgie-panel.desktop.in.h:2
+#: src/panel/budgie-panel.desktop.in:4
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
@@ -2181,11 +2430,11 @@ msgstr ""
 "Start andre programmer og giv diverse redskaber til at håndtere vinduer, "
 "vise klokkeslættet, osv."
 
-#: src/raven/widgets/calendar/Calendar.plugin.in.h:1
+#: src/raven/widgets/calendar/Calendar.plugin.desktop.in:4
 msgid "Calendar"
 msgstr "Kalender"
 
-#: src/raven/widgets/calendar/Calendar.plugin.in.h:2
+#: src/raven/widgets/calendar/Calendar.plugin.desktop.in:5
 msgid ""
 "A simple calendar with a month view, using the built-in Gtk.Calendar widget."
 " The calendar shows the current date by default."
@@ -2193,11 +2442,11 @@ msgstr ""
 "En simpel kalender med månedsvisning, som bruger den indbyggede Gtk.Calendar"
 " widget. Kalenderen viser den aktuelle dag som standard."
 
-#: src/raven/widgets/media-controls/MediaControls.plugin.in.h:1
+#: src/raven/widgets/media-controls/MediaControls.plugin.desktop.in:4
 msgid "Media Controls"
 msgstr "Mediekontroller"
 
-#: src/raven/widgets/media-controls/MediaControls.plugin.in.h:2
+#: src/raven/widgets/media-controls/MediaControls.plugin.desktop.in:5
 msgid ""
 "This widget uses the Mpris API to show actively playing media with metadata "
 "and playback controls, with support for audio and video."
@@ -2205,11 +2454,11 @@ msgstr ""
 "Denne widget bruger Mpris API til at vise aktivt spillende medie med "
 "metadata og afspilningskontroller, med understøttelse for lyd og billede."
 
-#: src/raven/widgets/sound-input/SoundInput.plugin.in.h:1
+#: src/raven/widgets/sound-input/SoundInput.plugin.desktop.in:4
 msgid "Sound Input"
 msgstr "Lydinput"
 
-#: src/raven/widgets/sound-input/SoundInput.plugin.in.h:2
+#: src/raven/widgets/sound-input/SoundInput.plugin.desktop.in:5
 msgid ""
 "Allows adjustment of audio input volume, and displays a list of available "
 "audio input devices."
@@ -2217,11 +2466,11 @@ msgstr ""
 "Tillader justering af lydinput lydstyrke, og viser en liste af tilgængelige "
 "lydinput enheder."
 
-#: src/raven/widgets/sound-output/SoundOutput.plugin.in.h:1
+#: src/raven/widgets/sound-output/SoundOutput.plugin.desktop.in:4
 msgid "Sound Output"
 msgstr "Lydoutput"
 
-#: src/raven/widgets/sound-output/SoundOutput.plugin.in.h:2
+#: src/raven/widgets/sound-output/SoundOutput.plugin.desktop.in:5
 msgid ""
 "Allows global and per-app audio output volume control, and displays a list "
 "of available audio output devices."
@@ -2229,7 +2478,7 @@ msgstr ""
 "Tillader globalt og per app lydoutput lydstyrke kontrol, og viser en liste "
 "af tilgængelige lydoutput enheder."
 
-#: src/raven/widgets/usage-monitor/UsageMonitor.plugin.in.h:2
+#: src/raven/widgets/usage-monitor/UsageMonitor.plugin.desktop.in:5
 msgid ""
 "A view for system resource usage in bar graph form. Includes CPU, RAM, and "
 "Swap usage by default."
@@ -2237,23 +2486,51 @@ msgstr ""
 "En visning for system ressourceforbrug i søjlediagram format. Inkluderer "
 "CPU, RAM og swap forbrug som standard."
 
-#: src/session/budgie-desktop.session.in.in.h:1
-#: src/session/budgie-desktop.desktop.in.in.h:1
-msgid "Budgie Desktop"
-msgstr "Budgie-skrivebord"
-
-#: src/session/budgie-desktop-magpie.desktop.in.in.h:1
+#: src/session/budgie-desktop-magpie.desktop.in.in:2
 msgid "Budgie Desktop (magpie)"
-msgstr ""
+msgstr "Budgie-skrivebord (magpie)"
 
-#: src/session/budgie-desktop-magpie.desktop.in.in.h:2
+#: src/session/budgie-desktop-magpie.desktop.in.in:3
 msgid ""
 "This session logs you into the Budgie Desktop using magpie as the window "
 "manager"
 msgstr ""
+"Denne session logger dig ind på Budgie-skrivebordet med brug af magpie som "
+"vinduesystem"
 
-#: src/session/budgie-desktop.desktop.in.in.h:2
+#: src/session/budgie-desktop-nm-applet.desktop.in:2
+msgid "Network (Budgie Desktop)"
+msgstr ""
+
+#: src/session/budgie-desktop-nm-applet.desktop.in:3
+msgid "Manage your network connections"
+msgstr ""
+
+#: src/session/budgie-desktop-powerdialog.desktop.in.in:3
+msgid "Budgie Power Dialog"
+msgstr ""
+
+#: src/session/budgie-desktop-powerdialog.desktop.in.in:4
+msgid "A button dialog to lock the screen, reboot, shutdown, etc."
+msgstr ""
+
+#: src/session/budgie-desktop-screenshotdialog.desktop.in.in:3
+msgid "Budgie Screenshot Dialog"
+msgstr ""
+
+#: src/session/budgie-desktop-screenshotdialog.desktop.in.in:4
+msgid "Screenshot interface"
+msgstr ""
+
+#: src/session/budgie-desktop.desktop.in.in:3
+#: src/session/budgie-desktop.session.desktop.in.in:2
+msgid "Budgie Desktop"
+msgstr "Budgie-skrivebord"
+
+#: src/session/budgie-desktop.desktop.in.in:4
 msgid ""
 "This session logs you into the Budgie Desktop using labwc as the window "
 "manager"
 msgstr ""
+"Denne session logger dig ind på Budgie-skrivebordet med brug af labwc som "
+"vinduesystem."

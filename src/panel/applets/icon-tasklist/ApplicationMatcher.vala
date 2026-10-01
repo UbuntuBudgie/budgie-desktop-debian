@@ -59,29 +59,39 @@ namespace Budgie {
 			// Extract all possible name variants from the instance
 			string[] variants = extract_name_variants(instance);
 
-			// Search all installed desktop files
-			var apps = AppInfo.get_all();
-			foreach (var app_info in apps) {
-				if (!(app_info is DesktopAppInfo)) continue;
-
+			// Collect all installed desktop files
+			DesktopAppInfo[] desktop_infos = {};
+			foreach (var app_info in AppInfo.get_all()) {
 				var desktop_info = app_info as DesktopAppInfo;
-				var desktop_id = desktop_info.get_id();
-				if (desktop_id == null) continue;
+				if (desktop_info == null || desktop_info.get_id() == null) continue;
 
-				// Try each matching strategy in priority order
-				match_result = try_startup_wm_class(desktop_info, desktop_id, instance, class_name, variants);
+				desktop_infos += desktop_info;
+			}
+
+			// Run each strategy over every desktop file before trying the next, looser one,
+			// so an exact match in one file beats a fuzzy match in a file listed earlier
+			foreach (var desktop_info in desktop_infos) {
+				match_result = try_startup_wm_class(desktop_info, desktop_info.get_id(), instance, class_name, variants);
 				if (match_result.matched()) return match_result;
+			}
 
-				match_result = try_desktop_id_match(desktop_info, desktop_id, instance, class_name, variants);
+			foreach (var desktop_info in desktop_infos) {
+				match_result = try_desktop_id_match(desktop_info, desktop_info.get_id(), instance, class_name, variants);
 				if (match_result.matched()) return match_result;
+			}
 
-				match_result = try_reverse_dns_match(desktop_info, desktop_id, instance, class_name, variants);
+			foreach (var desktop_info in desktop_infos) {
+				match_result = try_reverse_dns_match(desktop_info, desktop_info.get_id(), instance, class_name, variants);
 				if (match_result.matched()) return match_result;
+			}
 
-				match_result = try_snap_pattern_match(desktop_info, desktop_id, instance, class_name, variants);
+			foreach (var desktop_info in desktop_infos) {
+				match_result = try_snap_pattern_match(desktop_info, desktop_info.get_id(), instance, class_name, variants);
 				if (match_result.matched()) return match_result;
+			}
 
-				match_result = try_instance_to_exec_match(desktop_info, desktop_id, instance);
+			foreach (var desktop_info in desktop_infos) {
+				match_result = try_instance_to_exec_match(desktop_info, desktop_info.get_id(), instance);
 				if (match_result.matched()) return match_result;
 			}
 
@@ -247,13 +257,25 @@ namespace Budgie {
 			string desktop_id,
 			string instance
 		) {
-			var exec = Path.get_basename(desktop_info.get_executable());
+			unowned string? executable = desktop_info.get_executable();
+			if (executable == null) return new MatchResult();
+
+			var exec = Path.get_basename(executable);
 			if (instance == exec) {
 				debug(@"Matched via InstanceToExec: $desktop_id");
 				return create_match_result(desktop_id);
 			}
 
-			if (!instance.contains(" ")) return new MatchResult(); // No whitespace, return early since subsequent logic requires it
+			var exec_lower = exec.down();
+			var instance_lower = instance.down();
+
+			if (!instance.contains(" ")) { // No whitespace, only a case-insensitive comparison is left
+				if (instance_lower == exec_lower) {
+					debug(@"Matched via InstanceToExec (case-insensitive): $desktop_id");
+					return create_match_result(desktop_id);
+				}
+				return new MatchResult();
+			}
 
 			// Have a comparison between exec and a string replaced instance of whitespace to dashes
 			// This comparison would effectively check if "proton pass" as proton-pass is the same as the executable
@@ -267,6 +289,13 @@ namespace Budgie {
 				debug(@"Matched via InstanceToExec: $desktop_id");
 				return create_match_result(desktop_id);
 			}
+
+			// Electron apps report a titled app ID (e.g. "Proton Pass") for a lowercase exec (proton-pass)
+			if (instance_lower == exec_lower || instance_dash.down() == exec_lower || instance_dot.down() == exec_lower) {
+				debug(@"Matched via InstanceToExec (case-insensitive): $desktop_id");
+				return create_match_result(desktop_id);
+			}
+
 			return new MatchResult();
 		}
 
