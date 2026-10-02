@@ -1,3 +1,11 @@
+budgie-desktop (10.10.3-2) unstable; urgency=medium
+
+  * d/rules update dh_fixperms override to test the creation of labwc_bridge
+     for the architecture independent build that is test but currently
+     fails
+
+ -- David Mohammed <fossfreedom@ubuntu.com>  Fri, 02 Oct 2026 14:42:57 +0100
+
 budgie-desktop (10.10.3-1) unstable; urgency=medium
 
   * New upstream release
