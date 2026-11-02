@@ -1,12 +1,22 @@
 project(
     'budgie-desktop',
     ['c', 'vala'],
-    version: '10.10.3',
+    version: '10.10.4',
     license: [
         'GPL-2.0',
         'LGPL-2.1',
     ],
 )
+
+devenv = environment()
+devenv_applets_dir = join_paths(meson.project_build_root(), 'src', 'panel', 'applets')
+devenv_raven_widgets_dir = join_paths(meson.project_build_root(), 'src', 'raven', 'widgets')
+
+devenv.set('BUDGIE_MODULE_DIRECTORY', devenv_applets_dir)
+devenv.set('BUDGIE_MODULE_DATA_DIRECTORY', devenv_applets_dir)
+devenv.set('BUDGIE_RAVEN_PLUGIN_LIBDIR', devenv_raven_widgets_dir)
+devenv.set('BUDGIE_RAVEN_PLUGIN_DATADIR', devenv_raven_widgets_dir)
+meson.add_devenv(devenv)
 
 # Vala generates bad C code and missing these on gcc 14 will cause FTBFS
 # Additionally, Meson 1.4 unhides warnings from valac-generated C code,
@@ -86,7 +96,7 @@ ci = get_option('ci')
 if fs.exists('.git') and ci == false
     git = find_program('git')
     git_version = run_command('git', ['rev-parse', 'HEAD'], check: true)
-    package_version += ' (git-'+git_version.stdout().strip()+')'
+    package_version += ' (git-' + git_version.stdout().strip() + ')'
 endif
 
 cdata.set_quoted('PACKAGE_VERSION', package_version)
@@ -136,19 +146,28 @@ if prefix == '/usr' or prefix == '/usr/local'
     endif
 
     cdata.set_quoted('MODULEDIR_SECONDARY', join_paths(secondary_libdir_root, 'plugins'))
-    cdata.set_quoted('MODULE_DATA_DIR_SECONDARY', join_paths(secondary_datadir_root, 'plugins'))
-    cdata.set_quoted('RAVEN_PLUGIN_LIBDIR_SECONDARY', join_paths(secondary_libdir_root, 'raven-plugins'))
-    cdata.set_quoted('RAVEN_PLUGIN_DATADIR_SECONDARY', join_paths(secondary_datadir_root, 'raven-plugins'))
+    cdata.set_quoted(
+        'MODULE_DATA_DIR_SECONDARY',
+        join_paths(secondary_datadir_root, 'plugins'),
+    )
+    cdata.set_quoted(
+        'RAVEN_PLUGIN_LIBDIR_SECONDARY',
+        join_paths(secondary_libdir_root, 'raven-plugins'),
+    )
+    cdata.set_quoted(
+        'RAVEN_PLUGIN_DATADIR_SECONDARY',
+        join_paths(secondary_datadir_root, 'raven-plugins'),
+    )
 endif
 
 with_hibernate = get_option('with-hibernate')
 if with_hibernate == true
-  add_project_arguments('-D', 'WITH_HIBERNATE', language: 'vala')
+    add_project_arguments('-D', 'WITH_HIBERNATE', language: 'vala')
 endif
 
 with_libuuid_time_safe = get_option('with-libuuid-time-safe')
 if with_libuuid_time_safe == true
-  add_project_arguments('-D', 'with_libuuid_time_safe', language: 'vala')
+    add_project_arguments('-D', 'with_libuuid_time_safe', language: 'vala')
 endif
 
 with_stateless = get_option('with-stateless')
@@ -170,6 +189,11 @@ endif
 with_bluetooth = get_option('with-bluetooth')
 if with_bluetooth == true
     add_project_arguments('-D', 'WITH_BLUETOOTH', language: 'vala')
+endif
+
+graphics_lib = get_option('graphics-lib')
+if graphics_lib == 'graphicsmagick'
+    add_project_arguments('-D', 'USE_GRAPHICSMAGICK', language: 'vala')
 endif
 
 # oo7 provides the Secret Service and the xdg-desktop-portal Secret backend.
@@ -205,7 +229,8 @@ extra_includes = [
 with_polkit = get_option('with-polkit')
 
 # Get gvc built before we do anything
-gvc = subproject('gvc',
+gvc = subproject(
+    'gvc',
     default_options: [
         'static=false',
         'pkglibdir=@0@'.format(rpath_libdir),
@@ -261,7 +286,6 @@ report = [
     '    bluetooth:                                                                   @0@'.format(with_bluetooth),
     '    oo7:                                                                         @0@'.format(oo7),
 ]
-
 
 # Output some stuff to validate the build config
 message('\n\n\n' + '\n'.join(report) + '\n\n')

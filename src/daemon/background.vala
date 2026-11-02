@@ -25,6 +25,7 @@ namespace Budgie {
 		Gnome.BG? gnome_bg;
 		Subprocess? bg = null;
 		CrystalDockHelper? crystal_dock_helper = null;
+		uint debounce_timeout_id = 0;
 
 		/**
 		* Determine if the wallpaper is a colour wallpaper or not
@@ -37,6 +38,13 @@ namespace Budgie {
 				return true;
 			}
 			return false;
+		}
+
+		~Background() {
+			if (this.debounce_timeout_id > 0) {
+				GLib.Source.remove(this.debounce_timeout_id);
+				this.debounce_timeout_id = 0;
+			}
 		}
 
 		/**
@@ -100,10 +108,17 @@ namespace Budgie {
 			/* Setup Crystal Dock helper and monitor for changes */
 			crystal_dock_helper = new CrystalDockHelper();
 			crystal_dock_helper.dock_config_changed.connect(() => {
-				message("Crystal Dock configuration changed, updating wallpaper");
-				this.update();
-			});
+				if (this.debounce_timeout_id > 0) {
+					GLib.Source.remove(this.debounce_timeout_id);
+				}
 
+				this.debounce_timeout_id = GLib.Timeout.add(1000, () => {
+					debug("Crystal Dock configuration changed, updating wallpaper");
+					this.update();
+					this.debounce_timeout_id = 0;
+					return GLib.Source.REMOVE;
+				});
+			});
 		}
 
 		/**
@@ -200,6 +215,8 @@ namespace Budgie {
 						// use a delay to allow process termination to complete
 						if (bg != null) {
 							bg.force_exit();
+						} else {
+							kill_other_swaybg(new_bg.get_identifier());
 						}
 						bg = new_bg;
 						return false;
@@ -208,6 +225,31 @@ namespace Budgie {
 					warning("Error starting swaybg: %s", e.message);
 				}
 				set_accountsservice_user_bg(bg_filename);
+			}
+		}
+
+		/**
+		* Terminate the user's swaybg processes other than keep_pid, left behind by a replaced daemon
+		*/
+		private void kill_other_swaybg(string? keep_pid) {
+			string[] cmdline = { "pgrep", "-x", "-u", "%u".printf((uint) Posix.getuid()), "swaybg" };
+			string output;
+
+			try {
+				Process.spawn_sync(null, cmdline, null, SpawnFlags.SEARCH_PATH, null, out output, null, null);
+			} catch (SpawnError e) {
+				warning("Failed to list swaybg processes: %s", e.message);
+				return;
+			}
+
+			foreach (string line in output.split("\n")) {
+				string pid = line.strip();
+				if (pid == "" || pid == keep_pid) {
+					continue;
+				}
+
+				debug("Terminating stale swaybg %s", pid);
+				Posix.kill((Posix.pid_t) int.parse(pid), Posix.Signal.TERM);
 			}
 		}
 	}

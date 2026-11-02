@@ -26,7 +26,11 @@ panel_sources = [
     'main.vala',
     'manager.vala',
     'ConstrainedBox.vala',
+    'MainPanel.vala',
     'panel.vala',
+    'PanelApplets.vala',
+    'PanelPlacement.vala',
+    'PanelVisibility.vala',
     'uuid.vala',
     'settings/settings_autostart.vala',
     'settings/settings_desktop.vala',
@@ -50,6 +54,7 @@ panel_sources = [
 
 panel_deps = [
     libpanelplugin_vapi,
+    dep_gee,
     dep_giounix,
     dep_girepository,
     dep_gtk3,
@@ -68,6 +73,7 @@ panel_deps = [
     link_libraven,
     link_libwindowing,
     link_libbudgiewayland,
+    link_libappindexer,
     gvc.get_variable('libgvc_dep'),
 ]
 
