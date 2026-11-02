@@ -131,6 +131,16 @@ namespace Budgie {
 		* Toggle Raven, opening only the "main" applet view
 		*/
 		public void ToggleAppletView() throws DBusError, IOError {
+			if (this.is_expanded) {
+				if (parent.get_current_view() == "widgets") {
+					Toggle();
+					return;
+				} else {
+					parent.expose_main_view();
+					return;
+				}
+			}
+
 			if (!should_expand()) {
 				return;
 			}
@@ -143,6 +153,16 @@ namespace Budgie {
 		* Toggle Raven, opening only the notifications view
 		*/
 		public void ToggleNotificationsView() throws DBusError, IOError {
+			if (this.is_expanded) {
+				if (parent.get_current_view() == "notifications") {
+					Toggle();
+					return;
+				} else {
+					parent.expose_notification();
+					return;
+				}
+			}
+
 			if (!should_expand()) {
 				return;
 			}
@@ -288,6 +308,10 @@ namespace Budgie {
 			}
 		}
 
+		public string get_current_view() {
+			return main_view.get_current_view();
+		}
+
 		public void expose_main_view() {
 			main_view.set_clean();
 		}
@@ -360,12 +384,10 @@ namespace Budgie {
 
 			wm_settings = new Settings("com.solus-project.budgie-wm");
 
-			if (Xfw.windowing_get() == Xfw.Windowing.WAYLAND) {
-				GtkLayerShell.init_for_window(this);
-				GtkLayerShell.set_layer(this, GtkLayerShell.Layer.OVERLAY);
-				update_keyboard_mode();
-				wm_settings.changed["window-focus-mode"].connect(update_keyboard_mode);
-			}
+			GtkLayerShell.init_for_window(this);
+			GtkLayerShell.set_layer(this, GtkLayerShell.Layer.OVERLAY);
+			update_keyboard_mode();
+			wm_settings.changed["window-focus-mode"].connect(update_keyboard_mode);
 
 			get_style_context().add_class("budgie-container");
 
