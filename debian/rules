@@ -15,7 +15,7 @@ endif
 	dh $@ --with gir
 
 override_dh_auto_configure:
-	dh_auto_configure -- --prefix=/usr -Dwith-gtk-doc=false -Dwith-runtime-dependencies=false
+	dh_auto_configure -- --prefix=/usr -Dwith-gtk-doc=false -Dwith-runtime-dependencies=false -Dgraphics-lib=graphicsmagick
 
 override_dh_gencontrol:
 	dh_gencontrol -- $(SUBSTVARSREC) $(SUBSTVARSSUG)

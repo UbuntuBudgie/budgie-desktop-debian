@@ -24,5 +24,6 @@ libbudgie-plugin.so.0 libbudgie-plugin0 #MINVER#
  budgie_popover_manager_new@Base 10.4
  budgie_popover_manager_register_popover@Base 10.4
  budgie_popover_manager_show_popover@Base 10.4
+ budgie_popover_manager_track_window@Base 10.10.4
  budgie_popover_manager_unregister_popover@Base 10.4
  budgie_popover_new@Base 10.4

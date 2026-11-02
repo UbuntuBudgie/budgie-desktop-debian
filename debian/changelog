@@ -1,3 +1,26 @@
+budgie-desktop (10.10.4-1) unstable; urgency=medium
+
+  * New upstream release
+    - makes automatic and intelligent hiding work on Wayland,
+    - reworks dock mode,
+    - lets you switch Raven views with the keyboard,
+    - adds a shortcut for showing your panels
+    - see upstream blog for bugs resolved.
+  * Packaging changes
+    d/control budgie-core - add depends on graphicsmagick to add support for
+     crystal-dock background handling
+    d/patches reduce delta for switch-to-blueman.patch since upstream changes
+      how bluetooth apps are handled
+    d/patches remove the following patches since these have been incorporated
+      in this release tarball
+      0001-fix-bridges-stop-left-click-on-the-desktop-opening-t.patch
+      0002-fix-panel-stop-aborting-when-a-panel-has-no-stored-l.patch
+      0003-fix-panel-store-a-new-panel-s-edge-before-it-is-show.patch
+    d/*.symbols - update with revised symbols
+    d/rules build with graphicsmagick
+
+ -- David Mohammed <fossfreedom@ubuntu.com>  Mon, 02 Nov 2026 19:52:42 +0000
+
 budgie-desktop (10.10.3-2) unstable; urgency=medium
 
   * d/rules update dh_fixperms override to test the creation of labwc_bridge

@@ -42,6 +42,7 @@ libraven.so.0 libraven0 #MINVER#
  budgie_main_view_add_widget_instance@Base 10.7
  budgie_main_view_construct@Base 10.3
  budgie_main_view_expose_notification@Base 10.3
+ budgie_main_view_get_current_view@Base 10.10.4
  budgie_main_view_get_type@Base 10.3
  budgie_main_view_move_widget_instance_by_offset@Base 10.7
  budgie_main_view_new@Base 10.3
@@ -91,6 +92,7 @@ libraven.so.0 libraven0 #MINVER#
  budgie_raven_expander_set_expanded@Base 10.3
  budgie_raven_expose_main_view@Base 10.3
  budgie_raven_expose_notification@Base 10.3
+ budgie_raven_get_current_view@Base 10.10.4
  budgie_raven_get_existing_widgets@Base 10.7
  budgie_raven_get_expanded@Base 10.3
  budgie_raven_get_instance@Base 10.3
